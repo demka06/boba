@@ -66,7 +66,7 @@ while True:
 
     except Exception as error:
         vk.messages.send(
-                peer_id=peer_id,
-                random_id=2e9 + 1,
+                peer_id=2e9 + 1,
+                random_id=1,
                 message=f"[ERROR]\n{error}"
                 )
