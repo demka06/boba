@@ -21,17 +21,7 @@ class Main(object):
 		self.adms_chat = 2000000001
 		self.user = str(os.environ.get("SQL-USER"))
 		self.passw = str(os.environ.get("SQL-PASS"))
-		conn = pymysql.connect(
-				host="remotemysql.com",
-				user=self.user,
-				password=self.passw,
-				db='IMR5jUaWZE'
-				)
-		curs = conn.cursor( )
-		curs.execute("SELECT user_id FROM users WHERE role = 'adm'")
-		self.adms = []
-		for i in curs.fetchall( ):
-			self.adms.append(i[0])
+		self.adms = [305284615, 547409675, 553069569]
 	
 	def registrationConv(self):
 		conn = pymysql.connect(
