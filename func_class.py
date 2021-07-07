@@ -217,7 +217,7 @@ class Main(object):
 				mine = data[i] * prof[i][0]
 				res.append(mine)
 			curs.execute(
-					f"UPDATE users SET steel = {res[0]}, anders = {res[1] + res[3]}, food = {res[2]}, w_cris = {res[4]}, b_cris = {res[5]}, wood = {res[6]}, last_res_coll = {now} WHERE user_id = %s",
+					f"UPDATE users SET steel = {res[0]} + steel, anders = {res[1] + res[3]} + anders, food = {res[2]} + food, w_cris = {res[4]} + w_cris, b_cris = {res[5]} + b_cris, wood = {res[6]} + wood, last_res_coll = {now} WHERE user_id = %s",
 					(self.user_id,)
 					)
 			conn.commit( )
