@@ -661,7 +661,7 @@ class Main(object):
 					conn.commit( )
 					curs.execute(f"UPDATE users SET anders = anders + {trans_info[3]} WHERE user_id = {trans_info[1]}")
 					conn.commit( )
-					curs.execute(f"UPDATE users SET access = 0 WHERE trans_id = {trans_id}")
+					curs.execute(f"UPDATE transactions SET access = 0 WHERE trans_id = {trans_id}")
 					conn.commit( )
 					
 					self.vk.messages.send(
