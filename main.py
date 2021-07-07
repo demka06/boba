@@ -68,5 +68,5 @@ while True:
         vk.messages.send(
                 peer_id=peer_id,
                 random_id=2e9 + 1,
-                message=f"[ERROR]\n{Exception}"
+                message=f"[ERROR]\n{error}"
                 )
