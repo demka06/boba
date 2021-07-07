@@ -21,7 +21,17 @@ class Main(object):
 		self.adms_chat = 2000000001
 		self.user = str(os.environ.get("SQL-USER"))
 		self.passw = str(os.environ.get("SQL-PASS"))
-		self.adms = [305284615, 547409675, 553069569]
+		conn = pymysql.connect(
+				host="remotemysql.com",
+				user=self.user,
+				password=self.passw,
+				db='IMR5jUaWZE'
+				)
+		curs = conn.cursor( )
+		curs.execute("SELECT user_id FROM users WHERE role = adm")
+		self.adms = []
+		for i in curs.fetchall( ):
+			self.adms.append(i[0])
 	
 	def registrationConv(self):
 		conn = pymysql.connect(
@@ -289,7 +299,7 @@ class Main(object):
 		stats_pic.save('mil.png')
 		
 		vk_upload = vk_api.VkUpload(self.vk_session)
-		photo = vk_upload.photo_messages(photos="mil.png", peer_id=self.peer_id)
+		photo = vk_upload.photo_messages(photos="mil.png")
 		photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 		self.vk.messages.send(
 				peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
@@ -314,7 +324,7 @@ class Main(object):
 		stats_pic.save('build.png')
 		
 		vk_upload = vk_api.VkUpload(self.vk_session)
-		photo = vk_upload.photo_messages(photos="build.png", peer_id=self.peer_id)
+		photo = vk_upload.photo_messages(photos="build.png")
 		photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 		self.vk.messages.send(
 				peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
@@ -750,7 +760,7 @@ class Main(object):
 			stats_pic.save('stats.png')
 			
 			vk_upload = vk_api.VkUpload(self.vk_session)
-			photo = vk_upload.photo_messages(photos="stats.png", peer_id=self.peer_id)
+			photo = vk_upload.photo_messages(photos="stats.png")
 			photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 			self.vk.messages.send(peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo)
 		else:
@@ -763,65 +773,6 @@ class Main(object):
 						)
 				race_inv = curs.fetchone( )
 				
-				curs.execute(
-						"SELECT SUM(inf),SUM(mag),SUM(arch),SUM(ctpl),SUM(bllsts),SUM(clvr),SUM(plds) FROM users WHERE race_id = %s",
-						(race,)
-						)
-				mil_inv = curs.fetchone( )
-				
-				curs.execute(
-						"SELECT SUM(farm),SUM(swml),SUM(mine),SUM(vlg),SUM(city),SUM(tmpl),SUM(altr) FROM users WHERE race_id = %s",
-						(race,)
-						)
-				bld_inv = curs.fetchone( )
-				curs.execute(
-						"SELECT name FROM races WHERE race_id = %s",
-						(race,)
-						)
-				stats_pic_draw.text(
-						xy=(245, 71), text=curs.fetchone( )[0], fill="white",
-						font=ImageFont.truetype("Aqum.ttf", size=35)
-						)
-				
-				stats_pic_draw.text(xy=(207, 419), text=str(mil_inv[0]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 518), text=str(mil_inv[2]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 617), text=str(mil_inv[5]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 716), text=str(mil_inv[6]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 814), text=str(mil_inv[1]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 912), text=str(mil_inv[3]), fill="black", font=font)
-				stats_pic_draw.text(xy=(207, 1011), text=str(mil_inv[4]), fill="black", font=font)
-				
-				stats_pic_draw.text(
-						xy=(357, 174), text=str(round(race_inv[6], 3)), fill="white",
-						font=ImageFont.truetype("Aqum.ttf", size=25)
-						)
-				stats_pic_draw.text(
-						xy=(835, 174), text=str(race_inv[1]), fill="white",
-						font=ImageFont.truetype("Aqum.ttf", size=25)
-						)
-				
-				stats_pic_draw.text(xy=(631, 419), text=str(race_inv[1]), fill="black", font=font)
-				stats_pic_draw.text(xy=(631, 518), text=str(race_inv[3]), fill="black", font=font)
-				stats_pic_draw.text(xy=(631, 617), text=str(race_inv[2]), fill="black", font=font)
-				stats_pic_draw.text(xy=(631, 716), text=str(race_inv[4]), fill="black", font=font)
-				stats_pic_draw.text(xy=(631, 814), text=str(race_inv[5]), fill="black", font=font)
-				
-				stats_pic_draw.text(xy=(1055, 419), text=str(bld_inv[0]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 518), text=str(bld_inv[1]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 617), text=str(bld_inv[2]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 716), text=str(bld_inv[3]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 814), text=str(bld_inv[4]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 912), text=str(bld_inv[5]), fill="black", font=font)
-				stats_pic_draw.text(xy=(1055, 1011), text=str(bld_inv[6]), fill="black", font=font)
-				
-				stats_pic.save('stats.png')
-				
-				vk_upload = vk_api.VkUpload(self.vk_session)
-				photo = vk_upload.photo_messages(photos="stats.png", peer_id=self.peer_id)
-				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
-				self.vk.messages.send(
-						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
-						)
 			else:
 				curs.execute("SELECT race_id FROM reces WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
@@ -894,7 +845,7 @@ class Main(object):
 					stats_pic.save('stats.png')
 					
 					vk_upload = vk_api.VkUpload(self.vk_session)
-					photo = vk_upload.photo_messages(photos="stats.png", peer_id=self.peer_id)
+					photo = vk_upload.photo_messages(photos="stats.png")
 					photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 					self.vk.messages.send(
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
@@ -1238,12 +1189,11 @@ class Main(object):
 		stats_pic.save('prof.png')
 		
 		vk_upload = vk_api.VkUpload(self.vk_session)
-		photo = vk_upload.photo_messages(photos="prof.png", peer_id=self.peer_id)
+		photo = vk_upload.photo_messages(photos="prof.png")
 		photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 		self.vk.messages.send(
 				peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 				)
-	
 	def races(self):
 		conn = pymysql.connect(
 				host="remotemysql.com",
@@ -1261,5 +1211,6 @@ class Main(object):
 				random_id=random.randint(0, 10000000000),
 				message=txt
 				)
+	
 	def addAdmin(self):
 		pass
