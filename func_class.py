@@ -28,7 +28,7 @@ class Main(object):
 				db='IMR5jUaWZE'
 				)
 		curs = conn.cursor( )
-		curs.execute("SELECT user_id FROM users WHERE role = adm")
+		curs.execute("SELECT user_id FROM users WHERE role = 'adm'")
 		self.adms = []
 		for i in curs.fetchall( ):
 			self.adms.append(i[0])
