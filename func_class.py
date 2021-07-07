@@ -892,7 +892,7 @@ class Main(object):
 						)
 		else:
 			curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
-			if curs.fetchone( )[0] == 0:
+			if curs.fetchone( )[0] == 1:
 				race = self.command.split(" ")[0]
 				if race.isdigit( ):
 					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
