@@ -1195,7 +1195,7 @@ class Main(object):
 		curs.execute("SELECT name, adm, race_id FROM races")
 		
 		a = "\n\n"
-		txt = a.join(f"ID: {i[2]}\nНазвание: {i[0]}\nАдмин: {i[1]}" for i in curs.fetchall( ))
+		txt = a.join(f"ID: {i[2]}\nНазвание: {i[0]}\nАдмин: @id{i[1]}" for i in curs.fetchall( ))
 		self.vk.messages.send(
 				peer_id=self.peer_id,
 				random_id=random.randint(0, 10000000000),
