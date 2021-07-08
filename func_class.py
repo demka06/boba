@@ -264,7 +264,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.datetime.fromtimestamp(resp + 86400).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).strftime('%Y-%m-%d %H:%M:%S')}"
 					)
 	
 	def collectExpirience(self):
@@ -303,7 +303,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.datetime.fromtimestamp(resp + 86400).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).strftime('%Y-%m-%d %H:%M:%S')}"
 					)
 	
 	def listOfMillitaryObj(self):
