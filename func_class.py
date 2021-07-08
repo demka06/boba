@@ -297,7 +297,7 @@ class Main(object):
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
 					message=f"Вы получили %s." % (
-							numeral.get_plural(round(res, 4), ("Опыта", "Опыт")))
+							numeral.get_plural(round(res, 4), ("Опыта", "Опыт", "Опыт")))
 					)
 		else:
 			self.vk.messages.send(
