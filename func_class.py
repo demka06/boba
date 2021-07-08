@@ -35,14 +35,21 @@ class Main(object):
 		curs = conn.cursor( )
 		res = curs.execute("SELECT peer_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
 		if res == 0:
-			chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
-			user_count = chat["members_count"]
-			admin_id = chat["owner_id"]
-			curs.execute(
-					"INSERT INTO conversations (peer_id,user_count,admin_id) VALUES (%s,%s,%s)",
-					(self.peer_id, user_count, admin_id)
-					)
-			conn.commit( )
+			try:
+				chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
+				user_count = chat["members_count"]
+				admin_id = chat["owner_id"]
+				curs.execute(
+						"INSERT INTO conversations (peer_id,user_count,admin_id) VALUES (%s,%s,%s)",
+						(self.peer_id, user_count, admin_id)
+						)
+				conn.commit( )
+			except:
+				curs.execute(
+						"INSERT INTO conversations (peer_id,user_count,admin_id) VALUES (%s,%s,%s)",
+						(self.peer_id, 0, 0)
+						)
+				conn.commit( )
 	
 	def registrarionUser(self):
 		conn = pymysql.connect(
@@ -243,7 +250,9 @@ class Main(object):
 					(self.user_id,)
 					)
 			conn.commit( )
-			curs.execute(f"INSERT INTO res_coll (steel, anders, food, w_cris, b_cris, wood, time, user_id) VALUES ({res[0]}, {res[1] + res[3]}, {res[2]},{res[4]}, {res[5]}, {res[6]}, {now}, {self.user_id})")
+			curs.execute(
+					f"INSERT INTO res_coll (steel, anders, food, w_cris, b_cris, wood, time, user_id) VALUES ({res[0]}, {res[1] + res[3]}, {res[2]},{res[4]}, {res[5]}, {res[6]}, {now}, {self.user_id})"
+					)
 			conn.commit( )
 			self.vk.messages.send(
 					peer_id=self.peer_id,
@@ -287,8 +296,8 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы получили {round(res, 4)} %s." % (
-							numeral.get_plural(round(res, 4), "Опыта, Опыт"))
+					message=f"Вы получили %s." % (
+							numeral.get_plural(round(res, 4), ("Опыта", "Опыт")))
 					)
 		else:
 			self.vk.messages.send(
@@ -379,8 +388,8 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"Вам нужно еще {mil[0] - user_profile[0]} %s" % (
-									numeral.get_plural(mil[0] - user_profile[0], "Андер, Андеров, Андера"))
+							message=f"Вам нужно еще %s" % (
+									numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
 							)
 			else:
 				self.vk.messages.send(
@@ -409,8 +418,8 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"Вам нужно еще {mil[0] - user_profile[0]} %s" % (
-									numeral.get_plural(mil[0] - user_profile[0], "Андер, Андеров, Андера"))
+							message=f"Вам нужно еще %s" % (
+									numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
 							)
 			else:
 				self.vk.messages.send(
@@ -465,17 +474,19 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает {build[4] - user_profile[3]} %s Тьмы." % (
+											message=f"У вас не хватает %s Тьмы." % (
 													numeral.get_plural(
-														build[4] - user_profile[3], "Кристалла, Кристаллов"
-														))
+															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+															))
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[4] - user_profile[3]} %s Cвета." % (
-												numeral.get_plural(build[4] - user_profile[3], "Кристалла, Кристаллов"))
+										message=f"У вас не хватает %s Cвета." % (
+												numeral.get_plural(
+													build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+													))
 										)
 						else:
 							self.vk.messages.send(
@@ -530,17 +541,19 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает {build[4] - user_profile[3]} %s Тьмы." % (
+											message=f"У вас не хватает %s Тьмы." % (
 													numeral.get_plural(
-														build[4] - user_profile[3], "Кристалла, Кристаллов"
-														))
+															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+															))
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[4] - user_profile[3]} %s Cвета." % (
-												numeral.get_plural(build[4] - user_profile[3], "Кристалла, Кристаллов"))
+										message=f"У вас не хватает %s Cвета." % (
+												numeral.get_plural(
+													build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+													))
 										)
 						else:
 							self.vk.messages.send(
@@ -575,26 +588,30 @@ class Main(object):
 		if val.isdigit( ):
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
 			if curs.fetchone( )[0] >= int(val):
-				
 				try:
 					to_user = 0
-					if self.command.split(" ")[1].startswith("http") or self.command.split(" ")[1].startswith("https"):
-						short_name = self.command.split(" ")[1].split("/")[3]
-						to_user = self.vk.users.get(user_ids=short_name)[0]['id']
-					
-					# Если ссылка на группу начинается с [club ([club1|ВКонтакте API])
-					elif self.command.split(" ")[1].startswith("[id"):
-						to_user = self.command.split(" ")[1].split("|")[0].replace("[club", "")
-					
-					elif self.event.object["reply_message"] is not None:
-						if self.event.object["reply_message"]["from_id"] > 0:
-							to_user = self.event.object["reply_message"]["from_id"]
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message=f"[club{str(self.event.object['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
-									)
+					if len(self.command.split(" ")) >= 3:
+						if self.command.split(" ")[2].startswith("http") or self.command.split(" ")[2].startswith(
+								"https"
+								):
+							short_name = self.command.split(" ")[2].split("/")[3]
+							to_user = self.vk.users.get(user_ids=short_name)[0]['id']
+						
+						elif self.command.split(" ")[2].startswith("[id"):
+							to_user = self.command.split(" ")[2].split("|")[0].replace("[id", "")
+					else:
+						try:
+							if 'reply_message' in self.event.object["message"].keys( ):
+								if self.event.object["message"]["reply_message"]["from_id"] > 0:
+									to_user = self.event.object["message"]["reply_message"]["from_id"]
+								else:
+									self.vk.messages.send(
+											peer_id=self.peer_id,
+											random_id=random.randint(0, 10000000000),
+											message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+											)
+						except Exception:
+							pass
 					
 					curs.execute("SELECT peer_id FROM users WHERE user_id = %s", (to_user,))
 					to_chat = curs.fetchone( )
@@ -627,14 +644,14 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Вы] отправили {val} %s на счет @id{self.user_id}" % (
-											numeral.get_plural(val, "Андер, Андеров, Андера"))
+									message=f"[id{to_user}|Вы] отправили %s на счет @id{self.user_id}" % (
+											numeral.get_plural(int(val), ("Андер", "Андеров", "Андера")))
 									)
 							self.vk.messages.send(
 									peer_id=int(to_chat[0]),
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Вам] пришло {val} %s от @id{self.user_id}" % (
-											numeral.get_plural(val, "Андер, Андеров, Андера"))
+									message=f"[id{to_user}|Вам] пришло %s от @id{self.user_id}" % (
+											numeral.get_plural(val, ("Андер", "Андеров", "Андера")))
 									)
 						else:
 							self.vk.messages.send(
@@ -1036,7 +1053,7 @@ class Main(object):
 					message="Ваш ник слишком длинный."
 					)
 		else:
-			curs.execute("SELECT user_id FROM users WHERE nick_name = %s", (name,))
+			curs.execute("SELECT user_id FROM users WHERE nickname = %s", (name,))
 			if curs.fetchone( ) is None:
 				curs.execute("UPDATE users SET nickname = %s WHERE user_id = %s", (name, self.user_id))
 				conn.commit( )
@@ -1260,22 +1277,27 @@ class Main(object):
 	
 	def getProfile(self):
 		user_id = self.user_id
-		if self.command.split(" ")[1].startswith("http") or self.command.split(" ")[1].startswith("https"):
-			short_name = self.command.split(" ")[1].split("/")[3]
-			user_id = self.vk.users.get(user_ids=short_name)[0]['id']
-		
-		elif self.command.split(" ")[1].startswith("[id"):
-			user_id = self.command.split(" ")[1].split("|")[0].replace("[club", "")
-		
-		elif self.event.object["reply_message"] is not None:
-			if self.event.object["reply_message"]["from_id"] > 0:
-				user_id = self.event.object["reply_message"]["from_id"]
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message=f"[club{str(self.event.object['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
-						)
+		if len(self.command.split(" ")) >= 2:
+			
+			if self.command.split(" ")[1].startswith("http") or self.command.split(" ")[1].startswith("https"):
+				short_name = self.command.split(" ")[1].split("/")[3]
+				user_id = self.vk.users.get(user_ids=short_name)[0]['id']
+			
+			elif self.command.split(" ")[1].startswith("[id"):
+				user_id = self.command.split(" ")[1].split("|")[0].replace("[id", "")
+		else:
+			try:
+				if 'reply_message' in self.event.object["message"].keys( ):
+					if self.event.object["message"]["reply_message"]["from_id"] > 0:
+						user_id = self.event.object["message"]["reply_message"]["from_id"]
+					else:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+								)
+			except Exception:
+				pass
 		conn = pymysql.connect(
 				host="remotemysql.com",
 				user=self.user,
@@ -1284,9 +1306,9 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(
-			"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml FROM users WHERE user_id = %s",
-			(user_id,)
-			)
+				"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml FROM users WHERE user_id = %s",
+				(user_id,)
+				)
 		prof = curs.fetchone( )
 		curs.execute("SELECT name, photo_link FROM races WHERE race_id = %s", (prof[0],))
 		race = curs.fetchone( )
@@ -1295,33 +1317,33 @@ class Main(object):
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
 		font = ImageFont.truetype("Aqum.ttf", size=20)
 		
-		stats_pic_draw.text(xy=(230, 60), text=race[0], fill="black", font=ImageFont.truetype("Aqum.ttf", size=27))
-		stats_pic_draw.text(xy=(370, 160), text=prof[3], fill="black", font=ImageFont.truetype("Aqum.ttf", size=25))
+		stats_pic_draw.text(xy=(230, 65), text=race[0], fill="black", font=ImageFont.truetype("Aqum.ttf", size=40))
+		stats_pic_draw.text(xy=(370, 158), text=prof[3], fill="black", font=ImageFont.truetype("Aqum.ttf", size=25))
 		stats_pic_draw.text(xy=(170, 239), text=str(self.user_id), fill="black", font=font)
 		stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill="black", font=font)
 		stats_pic_draw.text(xy=(855, 239), text=str(prof[2]), fill="black", font=font)
 		
 		stats_pic_draw.text(xy=(170, 485), text=str(prof[15]), fill="black", font=font)
 		stats_pic_draw.text(xy=(170, 585), text=str(prof[16]), fill="black", font=font)
-		stats_pic_draw.text(xy=(170, 685), text=str(prof[17]), fill="black", font=font)
-		stats_pic_draw.text(xy=(170, 785), text=str(prof[18]), fill="black", font=font)
-		stats_pic_draw.text(xy=(170, 885), text=str(prof[20]), fill="black", font=font)
-		stats_pic_draw.text(xy=(170, 985), text=str(prof[19]), fill="black", font=font)
-		stats_pic_draw.text(xy=(170, 1085), text=str(prof[21]), fill="black", font=font)
+		stats_pic_draw.text(xy=(170, 683), text=str(prof[17]), fill="black", font=font)
+		stats_pic_draw.text(xy=(170, 783), text=str(prof[18]), fill="black", font=font)
+		stats_pic_draw.text(xy=(170, 879), text=str(prof[20]), fill="black", font=font)
+		stats_pic_draw.text(xy=(170, 978), text=str(prof[19]), fill="black", font=font)
+		stats_pic_draw.text(xy=(170, 1077), text=str(prof[21]), fill="black", font=font)
 		
 		stats_pic_draw.text(xy=(570, 485), text=str(prof[4]), fill="black", font=font)
 		stats_pic_draw.text(xy=(570, 585), text=str(prof[5]), fill="black", font=font)
-		stats_pic_draw.text(xy=(570, 685), text=str(prof[6]), fill="black", font=font)
-		stats_pic_draw.text(xy=(570, 785), text=str(prof[7]), fill="black", font=font)
-		stats_pic_draw.text(xy=(570, 885), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(570, 683), text=str(prof[6]), fill="black", font=font)
+		stats_pic_draw.text(xy=(570, 783), text=str(prof[7]), fill="black", font=font)
+		stats_pic_draw.text(xy=(570, 879), text=str(prof[8]), fill="black", font=font)
 		
 		stats_pic_draw.text(xy=(970, 485), text=str(prof[8]), fill="black", font=font)
 		stats_pic_draw.text(xy=(970, 585), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 685), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 785), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 885), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 985), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 1085), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 683), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 783), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 879), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 978), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 1077), text=str(prof[8]), fill="black", font=font)
 		
 		stats_pic.save('prof.png')
 		
@@ -1398,7 +1420,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"""LOT_ID:{lot_id}\nFROM_USER: {lot[1]}\nTO_USER: {lot[2]}\nCOST: {lot[3]}\nRES: {curs.fetchone()}\nACCESS: {lot[5]}\nPURCH: {lot[6]}\nTIME: {lot[7]}\nPURCH_TIME: {lot[8]}"""
+								message=f"""LOT_ID:{lot_id}\nFROM_USER: {lot[1]}\nTO_USER: {lot[2]}\nCOST: {lot[3]}\nRES: {curs.fetchone( )}\nACCESS: {lot[5]}\nPURCH: {lot[6]}\nTIME: {lot[7]}\nPURCH_TIME: {lot[8]}"""
 								)
 				else:
 					self.vk.messages.send(
@@ -1412,7 +1434,7 @@ class Main(object):
 						random_id=random.randint(0, 10000000000),
 						message="Указано недостаточно аргументов."
 						)
-
+	
 	def getTransaction(self):
 		conn = pymysql.connect(
 				host="remotemysql.com",
@@ -1437,7 +1459,8 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"TRANS_ID: {trans[0]}\nFROM: @id{trans[1]}\nTO: @id{trans[2]}\nSUMM: {trans[3]}\nTIME: {trans[4]}\nACCEPT: {trans[6]}")
+								message=f"TRANS_ID: {trans[0]}\nFROM: @id{trans[1]}\nTO: @id{trans[2]}\nSUMM: {trans[3]}\nTIME: {trans[4]}\nACCEPT: {trans[6]}"
+								)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -1465,9 +1488,9 @@ class Main(object):
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 3:
 				if self.command.split(" ")[1].startswith("[id"):
-					user = self.command.split(" ")[1].split("|")[0].replace("[id")
+					user = self.command.split(" ")[1].split("|")[0].replace("[id", "")
 					curs.execute(f"SELECT user_id FROM users WHERE user_id = {user}")
-					if curs.fetchone() is None:
+					if curs.fetchone( ) is not None:
 						nick = self.txt.split(" ", 2)[2]
 						if len(nick) > 12:
 							self.vk.messages.send(
@@ -1477,7 +1500,7 @@ class Main(object):
 									)
 						else:
 							curs.execute("UPDATE users SET nickname = %s WHERE user_id = %s", (nick, user))
-							conn.commit()
+							conn.commit( )
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
@@ -1489,7 +1512,7 @@ class Main(object):
 								random_id=random.randint(0, 10000000000),
 								message=f"[id{user}|Этот пользователь] не зарегистрирован в Боте."
 								)
-					
+				
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -1502,7 +1525,7 @@ class Main(object):
 						random_id=random.randint(0, 10000000000),
 						message="Указано недостаточно аргументов."
 						)
-				
+	
 	def showEvent(self):
 		if self.user_id in self.adms:
 			self.vk.messages.send(
