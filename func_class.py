@@ -1414,7 +1414,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"""LOT_ID:{lot_id}\nFROM_USER: {lot[1]}\nTO_USER: {lot[2]}\nCOST: {lot[3]}\nRES: {curs.fetchone( )}\nACCESS: {lot[5]}\nPURCH: {lot[6]}\nTIME: {lot[7]}\nPURCH_TIME: {lot[8]}"""
+								message=f"""LOT_ID:{lot_id}\nFROM_USER: {lot[1]}\nTO_USER: {lot[2]}\nCOST: {lot[3]}\nRES: {curs.fetchone( )[0]}\nACCESS: {lot[5]}\nPURCH: {lot[6]}\nTIME: {lot[7]}\nPURCH_TIME: {lot[8]}"""
 								)
 				else:
 					self.vk.messages.send(
