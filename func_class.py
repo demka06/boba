@@ -1099,7 +1099,7 @@ class Main(object):
 		if lot_id.isdigit( ):
 			curs.execute("SELECT count, res_id, cost, from_user FROM market WHERE lot_id = %s", (lot_id,))
 			lot = curs.fetchone( )
-			if lot[3] == self.user_id:
+			if lot[3] != self.user_id:
 				if lot is None:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -1124,7 +1124,7 @@ class Main(object):
 						conn.commit( )
 						morph = pymorphy2.MorphAnalyzer( )
 						res_n = morph.parse(res_name[1])[0]
-						res_n = res_n.inflect({'gent'})
+						res_n = res_n.inflect({'gent'}).word.capitalize()
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
@@ -1198,7 +1198,7 @@ class Main(object):
 					else:
 						morph = pymorphy2.MorphAnalyzer( )
 						res_name = morph.parse(res_name[3])[0]
-						res_name = res_name.inflect({'gent'}).word
+						res_name = res_name.inflect({'gent'}).word.capitalize()
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
@@ -1207,7 +1207,7 @@ class Main(object):
 				else:
 					morph = pymorphy2.MorphAnalyzer( )
 					res_name = morph.parse(res_name[3])[0]
-					res_name = res_name.inflect({'gent'})
+					res_name = res_name.inflect({'gent'}).word.capitalize()
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
