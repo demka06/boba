@@ -1317,11 +1317,11 @@ class Main(object):
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
 		font = ImageFont.truetype("Aqum.ttf", size=20)
 		
-		stats_pic_draw.text(xy=(230, 65), text=race[0], fill="black", font=ImageFont.truetype("Aqum.ttf", size=40))
-		stats_pic_draw.text(xy=(370, 158), text=prof[3], fill="black", font=ImageFont.truetype("Aqum.ttf", size=25))
-		stats_pic_draw.text(xy=(170, 239), text=str(self.user_id), fill="black", font=font)
-		stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill="black", font=font)
-		stats_pic_draw.text(xy=(855, 239), text=str(prof[2]), fill="black", font=font)
+		stats_pic_draw.text(xy=(230, 65), text=race[0], fill="white", font=ImageFont.truetype("Aqum.ttf", size=40))
+		stats_pic_draw.text(xy=(370, 158), text=prof[3], fill="white", font=ImageFont.truetype("Aqum.ttf", size=25))
+		stats_pic_draw.text(xy=(170, 239), text=str(self.user_id), fill="white", font=font)
+		stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill="white", font=font)
+		stats_pic_draw.text(xy=(855, 239), text=str(prof[2]), fill="white", font=font)
 		
 		stats_pic_draw.text(xy=(170, 485), text=str(prof[15]), fill="black", font=font)
 		stats_pic_draw.text(xy=(170, 585), text=str(prof[16]), fill="black", font=font)
@@ -1334,8 +1334,8 @@ class Main(object):
 		stats_pic_draw.text(xy=(570, 485), text=str(prof[4]), fill="black", font=font)
 		stats_pic_draw.text(xy=(570, 585), text=str(prof[5]), fill="black", font=font)
 		stats_pic_draw.text(xy=(570, 683), text=str(prof[6]), fill="black", font=font)
-		stats_pic_draw.text(xy=(570, 783), text=str(prof[7]), fill="black", font=font)
-		stats_pic_draw.text(xy=(570, 879), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(570, 783), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(570, 879), text=str(prof[7]), fill="black", font=font)
 		
 		stats_pic_draw.text(xy=(970, 485), text=str(prof[11]), fill="black", font=font)
 		stats_pic_draw.text(xy=(970, 585), text=str(prof[22]), fill="black", font=font)
