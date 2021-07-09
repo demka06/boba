@@ -251,13 +251,13 @@ class Main(object):
 					)
 			conn.commit( )
 			curs.execute(
-					f"INSERT INTO res_coll (steel, anders, food, w_cris, b_cris, wood, time, user_id) VALUES ({res[0]}, {res[1] + res[3]}, {res[2]},{res[4]}, {res[5]}, {res[6]}, {now}, {self.user_id})"
+					f"INSERT INTO res_collect (steel, anders, food, w_cris, b_cris, wood, time, user_id) VALUES ({res[0]}, {res[1] + res[3]}, {res[2]},{res[4]}, {res[5]}, {res[6]}, {now}, {self.user_id})"
 					)
 			conn.commit( )
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]}"
+					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1]+res[3]}"
 					)
 		else:
 			
