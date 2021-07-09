@@ -1199,7 +1199,7 @@ class Main(object):
 					else:
 						curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
 						if curs.fetchone( )[0] >= int(res_count):
-							if res[0] >= int(res_cost):
+							if res[0] <= int(res_cost):
 								cost = int(res_cost) * int(res_count)
 								curs.execute(
 									"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
@@ -1220,7 +1220,7 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
+										message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}.\n\n{res_name[3]}"
 										)  # оформление
 						else:
 							morph = pymorphy2.MorphAnalyzer( )
