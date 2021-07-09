@@ -643,14 +643,12 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Вы] отправили %s на счет @id{self.user_id}" % (
-											numeral.get_plural(int(val), ("Андер", "Андеров", "Андера")))
+									message=f"[id{to_user}|Вы] отправили {val} ед. Андеров на счет @id{self.user_id}" 
 									)
 							self.vk.messages.send(
 									peer_id=int(to_chat[0]),
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Вам] пришло %s от @id{self.user_id}" % (
-											numeral.get_plural(val, ("Андер", "Андеров", "Андера")))
+									message=f"[id{to_user}|Вам] пришло {val} ед. Андеров от @id{self.user_id}" %
 									)
 						else:
 							self.vk.messages.send(
@@ -1080,8 +1078,7 @@ class Main(object):
 		a = ""
 		for i in goods:
 			curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[2]}")
-			a += f"ID: {i[0]}\nПродавец: @id{i[1]}\nСтоимость: {i[4]} %s\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[3]}\n\n" % (
-					numeral.get_plural(i[4], "Андер, Андеров, Андера"))
+			a += f"ID: {i[0]}\nПродавец: @id{i[1]}\nСтоимость: {i[4]} {i[4]} \nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[3]}\n\n"
 		self.vk.messages.send(
 				peer_id=self.peer_id,
 				random_id=random.randint(0, 10000000000),
