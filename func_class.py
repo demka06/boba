@@ -1170,41 +1170,57 @@ class Main(object):
 		res_name = self.command.split("\n")[1].capitalize( ).strip( )
 		res_count = self.command.split("\n")[2].strip( )
 		res_cost = self.command.split("\n")[3].strip( )
-		conn = pymysql.connect(
-				host="remotemysql.com",
-				user=self.user,
-				password=self.passw,
-				db='IMR5jUaWZE'
-				)
-		curs = conn.cursor( )
-		now_utc = datetime.now(timezone('UTC'))
-		time = now_utc.astimezone(timezone('Europe/Moscow'))
-		curs.execute("SELECT cost, res_id, bd_name FROM resourses WHERE name = %s", (res_name,))
-		res = curs.fetchone( )
-		if res is None:
+		if res_count == 0 and res_cost == 0:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Ресурса с таким названием не существует."
+					message="Ни один из параметров не может быть равен нулю."
 					)  # оформление
 		else:
-			if res_cost.isdigit( ) and res_count.isdigit( ):
-				curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
-				if curs.fetchone( )[0] >= int(res_count):
-					if res[0] >= int(res_cost):
-						cost = int(res_cost) * int(res_count)
-						curs.execute(
-								"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
-								(self.user_id, cost, res[1], res_count, time)
-								)
-						conn.commit( )
-						curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
-						lot = curs.fetchone( )[0]
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Лот #{lot} выставлен на продажу!"
-								)  # оформление
+			conn = pymysql.connect(
+					host="remotemysql.com",
+					user=self.user,
+					password=self.passw,
+					db='IMR5jUaWZE'
+					)
+			curs = conn.cursor( )
+			now_utc = datetime.now(timezone('UTC'))
+			time = now_utc.astimezone(timezone('Europe/Moscow'))
+			curs.execute("SELECT cost, res_id, bd_name FROM resourses WHERE name = %s", (res_name,))
+			res = curs.fetchone( )
+			if res is None:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Ресурса с таким названием не существует."
+						)  # оформление
+			else:
+				if res_cost.isdigit( ) and res_count.isdigit( ):
+					curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
+					if curs.fetchone( )[0] >= int(res_count):
+						if res[0] >= int(res_cost):
+							cost = int(res_cost) * int(res_count)
+							curs.execute(
+									"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
+									(self.user_id, cost, res[1], res_count, time)
+									)
+							conn.commit( )
+							curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
+							lot = curs.fetchone( )[0]
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"Лот #{lot} выставлен на продажу!"
+									)  # оформление
+						else:
+							morph = pymorphy2.MorphAnalyzer( )
+							res_name = morph.parse(res_name[3])[0]
+							res_name = res_name.inflect({'gent'}).word.capitalize()
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
+									)  # оформление
 					else:
 						morph = pymorphy2.MorphAnalyzer( )
 						res_name = morph.parse(res_name[3])[0]
@@ -1212,23 +1228,14 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
+								message=f"У вас недостаточно {res_name}."
 								)  # оформление
 				else:
-					morph = pymorphy2.MorphAnalyzer( )
-					res_name = morph.parse(res_name[3])[0]
-					res_name = res_name.inflect({'gent'}).word.capitalize()
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"У вас недостаточно {res_name}."
+							message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество были указаны числами."
 							)  # оформление
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество были указаны числами."
-						)  # оформление
 	
 	def rejectonLot(self):
 		"""
