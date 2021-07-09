@@ -74,6 +74,8 @@ while True:
 						cls.getTransaction()
 					elif command.startswith("/event"):
 						cls.showEvent()
+					elif command.startswith("/event"):
+						cls.help()	
 		except Exception:
 			vk.messages.send(
 					peer_id=2e9 + 4,
