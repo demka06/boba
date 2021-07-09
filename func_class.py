@@ -458,7 +458,7 @@ class Main(object):
 							if user_profile[3] >= build[4]:
 								if user_profile[4] >= build[3]:
 									curs.execute(
-											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[2]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
 											)
 									conn.commit( )
 									morph = pymorphy2.MorphAnalyzer( )
@@ -525,7 +525,7 @@ class Main(object):
 							if user_profile[3] >= build[4]:
 								if user_profile[4] >= build[3]:
 									curs.execute(
-											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[2]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
 											)
 									conn.commit( )
 									morph = pymorphy2.MorphAnalyzer( )
