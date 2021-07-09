@@ -1337,13 +1337,13 @@ class Main(object):
 		stats_pic_draw.text(xy=(570, 783), text=str(prof[7]), fill="black", font=font)
 		stats_pic_draw.text(xy=(570, 879), text=str(prof[8]), fill="black", font=font)
 		
-		stats_pic_draw.text(xy=(970, 485), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 585), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 683), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 783), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 879), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 978), text=str(prof[8]), fill="black", font=font)
-		stats_pic_draw.text(xy=(970, 1077), text=str(prof[8]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 485), text=str(prof[11]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 585), text=str(prof[22]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 683), text=str(prof[14]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 783), text=str(prof[9]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 879), text=str(prof[10]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 978), text=str(prof[12]), fill="black", font=font)
+		stats_pic_draw.text(xy=(970, 1077), text=str(prof[13]), fill="black", font=font)
 		
 		stats_pic.save('prof.png')
 		
