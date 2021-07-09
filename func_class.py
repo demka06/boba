@@ -1198,7 +1198,7 @@ class Main(object):
 					else:
 						morph = pymorphy2.MorphAnalyzer( )
 						res_name = morph.parse(res_name[3])[0]
-						res_name = res_name.inflect({'gent'})
+						res_name = res_name.inflect({'gent'}).word
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
