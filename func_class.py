@@ -1103,7 +1103,7 @@ class Main(object):
 		time = now_utc.astimezone(timezone('Europe/Moscow'))
 		lot_id = self.command.split(" ")[1]
 		if lot_id.isdigit( ):
-			curs.execute("SELECT count, res_id, cost, from_user FROM market WHERE lot_id = %s", (lot_id,))
+			curs.execute("SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,))
 			lot = curs.fetchone( )
 			if lot[3] != self.user_id:
 				if lot is None:
@@ -1113,36 +1113,40 @@ class Main(object):
 							message="Лота с таким ID не существует."
 							)  # оформление
 				else:
-					curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
-					money = curs.fetchone( )[0]
-					if money >= lot[2]:
-						curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
-						res_name = curs.fetchone( )
-						curs.execute(
-								f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
-								)
-						conn.commit( )
-						curs.execute(
-								f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
-								)
-						conn.commit( )
-						curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
-						conn.commit( )
-						morph = pymorphy2.MorphAnalyzer( )
-						res_n = morph.parse(res_name[1])[0]
-						res_n = res_n.inflect({'gent'}).word.capitalize()
+					if lot[4] == 1:
 						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Вы купили {lot[0]} ед. {res_n}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
-								)  # оформление
-					
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Лот уже куплен."
+							)  # оформление
 					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="У вас недостаточно Андеров."
-								)  # оформление
+						curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+						money = curs.fetchone( )[0]
+						if money >= lot[2]:
+							curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
+							res_name = curs.fetchone( )
+							curs.execute(
+									f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
+									)
+							conn.commit( )
+							curs.execute(
+									f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
+									)
+							conn.commit( )
+							curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
+							conn.commit( )
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
+									)  # оформление
+
+						else:
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message="У вас недостаточно Андеров."
+									)  # оформление
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
