@@ -799,7 +799,6 @@ class Main(object):
 			photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 			self.vk.messages.send(peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo)
 		else:
-			print(4)
 			race = self.command.split(" ", 1)[1]
 			if race.isdigit( ):
 				curs.execute(
@@ -1078,11 +1077,11 @@ class Main(object):
 		a = ""
 		for i in goods:
 			curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[2]}")
-			a += f"ID: {i[0]}\nПродавец: @id{i[1]}\nСтоимость: {i[4]} {i[4]} \nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[3]}\n\n"
+			a += f"ID: {i[0]}\nПродавец: @id{i[1]}\nСтоимость: {i[4]} Андеров \nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[3]}\n\n"
 		self.vk.messages.send(
 				peer_id=self.peer_id,
 				random_id=random.randint(0, 10000000000),
-				message=f"Список лотов:\n{a}ЧТОБЫ КУПИТЬ ЛОТ НАПИШИТЕ '/buy [ID лота]' (без кавычек)"
+				message=f"Список лотов:\n{a}ЧТОБЫ КУПИТЬ ЛОТ НАПИШИТЕ '/buygood [ID лота]' (без кавычек)"
 				)  # оформление
 	
 	def buyGood(self):
