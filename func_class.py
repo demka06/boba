@@ -1167,10 +1167,10 @@ class Main(object):
 		[кол-во]
 		[стоимость за ед.]
 		"""
-		res_name = self.command.split("\n")[1].capitalize( ).strip( )
-		res_count = self.command.split("\n")[2].strip( )
-		res_cost = self.command.split("\n")[3].strip( )
 		if len(self.command.split("\n")) >= 4:
+			res_name = self.command.split("\n")[1].capitalize( ).strip( )
+			res_count = self.command.split("\n")[2].strip( )
+			res_cost = self.command.split("\n")[3].strip( )
 			conn = pymysql.connect(
 						host="remotemysql.com",
 						user=self.user,
