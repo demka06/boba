@@ -17,7 +17,7 @@ while True:
 	for event in longpoll.listen():
 		try:
 			if event.type == VkBotEventType.MESSAGE_NEW:
-				if event.object.message['peer_id'] != event.object.message['from_id']:
+				if event.object.message['peer_id'] != event.object.message['from_id']  and event.object.message['from_id'] > 0:
 					command = event.obj.message["text"].lower()
 					user_id = event.object.message["from_id"]
 					peer_id = event.object.message["peer_id"]
