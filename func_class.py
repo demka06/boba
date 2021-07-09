@@ -643,7 +643,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Вы] отправили {val} ед. Андеров на счет @id{self.user_id}" 
+									message=f"[id{self.user_id}|Вы] отправили {val} ед. Андеров на счет @id{to_user}" 
 									)
 							self.vk.messages.send(
 									peer_id=int(to_chat[0]),
