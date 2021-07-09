@@ -803,7 +803,7 @@ class Main(object):
 			self.vk.messages.send(peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo)
 		else:
 			print(4)
-			race = self.command.split(" ")[1]
+			race = self.command.split(" ", 1)[1]
 			if race.isdigit( ):
 				curs.execute(
 						"SELECT SUM(anders), SUM(food), SUM(steel), SUM(wood), SUM(w_cris), SUM(b_cris), SUM(exp) FROM users WHERE race_id = %s",
@@ -872,7 +872,7 @@ class Main(object):
 						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 						)
 			else:
-				curs.execute("SELECT race_id FROM races WHERE low_name = %s", (race,))
+				curs.execute("SELECT race_id, name FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
 				if race_id is None:
 					self.vk.messages.send(
@@ -881,27 +881,25 @@ class Main(object):
 							message="Расы с таким названием не существует."
 							)
 				else:
-					curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
-					race_id = curs.fetchall( )
 					curs.execute(
 							"SELECT SUM(anders), SUM(food), SUM(steel), SUM(wood), SUM(w_cris), SUM(b_cris), SUM(exp) FROM users WHERE race_id = %s",
-							(race_id,)
+							(race_id[0],)
 							)
 					race_inv = curs.fetchone( )
 					
 					curs.execute(
 							"SELECT SUM(inf),SUM(mag),SUM(arch),SUM(ctpl),SUM(bllsts),SUM(clvr),SUM(plds) FROM users WHERE race_id = %s",
-							(race_id,)
+							(race_id[0],)
 							)
 					mil_inv = curs.fetchone( )
 					
 					curs.execute(
 							"SELECT SUM(farm),SUM(swml),SUM(mine),SUM(vlg),SUM(city),SUM(tmpl),SUM(altr) FROM users WHERE race_id = %s",
-							(race_id,)
+							(race_id[0],)
 							)
 					bld_inv = curs.fetchone( )
 					stats_pic_draw.text(
-							xy=(245, 71), text=curs.fetchone( )[0], fill="white",
+							xy=(245, 71), text=race_id[1], fill="white",
 							font=ImageFont.truetype("Aqum.ttf", size=35)
 							)  # RACE NAME
 					"""MILITARY"""
