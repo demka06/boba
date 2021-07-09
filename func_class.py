@@ -23,7 +23,7 @@ class Main(object):
 		self.adms_chat = 2000000004
 		self.user = str(os.environ.get("SQL-USER"))
 		self.passw = str(os.environ.get("SQL-PASS"))
-		self.adms = [305284615, 547409675, 553069569]
+		self.adms = [305284615, 547409675, 553069569, 337138653]
 	
 	def registrationConv(self):
 		conn = pymysql.connect(
