@@ -949,7 +949,7 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
-			if len(self.command.split(" ")) == 2:
+			if len(self.command.split(" ")) == 3:
 				user = self.command.split(" ")[1].split("|")[0]
 				race = self.command.split(" ")[2]
 				if race.isdigit( ):
@@ -1005,7 +1005,7 @@ class Main(object):
 								)
 		else:
 			curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
-			if curs.fetchone( )[0] == 0:
+			if curs.fetchone( )[0] != 1:
 				race = self.command.split(" ")[0]
 				if race.isdigit( ):
 					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
