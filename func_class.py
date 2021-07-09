@@ -991,7 +991,7 @@ class Main(object):
 							message="ID расы должно состоять только из цифр."
 							)
 			else:
-				race = self.command.split(" ")[0]
+				race = self.command.split(" ")[1]
 				if race.isdigit( ):
 					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
 					maxi = curs.fetchone( )[0]
