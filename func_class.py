@@ -1201,10 +1201,10 @@ class Main(object):
 						if curs.fetchone( )[0] >= int(res_count):
 							if res[0] >= int(res_cost):
 								cost = int(res_cost) * int(res_count)
-									curs.execute(
-										"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
-										(self.user_id, cost, res[1], res_count, time)
-											)
+								curs.execute(
+									"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
+									(self.user_id, cost, res[1], res_count, time)
+										)
 								conn.commit( )
 								curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
 								lot = curs.fetchone( )[0]
