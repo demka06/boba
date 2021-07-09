@@ -734,7 +734,7 @@ class Main(object):
 		stats_pic = Image.open("interfeys_dlya_bota_v3.png")
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
 		font = ImageFont.truetype("Aqum.ttf", size=20)
-		if len(self.command.split(" ")) <= 2:
+		if len(self.command.split(" ")) < 2:
 			curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
 			race_id = curs.fetchall( )
 			curs.execute(
@@ -872,7 +872,7 @@ class Main(object):
 						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 						)
 			else:
-				curs.execute("SELECT race_id FROM reces WHERE low_name = %s", (race,))
+				curs.execute("SELECT race_id FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
 				if race_id is None:
 					self.vk.messages.send(
