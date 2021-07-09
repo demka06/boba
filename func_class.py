@@ -1537,5 +1537,6 @@ class Main(object):
 		self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="https://vk.com/@andwb-help"
+					message="хуй\nhttps://vk.com/@andwb-help",
+					attachment="article-205707057_457239196_0d6cbb198060823369"
 					)
