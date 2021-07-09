@@ -344,7 +344,7 @@ class Main(object):
 		stats_pic = Image.open("stroenia_v2.png")
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
 		font = ImageFont.truetype("Aqum.ttf", size=23)
-		stats_pic_draw.text(xy=(365, 180), text=str(builds[0]), fill="black", font=font)
+		stats_pic_draw.text(xy=(365, 180), text=str(builds[0]), fill="white", font=font)
 		
 		stats_pic.save('build.png')
 		
