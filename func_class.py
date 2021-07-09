@@ -949,7 +949,7 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
-			if len(self.command.split(" ")) == 3:
+			if len(self.command.split(" ")) >= 3:
 				user = self.command.split(" ")[1].split("|")[0]
 				race = self.command.split(" ")[2]
 				if race.isdigit( ):
@@ -1005,8 +1005,8 @@ class Main(object):
 								)
 		else:
 			curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
-			if curs.fetchone( )[0] != 1:
-				race = self.command.split(" ")[0]
+			if curs.fetchone( )[0] == 1:
+				race = self.command.split(" ")[1]
 				if race.isdigit( ):
 					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
 					maxi = curs.fetchone( )[0]
@@ -1092,73 +1092,80 @@ class Main(object):
 				)  # оформление
 	
 	def buyGood(self):
-		conn = pymysql.connect(
-				host="remotemysql.com",
-				user=self.user,
-				password=self.passw,
-				db='IMR5jUaWZE'
-				)
-		curs = conn.cursor( )
-		now_utc = datetime.now(timezone('UTC'))
-		time = now_utc.astimezone(timezone('Europe/Moscow'))
-		lot_id = self.command.split(" ")[1]
-		if lot_id.isdigit( ):
-			curs.execute("SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,))
-			lot = curs.fetchone( )
-			if lot[3] != self.user_id:
-				if lot is None:
+		if len(self.command.split(" ")) >= 2:
+			conn = pymysql.connect(
+					host="remotemysql.com",
+					user=self.user,
+					password=self.passw,
+					db='IMR5jUaWZE'
+					)
+			curs = conn.cursor( )
+			now_utc = datetime.now(timezone('UTC'))
+			time = now_utc.astimezone(timezone('Europe/Moscow'))
+			lot_id = self.command.split(" ")[1]
+			if lot_id.isdigit( ):
+				curs.execute("SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,))
+				lot = curs.fetchone( )
+				if lot[3] != self.user_id:
+					if lot is None:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Лота с таким ID не существует."
+								)  # оформление
+					else:
+						if lot[4] == 1:
+							self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Лот уже куплен."
+								)  # оформление
+						else:
+							curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+							money = curs.fetchone( )[0]
+							if money >= lot[2]:
+								curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
+								res_name = curs.fetchone( )
+								curs.execute(
+										f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
+										)
+								conn.commit( )
+								curs.execute(
+										f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
+										)
+								conn.commit( )
+								curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
+								conn.commit( )
+								self.vk.messages.send(
+										peer_id=self.peer_id,
+										random_id=random.randint(0, 10000000000),
+										message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
+										)  # оформление
+
+							else:
+								self.vk.messages.send(
+										peer_id=self.peer_id,
+										random_id=random.randint(0, 10000000000),
+										message="У вас недостаточно Андеров."
+										)  # оформление
+				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Лота с таким ID не существует."
+							message="Нельзя купить свой же лот."
 							)  # оформление
-				else:
-					if lot[4] == 1:
-						self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Лот уже куплен."
-							)  # оформление
-					else:
-						curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
-						money = curs.fetchone( )[0]
-						if money >= lot[2]:
-							curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
-							res_name = curs.fetchone( )
-							curs.execute(
-									f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
-									)
-							conn.commit( )
-							curs.execute(
-									f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
-									)
-							conn.commit( )
-							curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
-							conn.commit( )
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
-									)  # оформление
-
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="У вас недостаточно Андеров."
-									)  # оформление
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Нельзя купить свой же лот."
+						message="ID лота должно состоять только из цифр."
 						)  # оформление
 		else:
 			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="ID лота должно состоять только из цифр."
-					)  # оформление
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Указаны не все аргументы."
+						)  # оформление
 	
 	def addGood(self):
 		"""
@@ -1215,7 +1222,7 @@ class Main(object):
 										)  # оформление
 							else:
 								morph = pymorphy2.MorphAnalyzer( )
-								res_name = morph.parse(res_name[3])[0]
+								res_name = morph.parse(res_name)[0]
 								res_name = res_name.inflect({'gent'}).word.capitalize()
 								self.vk.messages.send(
 										peer_id=self.peer_id,
@@ -1224,7 +1231,7 @@ class Main(object):
 										)  # оформление
 						else:
 							morph = pymorphy2.MorphAnalyzer( )
-							res_name = morph.parse(res_name[3])[0]
+							res_name = morph.parse(res_name)[0]
 							res_name = res_name.inflect({'gent'}).word.capitalize()
 							self.vk.messages.send(
 									peer_id=self.peer_id,
