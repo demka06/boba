@@ -1040,7 +1040,7 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		name = self.txt.split(" ", 1)[1]
-		if len(name) > 12:
+		if len(name) > 20:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
@@ -1485,7 +1485,7 @@ class Main(object):
 					curs.execute(f"SELECT user_id FROM users WHERE user_id = {user}")
 					if curs.fetchone( ) is not None:
 						nick = self.txt.split(" ", 2)[2]
-						if len(nick) > 12:
+						if len(nick) > 20:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
