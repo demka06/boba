@@ -74,7 +74,7 @@ while True:
 						cls.getTransaction()
 					elif command.startswith("/event"):
 						cls.showEvent()
-					elif command.startswith("/event"):
+					elif command.startswith("/help"):
 						cls.help()	
 		except Exception:
 			vk.messages.send(
