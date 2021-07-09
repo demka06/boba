@@ -1039,29 +1039,36 @@ class Main(object):
 				db='IMR5jUaWZE'
 				)
 		curs = conn.cursor( )
-		name = self.txt.split(" ", 1)[1]
-		if len(name) > 20:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Ваш ник слишком длинный."
-					)
-		else:
-			curs.execute("SELECT user_id FROM users WHERE nickname = %s", (name,))
-			if curs.fetchone( ) is None:
-				curs.execute("UPDATE users SET nickname = %s WHERE user_id = %s", (name, self.user_id))
-				conn.commit( )
-				# нужно переложить ответственность за ник на пользователя - ГОТОВО
+		if len(self.txt.split(" ")) >= 2:
+			name = self.txt.split(" ", 1)[1]
+			if len(name) > 20:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Ник успешно изменен."
+						message="Ваш ник слишком длинный."
 						)
 			else:
-				self.vk.messages.send(
+				curs.execute("SELECT user_id FROM users WHERE nickname = %s", (name,))
+				if curs.fetchone( ) is None:
+					curs.execute("UPDATE users SET nickname = %s WHERE user_id = %s", (name, self.user_id))
+					conn.commit( )
+					# нужно переложить ответственность за ник на пользователя - ГОТОВО
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Ник успешно изменен."
+							)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Этот ник уже кем-то занят."
+							)
+		else:
+			self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Этот ник уже кем-то занят."
+						message="Указано недостаточно аргументов."
 						)
 	
 	def listOfGoods(self):
@@ -1525,4 +1532,10 @@ class Main(object):
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
 					message=self.event
+					)
+	def help(self):
+		self.vk.messages.send(
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message="https://vk.com/@andwb-help"
 					)
