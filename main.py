@@ -16,19 +16,20 @@ vk = vk_session.get_api()  # For api requests
 
 user = str(os.environ.get("SQL-USER"))
 passw = str(os.environ.get("SQL-PASS"))
-conn = pymysql.connect(
-		host="remotemysql.com",
-		user=user,
-		password=passw,
-		db='IMR5jUaWZE'
-		)
-curs = conn.cursor()
+
 # ----------------[ ENIGNE ]-----------------
 while True:
 	for event in longpoll.listen():
 		try:
 			if event.type == VkBotEventType.MESSAGE_NEW:
 				if event.object.message['peer_id'] != event.object.message['from_id']  and event.object.message['from_id'] > 0:
+					conn = pymysql.connect(
+					host="remotemysql.com",
+					user=user,
+					password=passw,
+					db='IMR5jUaWZE'
+					)
+					curs = conn.cursor()
 					curs.execute(f"SELECT ban FROM users WHERE user_id = {event.object.message['from_id']}")
 					if int(curs.fetchone()[0]) == 0:
 						command = event.obj.message["text"].lower()
