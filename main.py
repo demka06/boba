@@ -55,7 +55,7 @@ while True:
 							cls.buyBuild()
 						elif command.startswith("/buymil"):
 							cls.buyMilitaryObj()
-						elif command.startswith("/trans"):
+						elif command.startswith("/transm"):
 							cls.transaction()
 						elif command.startswith("/rejt"):
 							cls.transactionRejection()
@@ -89,6 +89,18 @@ while True:
 							cls.showEvent()
 						elif command.startswith("/help"):
 							cls.help()
+						elif command.startswith("/transr"):
+							cls.addResTransactions()
+						elif command.startswith("/trnacc"):
+							cls.acceptPersonalTrans()
+						elif command.startswith("/trnrej"):
+							cls.personalTransRejection()
+						elif command.startswith("/rjtrns"):
+							cls.PersonalTransRejForAdms()
+						elif command.startswith("/lsttrn"):
+							cls.listOfPersonalTrans()
+							
+						
 		except Exception:
 			vk.messages.send(
 					peer_id=2e9 + 4,
