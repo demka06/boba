@@ -2062,12 +2062,12 @@ class Main(object):
 						if int(trans[0]) == 1:
 							if int(trans[1]) == 0:
 								if int(trans[4]) == 0:
-									curs.execute("UPDATE personal_trans SET accept = 1")
-									conn.commit()
 									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[6]}")
 									curs.execute(f"UPDATE users SET anders = anders - {trans[5]}, {curs.fetchone()[0]} = {curs.fetchone()[0]} + {trans[7]} WHERE user_id = {trans[3]}")
 									conn.commit()
 									curs.execute(f"UPDATE users SET anders = anders + {trans[5]}, {curs.fetchone()[0]} = {curs.fetchone()[0]} - {trans[7]} WHERE user_id = {trans[2]}")
+									conn.commit()
+									curs.execute("UPDATE personal_trans SET accept = 1")
 									conn.commit()
 									self.vk.messages.send(
 											peer_id=self.peer_id,
