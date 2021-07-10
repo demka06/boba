@@ -1759,28 +1759,35 @@ class Main(object):
 								if int(cost) == 0:
 									cost = 0
 									if int(us[1]) >= int(count):
-										now_utc = datetime.now(timezone('UTC'))
-										time = str(now_utc.astimezone(timezone('Europe/Moscow')))
-										curs.execute(
-												f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
-												)
-										conn.commit( )
-										curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
-										conn.commit( )
-										curs.execute(
-												"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
-												)
-										last_trans = curs.fetchone( )[0]
-										self.vk.messages.send(
-												peer_id=int(us[2]),
-												random_id=random.randint(0, 10000000000),
-												message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
-												)
-										self.vk.messages.send(
+										if int(count) != 0:
+											now_utc = datetime.now(timezone('UTC'))
+											time = str(now_utc.astimezone(timezone('Europe/Moscow')))
+											curs.execute(
+													f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
+													)
+											conn.commit( )
+											curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
+											conn.commit( )
+											curs.execute(
+													"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
+													)
+											last_trans = curs.fetchone( )[0]
+											self.vk.messages.send(
+													peer_id=int(us[2]),
+													random_id=random.randint(0, 10000000000),
+													message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
+													)
+											self.vk.messages.send(
+													peer_id=self.peer_id,
+													random_id=random.randint(0, 10000000000),
+													message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
+													)
+										else:
+											self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
-												)
+												message=f"Нельзя передать 0 ед. ресурса."
+												)  # оформление
 									else:
 										morph = pymorphy2.MorphAnalyzer( )
 										res_name = morph.parse(res)[0]
@@ -1947,6 +1954,7 @@ class Main(object):
 					if int(trans[0]) == self.user_id:
 						if int(trans[1]) == 0:
 							if int(trans[2]) == 0:
+								
 								curs.execute(f"SELECT bd_name, name FROM resourses WHERE res_id = {trans[3]}")
 								res_name = curs.fetchone( )
 								curs.execute(f"UPDATE personal_trans SET rej = 1 WHERE trans_id = {trans_id}")
@@ -2006,7 +2014,7 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(
-				f"SELECT to_user, res_id, count, cost, trans_id WHERE rej = 0 and accept = 0 and from_user = {self.user_id}"
+				f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user = {self.user_id}"
 				)
 		from_you = curs.fetchall( )
 		fr = ""
