@@ -2040,7 +2040,8 @@ class Main(object):
 		self.vk.messages.send(
 				peer_id=self.peer_id,
 				random_id=random.randint(0, 10000000000),
-				message=f"Для вас: {fro}\n Для кого-либо: {fr}."
+				message=f"Для вас: {fro}\n Для кого-либо: {fr}.",
+				disable_mentions=1
 				)
 		
 	def PersonalTransRejForAdms(self):
