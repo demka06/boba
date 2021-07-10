@@ -1774,12 +1774,12 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=int(us[2]),
 												random_id=random.randint(0, 10000000000),
-												message=f"[id{user}|Вам] предложили сделку!.\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/mytrns' (Без кавычек!)"
+												message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
 												)
 										self.vk.messages.send(
-												peer_id=int(us[2]),
+												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"[id{self.user_id}|Вы] предложили сделку!.\nЕе ID: {last_trans}"
+												message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
 												)
 									else:
 										morph = pymorphy2.MorphAnalyzer( )
