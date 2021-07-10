@@ -1955,7 +1955,7 @@ class Main(object):
 						db='IMR5jUaWZE'
 						)
 				curs = conn.cursor( )
-				curs.execute(f"SELECT from_id, rej, purch, res_id, count FROM personal_trans WHERE trans_id = {trans_id}")
+				curs.execute(f"SELECT from_user, rej, purch, res_id, count FROM personal_trans WHERE trans_id = {trans_id}")
 				trans = curs.fetchone( )
 				if trans is not None:
 					if int(trans[0]) == self.user_id:
