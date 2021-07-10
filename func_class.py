@@ -2056,7 +2056,7 @@ class Main(object):
 			if len(self.command.split(" ")) >= 2:
 				trans_id = self.command.split(" ")[1]
 				if trans_id.isdigit():
-					curs.execute(f"SELECT purch, rej, to_user, from_user, accept, cost, res_id, count FROM personal_trans WHERE lot_id = {trans_id}")
+					curs.execute(f"SELECT purch, rej, to_user, from_user, accept, cost, res_id, count FROM personal_trans WHERE trans_id = {trans_id}")
 					trans = curs.fetchone()
 					if trans is not None:
 						if int(trans[0]) == 1:
