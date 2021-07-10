@@ -1760,28 +1760,35 @@ class Main(object):
 									cost = 0
 									if int(us[1]) >= int(count):
 										if int(count) != 0:
-											now_utc = datetime.now(timezone('UTC'))
-											time = str(now_utc.astimezone(timezone('Europe/Moscow')))
-											curs.execute(
-													f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
-													)
-											conn.commit( )
-											curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
-											conn.commit( )
-											curs.execute(
-													"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
-													)
-											last_trans = curs.fetchone( )[0]
-											self.vk.messages.send(
-													peer_id=int(us[2]),
-													random_id=random.randint(0, 10000000000),
-													message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
-													)
-											self.vk.messages.send(
-													peer_id=self.peer_id,
-													random_id=random.randint(0, 10000000000),
-													message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
-													)
+											if self.user_id != user: 
+												now_utc = datetime.now(timezone('UTC'))
+												time = str(now_utc.astimezone(timezone('Europe/Moscow')))
+												curs.execute(
+														f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
+														)
+												conn.commit( )
+												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
+												conn.commit( )
+												curs.execute(
+														"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
+														)
+												last_trans = curs.fetchone( )[0]
+												self.vk.messages.send(
+														peer_id=int(us[2]),
+														random_id=random.randint(0, 10000000000),
+														message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
+														)
+												self.vk.messages.send(
+														peer_id=self.peer_id,
+														random_id=random.randint(0, 10000000000),
+														message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
+														)
+											else:
+												self.vk.messages.send(
+												peer_id=self.peer_id,
+												random_id=random.randint(0, 10000000000),
+												message=f"Нельзя предложить сделку самому себе."
+												)  # оформление
 										else:
 											self.vk.messages.send(
 												peer_id=self.peer_id,
