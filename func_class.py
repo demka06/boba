@@ -2030,7 +2030,7 @@ class Main(object):
 			fr += f"ID: #{i[4]}\nДля кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
 		
 		curs.execute(
-				f"SELECT to_user, res_id, count, cost, trans_id WHERE rej = 0 and accept = 0 and from_user != {self.user_id}"
+				f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user != {self.user_id}"
 				)
 		for_you = curs.fetchall( )
 		fro = ""
