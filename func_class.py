@@ -1888,7 +1888,7 @@ class Main(object):
 									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[0]}")
 									res_name = curs.fetchone( )
 									curs.execute(
-											f"UPDATE users SET anders = anders - {trans[1]}, {res_name} = {res_name} + {trans[4]}"
+											f"UPDATE users SET anders = anders - {trans[1]}, {res_name[0]} = {res_name[0]} + {trans[4]}"
 											)
 									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
 									self.vk.messages.send(
