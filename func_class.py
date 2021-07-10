@@ -257,7 +257,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1]+res[3]}"
+					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]}"
 					)
 		else:
 			
@@ -433,7 +433,7 @@ class Main(object):
 					random_id=random.randint(0, 10000000000),
 					message=f"Указано недостаточно аргументов."
 					)
-			
+	
 	def buyBuild(self):
 		if len(self.command.split(" ")) >= 2:
 			conn = pymysql.connect(
@@ -492,8 +492,8 @@ class Main(object):
 											random_id=random.randint(0, 10000000000),
 											message=f"У вас не хватает %s Cвета." % (
 													numeral.get_plural(
-														build[4] - user_profile[3], ("Кристалла", "Кристаллов")
-														))
+															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+															))
 											)
 							else:
 								self.vk.messages.send(
@@ -559,8 +559,8 @@ class Main(object):
 											random_id=random.randint(0, 10000000000),
 											message=f"У вас не хватает %s Cвета." % (
 													numeral.get_plural(
-														build[4] - user_profile[3], ("Кристалла", "Кристаллов")
-														))
+															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+															))
 											)
 							else:
 								self.vk.messages.send(
@@ -657,7 +657,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{self.user_id}|Вы] отправили {val} ед. Андеров на счет @id{to_user}" 
+									message=f"[id{self.user_id}|Вы] отправили {val} ед. Андеров на счет @id{to_user}"
 									)
 							self.vk.messages.send(
 									peer_id=int(to_chat[0]),
@@ -1086,10 +1086,10 @@ class Main(object):
 							)
 		else:
 			self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указано недостаточно аргументов."
-						)
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message="Указано недостаточно аргументов."
+					)
 	
 	def listOfGoods(self):
 		conn = pymysql.connect(
@@ -1136,10 +1136,10 @@ class Main(object):
 					else:
 						if lot[4] == 1:
 							self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Лот уже куплен."
-								)  # оформление
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message="Лот уже куплен."
+									)  # оформление
 						else:
 							curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
 							money = curs.fetchone( )[0]
@@ -1154,14 +1154,17 @@ class Main(object):
 										f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
 										)
 								conn.commit( )
-								curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
+								curs.execute(
+										f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1",
+										(time,)
+										)
 								conn.commit( )
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
 										message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
 										)  # оформление
-
+							
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
@@ -1182,10 +1185,10 @@ class Main(object):
 						)  # оформление
 		else:
 			self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
-						)  # оформление
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message="Указаны не все аргументы."
+					)  # оформление
 	
 	def addGood(self):
 		"""
@@ -1199,11 +1202,11 @@ class Main(object):
 			res_count = self.command.split("\n")[2].strip( )
 			res_cost = self.command.split("\n")[3].strip( )
 			conn = pymysql.connect(
-						host="remotemysql.com",
-						user=self.user,
-						password=self.passw,
-						db='IMR5jUaWZE'
-						)
+					host="remotemysql.com",
+					user=self.user,
+					password=self.passw,
+					db='IMR5jUaWZE'
+					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
 			time = now_utc.astimezone(timezone('Europe/Moscow'))
@@ -1219,33 +1222,35 @@ class Main(object):
 				if res_cost.isdigit( ) and res_count.isdigit( ):
 					if int(res_count) == 0 or int(res_cost) == 0:
 						self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество не были равны нулю."
-							)  # оформление
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество не были равны нулю."
+								)  # оформление
 					else:
 						curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
 						if curs.fetchone( )[0] >= int(res_count):
 							if res[0] <= int(res_cost):
 								cost = int(res_cost) * int(res_count)
-								curs.execute(f"UPDATE users SET {res[2]} = {res[2]} - {res_count} WHERE user_id = {self.user_id}")
+								curs.execute(
+										f"UPDATE users SET {res[2]} = {res[2]} - {res_count} WHERE user_id = {self.user_id}"
+										)
 								conn.commit( )
 								curs.execute(
-									"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
-									(self.user_id, cost, res[1], res_count, time)
+										"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
+										(self.user_id, cost, res[1], res_count, time)
 										)
 								conn.commit( )
 								curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
 								lot = curs.fetchone( )[0]
 								self.vk.messages.send(
-									peer_id=self.peer_id,
+										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
 										message=f"Лот #{lot} выставлен на продажу!"
 										)  # оформление
 							else:
 								morph = pymorphy2.MorphAnalyzer( )
 								res_name = morph.parse(res_name)[0]
-								res_name = res_name.inflect({'gent'}).word.capitalize()
+								res_name = res_name.inflect({'gent'}).word.capitalize( )
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
@@ -1254,7 +1259,7 @@ class Main(object):
 						else:
 							morph = pymorphy2.MorphAnalyzer( )
 							res_name = morph.parse(res_name)[0]
-							res_name = res_name.inflect({'gent'}).word.capitalize()
+							res_name = res_name.inflect({'gent'}).word.capitalize( )
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
@@ -1268,10 +1273,10 @@ class Main(object):
 							)  # оформление
 		else:
 			self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
-						)  # оформление
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message="Указаны не все аргументы."
+					)  # оформление
 	
 	def rejectonLot(self):
 		"""
@@ -1580,10 +1585,93 @@ class Main(object):
 					random_id=random.randint(0, 10000000000),
 					message=self.event
 					)
+	
 	def help(self):
 		self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Помощь:\nvk.com/@andwb-help",
-					attachment="article-205707057_62167_0d6cbb198060823369"
+				peer_id=self.peer_id,
+				random_id=random.randint(0, 10000000000),
+				message="Помощь:\nvk.com/@andwb-help",
+				attachment="article-205707057_62167_0d6cbb198060823369"
+				)
+	
+	def giveBan(self):
+		if self.user_id in self.adms:
+			conn = pymysql.connect(
+					host="remotemysql.com",
+					user=self.user,
+					password=self.passw,
+					db='IMR5jUaWZE'
 					)
+			curs = conn.cursor( )
+			if len(self.command.split(" ")) >= 2:
+				if self.command.split(" ")[1].split("|")[0].startswith("[id"):
+					us = self.command.split(" ")[1].split("|")[0].replace("[id", "")
+					curs.execute(f"SELECT user_id FROM users WHERE user_id = {us}")
+					if curs.fetchone( ) is None:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Этого пользователя нет в базе данных."
+								)
+					else:
+						curs.execute(f"UPDATE users SET ban = 1 WHERE user_id = {us}")
+						conn.commit( )
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Бан выдан."
+								)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Вы указали неверную ссылку на пользователя."
+							)
+			else:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Указаны не все аргументы."
+						)
+	
+	def giveUnban(self):
+		if self.user_id in self.adms:
+			conn = pymysql.connect(
+					host="remotemysql.com",
+					user=self.user,
+					password=self.passw,
+					db='IMR5jUaWZE'
+					)
+			curs = conn.cursor( )
+			if len(self.command.split(" ")) >= 2:
+				if self.command.split(" ")[1].split("|")[0].startswith("[id"):
+					us = self.command.split(" ")[1].split("|")[0].replace("[id", "")
+					curs.execute(f"SELECT user_id FROM users WHERE user_id = {us}")
+					if curs.fetchone( ) is None:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Этого пользователя нет в базе данных."
+								)
+					else:
+						curs.execute(f"UPDATE users SET ban = 0 WHERE user_id = {us}")
+						conn.commit( )
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Бан снят."
+								)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Вы указали неверную ссылку на пользователя."
+							)
+			else:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Указаны не все аргументы."
+						)
+	def resTransactions(self):
+		pass
