@@ -1762,7 +1762,7 @@ class Main(object):
 										now_utc = datetime.now(timezone('UTC'))
 										time = str(now_utc.astimezone(timezone('Europe/Moscow')))
 										curs.execute(
-												f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, {time})"
+												f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 												)
 										conn.commit( )
 										curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
@@ -1805,7 +1805,7 @@ class Main(object):
 									now_utc = datetime.now(timezone('UTC'))
 									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
 									curs.execute(
-											f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, {time})"
+											f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 											)
 									conn.commit( )
 									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
@@ -1868,7 +1868,7 @@ class Main(object):
 									now_utc = datetime.now(timezone('UTC'))
 									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
 									curs.execute(
-											f"UPDATE personal_trans SET purch = 1, purch_time = {time} WHERE trans_id = {tr_id}"
+											f"UPDATE personal_trans SET purch = 1, purch_time = %s WHERE trans_id = {tr_id}", (time, )
 											)
 									conn.commit( )
 									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[0]}")
