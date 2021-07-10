@@ -1701,14 +1701,14 @@ class Main(object):
 			res = self.command.split("\n")[2].capitalize( ).strip( )
 			count = self.command.split("\n")[3].strip( )
 			cost = self.command.split("\n")[4].strip( )
-			if self.command.split(" ")[2].startswith("http") or self.command.split(" ")[2].startswith(
+			if self.command.split("\n")[1].startswith("http") or self.command.split("\n")[1].startswith(
 					"https"
 					):
 				short_name = self.command.split(" ")[2].split("/")[3]
 				user = self.vk.users.get(user_ids=short_name)[0]['id']
 			
-			elif self.command.split(" ")[2].startswith("[id"):
-				user = self.command.split(" ")[2].split("|")[0].replace("[id", "")
+			elif self.command.split("\n")[1].startswith("[id"):
+				user = self.command.split("\n")[1].split("|")[0].replace("[id", "")
 			else:
 				try:
 					if 'reply_message' in self.event.object["message"].keys( ):
