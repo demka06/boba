@@ -1172,7 +1172,7 @@ class Main(object):
 										)
 								conn.commit( )
 								curs.execute(
-										f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
+										f"UPDATE users SET anders = anders + {lot[2]}, WHERE user_id = {lot[3]}"
 										)
 								conn.commit( )
 								curs.execute(
