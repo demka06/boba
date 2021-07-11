@@ -1767,7 +1767,7 @@ class Main(object):
 														f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 														)
 												conn.commit( )
-												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count} WHERE user_id = {self.user_id}")
+												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - %s WHERE user_id = {self.user_id}",(int(count), ))
 												conn.commit( )
 												curs.execute(
 														"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
@@ -1882,6 +1882,12 @@ class Main(object):
 									now_utc = datetime.now(timezone('UTC'))
 									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
 									curs.execute(
+											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
+											)
+									conn.commit( )
+									curs.execute(f"UPDATE users SET {res_name[0]} = {res_name[0]} + %s WHERE user_id = {self.user_id}", (trans[4], ))
+									conn.commit( )
+									curs.execute(
 											f"UPDATE personal_trans SET purch = 1, purch_time = %s WHERE trans_id = {tr_id}", (time, )
 											)
 									conn.commit( )
@@ -1899,12 +1905,6 @@ class Main(object):
 									db='IMR5jUaWZE'
 									)
 									curs = conn.cursor( )
-									curs.execute(
-											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
-											)
-									conn.commit( )
-									curs.execute(f"UPDATE users SET {res_name[0]} = {res_name[0]} + %s WHERE user_id = {self.user_id}", (trans[4], ))
-									conn.commit( )
 									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
 									self.vk.messages.send(
 											peer_id=int(curs.fetchone( )[0]),
