@@ -1899,7 +1899,7 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=int(curs.fetchone( )[0]),
 											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{tr_id} совершена!\nUPDATE users SET anders = anders - {trans[1]}, {res_name[0]} = {res_name[0]} + {trans[4]} WHERE user_id = {trans[6]}""
+											message=f"Сделка #{tr_id} совершена!\nUPDATE users SET anders = anders - {trans[1]}, {res_name[0]} = {res_name[0]} + {trans[4]} WHERE user_id = {trans[6]}"
 											)
 									self.vk.messages.send(
 											peer_id=self.peer_id,
