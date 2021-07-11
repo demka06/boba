@@ -1822,7 +1822,7 @@ class Main(object):
 											f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 											)
 									conn.commit( )
-									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
+									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count} WHERE user_id = {self.user_id}")
 									conn.commit( )
 									curs.execute("SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1")
 									last_trans = curs.fetchone( )[0]
