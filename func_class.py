@@ -1802,7 +1802,7 @@ class Main(object):
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
 												message=f"У вас недостаточно {res_name}."
-												)  #оформление
+												)  # оформление
 								else:
 									morph = pymorphy2.MorphAnalyzer( )
 									res_name = morph.parse(res)[0]
