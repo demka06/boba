@@ -2064,14 +2064,9 @@ class Main(object):
 								if int(trans[4]) == 0:
 									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[6]}")
 									a = curs.fetchone()
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"С  {a[0]} "
-											)
 									curs.execute(f"UPDATE users SET anders = anders - {trans[5]}, {a[0]} = {a[0]} + {trans[7]} WHERE user_id = {trans[3]}")
 									conn.commit()
-									curs.execute(f"UPDATE users SET anders = anders + {trans[5]}, {curs.fetchone()[0]} = {curs.fetchone()[0]} - {trans[7]} WHERE user_id = {trans[2]}")
+									curs.execute(f"UPDATE users SET anders = anders + {trans[5]}, {a[0]} = {a[0]} - {trans[7]} WHERE user_id = {trans[2]}")
 									conn.commit()
 									curs.execute("UPDATE personal_trans SET accept = 1")
 									conn.commit()
