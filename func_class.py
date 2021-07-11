@@ -1881,6 +1881,8 @@ class Main(object):
 								if int(curs.fetchone( )[0]) >= int(trans[1]):
 									now_utc = datetime.now(timezone('UTC'))
 									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
+									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[0]}")
+									res_name = curs.fetchone( )
 									curs.execute(
 											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
 											)
@@ -1891,8 +1893,6 @@ class Main(object):
 											f"UPDATE personal_trans SET purch = 1, purch_time = %s WHERE trans_id = {tr_id}", (time, )
 											)
 									conn.commit( )
-									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[0]}")
-									res_name = curs.fetchone( )
 									curs.execute(
 											f"UPDATE users SET anders = anders + {trans[1]} WHERE user_id = {trans[5]}"
 											)
