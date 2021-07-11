@@ -1891,6 +1891,14 @@ class Main(object):
 											f"UPDATE users SET anders = anders + {trans[1]} WHERE user_id = {trans[5]}"
 											)
 									conn.commit( )
+									conn.close()
+									conn = pymysql.connect(
+									host="remotemysql.com",
+									user=self.user,
+									password=self.passw,
+									db='IMR5jUaWZE'
+									)
+									curs = conn.cursor( )
 									curs.execute(
 											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
 											)
