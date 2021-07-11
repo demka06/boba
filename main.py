@@ -4,7 +4,7 @@ import traceback
 import pymysql
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-import func_class
+import funcclass
 import os
 
 # ------------- [ CONNECT TO VK ] -----------
@@ -22,7 +22,7 @@ while True:
 	for event in longpoll.listen():
 		try:
 			if event.type == VkBotEventType.MESSAGE_NEW:
-				if event.object.message['peer_id'] != event.object.message['from_id']  and event.object.message['from_id'] > 0:
+				if event.object.message['peer_id'] != event.object.message['from_id'] and event.object.message['from_id'] > 0:
 					conn = pymysql.connect(
 					host="remotemysql.com",
 					user=user,
@@ -35,7 +35,7 @@ while True:
 						command = event.obj.message["text"].lower()
 						user_id = event.object.message["from_id"]
 						peer_id = event.object.message["peer_id"]
-						cls = func_class.Main(vk, event, vk_session)
+						cls = funcclass.Main(vk, event, vk_session)
 						cls.registrationConv()
 						cls.registrarionUser()
 						if command.startswith("/addres"):
