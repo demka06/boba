@@ -20,10 +20,12 @@ class Main(object):
 		self.command = event.obj.message["text"].lower( )
 		self.txt = event.obj.message["text"]
 		self.vk_session = vk_session
-		self.adms_chat = 2000000004
-		self.user = str(os.environ.get("SQL-USER"))
-		self.passw = str(os.environ.get("SQL-PASS"))
-		self.adms = [305284615, 547409675, 553069569, 337138653]
+		self.adms_chat = 2000000001
+		self.user = "IMR5jUaWZE"
+		self.passw = "QC8h83iPXP"
+		"""self.user = str(os.environ.get("SQL-USER"))
+		self.passw = str(os.environ.get("SQL-PASS"))"""
+		self.adms = [305284615, 553069569]
 	
 	def registrationConv(self):
 		conn = pymysql.connect(
@@ -257,14 +259,14 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]}"
+					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1]+res[3]}"
 					)
 		else:
 			
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).strftime('%Y-%m-%d %H:%M:%S')}"
 					)
 	
 	def collectExpirience(self):
@@ -289,27 +291,20 @@ class Main(object):
 			for i in data:
 				mil = i + mil
 			res = mil * 0.1
-			if res == 0:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message=f"Вы сейчас можете собрать только 0 ед. Опыта. Лучше увеличьте численность армии и попробуйте вновь собрать опыт."
-						)
-			else:
-				curs.execute(f"UPDATE users SET exp = exp + {res}, last_exp_coll = {now} WHERE user_id = {self.user_id}")
-				conn.commit( )
-				curs.execute(f"INSERT INTO exp_collect (exp, time, user_id) VALUES ({res}, {now}, {self.user_id})")
-				conn.commit( )
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message=f"Вы получили {res} ед. Опыта"
-						)
+			curs.execute(f"UPDATE users SET exp = exp + {res}, last_exp_coll = {now} WHERE user_id = {self.user_id}")
+			conn.commit( )
+			curs.execute(f"INSERT INTO exp_collect (exp, time, user_id) VALUES ({res}, {now}, {self.user_id})")
+			conn.commit( )
+			self.vk.messages.send(
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message=f"Вы получили {res} ед. Опыта"
+					)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).strftime('%Y-%m-%d %H:%M:%S')}"
 					)
 	
 	def listOfMillitaryObj(self):
@@ -363,208 +358,130 @@ class Main(object):
 				)
 	
 	def buyMilitaryObj(self):
-		if len(self.command.split(" ")) >= 2:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
-					)
-			curs = conn.cursor( )
-			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
-			user_profile = curs.fetchone( )
-			mil_id = self.command.split(" ")[1]
-			if mil_id.isdigit( ):
-				curs.execute("SELECT cost, count, bd_name, name FROM military WHERE mil_id = %s", (mil_id,))
-				mil = curs.fetchone( )
-				if mil is not None:
-					if user_profile[0] >= mil[0]:
-						curs.execute(
-								f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
-								)
-						conn.commit( )
-						morph = pymorphy2.MorphAnalyzer( )
-						mil_name = morph.parse(mil[3])[0]
-						mil_name = mil_name.inflect({'gent'}).word.capitalize( )
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
-								)
-					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Вам нужно еще %s" % (
-										numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
-								)
+		conn = pymysql.connect(
+				host="remotemysql.com",
+				user=self.user,
+				password=self.passw,
+				db='IMR5jUaWZE'
+				)
+		curs = conn.cursor( )
+		curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+		user_profile = curs.fetchone( )
+		mil_id = self.command.split(" ")[1]
+		if mil_id.isdigit( ):
+			curs.execute("SELECT cost, count, bd_name, name FROM military WHERE mil_id = %s", (mil_id,))
+			mil = curs.fetchone( )
+			if mil is not None:
+				if user_profile[0] >= mil[0]:
+					curs.execute(
+							f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
+							)
+					conn.commit( )
+					morph = pymorphy2.MorphAnalyzer( )
+					mil_name = morph.parse(mil[3])[0]
+					mil_name = mil_name.inflect({'gent'}).word.capitalize( )
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
+							)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Войска с таким ID не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+							message=f"Вам нужно еще %s" % (
+									numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
 							)
 			else:
-				curs.execute("SELECT cost, count, bd_name FROM military WHERE name = %s", (mil_id,))
-				mil = curs.fetchone( )
-				if mil is not None:
-					if user_profile[0] >= mil[0]:
-						curs.execute(
-								f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
-								)
-						conn.commit( )
-						morph = pymorphy2.MorphAnalyzer( )
-						mil_name = morph.parse(mil[3])[0]
-						mil_name = mil_name.inflect({'gent'}).word.capitalize( )
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
-								)
-					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"Вам нужно еще %s" % (
-										numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
-								)
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Войска с таким ID не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+						)
+		else:
+			curs.execute("SELECT cost, count, bd_name FROM military WHERE name = %s", (mil_id,))
+			mil = curs.fetchone( )
+			if mil is not None:
+				if user_profile[0] >= mil[0]:
+					curs.execute(
+							f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
+							)
+					conn.commit( )
+					morph = pymorphy2.MorphAnalyzer( )
+					mil_name = morph.parse(mil[3])[0]
+					mil_name = mil_name.inflect({'gent'}).word.capitalize( )
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
+							)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Войска с таким названием не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+							message=f"Вам нужно еще %s" % (
+									numeral.get_plural(mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")))
 							)
-		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message=f"Указано недостаточно аргументов."
-					)
+			else:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Войска с таким названием не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+						)
 	
 	def buyBuild(self):
-		if len(self.command.split(" ")) >= 2:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
+		conn = pymysql.connect(
+				host="remotemysql.com",
+				user=self.user,
+				password=self.passw,
+				db='IMR5jUaWZE'
+				)
+		curs = conn.cursor( )
+		curs.execute("SELECT steel, wood, food, w_cris, b_cris FROM users WHERE user_id = %s", (self.user_id,))
+		user_profile = curs.fetchone( )
+		build_id = self.command.split(" ")[1]
+		print(3)
+		if build_id.isdigit( ):
+			print(2)
+			# По ID
+			curs.execute(
+					"SELECT food, steel, wood, b_cris, w_cris, build_name, name FROM builds WHERE build_id = %s",
+					(build_id,)
 					)
-			curs = conn.cursor( )
-			curs.execute("SELECT steel, wood, food, w_cris, b_cris FROM users WHERE user_id = %s", (self.user_id,))
-			user_profile = curs.fetchone( )
-			build_id = self.command.split(" ")[1]
-			if build_id.isdigit( ):
-				# По ID
-				curs.execute(
-						"SELECT food, steel, wood, b_cris, w_cris, build_name, name FROM builds WHERE build_id = %s",
-						(build_id,)
+			build = curs.fetchone( )
+			if build is None:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Здания с таким ID не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
 						)
-				build = curs.fetchone( )
-				if build is None:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Здания с таким ID не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
-							)
-				else:
-					if user_profile[2] >= build[0]:
-						if user_profile[0] >= build[1]:
-							if user_profile[1] >= build[2]:
-								if user_profile[3] >= build[4]:
-									if user_profile[4] >= build[3]:
-										curs.execute(
-												f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
-												)
-										conn.commit( )
-										morph = pymorphy2.MorphAnalyzer( )
-										build_name = morph.parse(build[6])[0]
-										build_name = build_name.inflect({'gent'}).word.capitalize( )
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"Поздравляем вас с покупкой {build_name}!"
-												)
-									else:
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"У вас не хватает %s Тьмы." % (
-														numeral.get_plural(
-																build[4] - user_profile[3], ("Кристалла", "Кристаллов")
-																))
-												)
-								else:
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает %s Cвета." % (
-													numeral.get_plural(
-															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
-															))
-											)
-							else:
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
-										)
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
-									)
-					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
-								)
 			else:
-				# По названию
-				curs.execute(
-						"SELECT food, steel, wood, b_cris, w_cris, build_name, name FROM builds WHERE name = %s",
-						(build_id,)
-						)
-				build = curs.fetchone( )
-				if build is None:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Здания с таким Названием не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
-							)
-				else:
-					if user_profile[2] >= build[0]:
-						if user_profile[0] >= build[1]:
-							if user_profile[1] >= build[2]:
-								if user_profile[3] >= build[4]:
-									if user_profile[4] >= build[3]:
-										curs.execute(
-												f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
-												)
-										conn.commit( )
-										morph = pymorphy2.MorphAnalyzer( )
-										build_name = morph.parse(build[6])[0]
-										build_name = build_name.inflect({'gent'}).word.capitalize( )
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"Поздравляем вас с покупкой {build_name}!"
-												)
-									else:
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"У вас не хватает %s Тьмы." % (
-														numeral.get_plural(
-																build[4] - user_profile[3], ("Кристалла", "Кристаллов")
-																))
-												)
+				print(1)
+				if user_profile[2] >= build[0]:
+					if user_profile[0] >= build[1]:
+						if user_profile[1] >= build[2]:
+							if user_profile[3] >= build[4]:
+								if user_profile[4] >= build[3]:
+									print(build)
+									print(f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[2]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+									      )
+									curs.execute(
+											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+											)
+									conn.commit( )
+									morph = pymorphy2.MorphAnalyzer( )
+									build_name = morph.parse(build[6])[0]
+									build_name = build_name.inflect({'gent'}).word.capitalize( )
+									self.vk.messages.send(
+											peer_id=self.peer_id,
+											random_id=random.randint(0, 10000000000),
+											message=f"Поздравляем вас с покупкой {build_name}!"
+											)
 								else:
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает %s Cвета." % (
+											message=f"У вас не хватает %s Тьмы." % (
 													numeral.get_plural(
 															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
 															))
@@ -573,26 +490,101 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
+										message=f"У вас не хватает %s Cвета." % (
+												numeral.get_plural(
+														build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+														))
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
+									message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
 									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
+								message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
 								)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
+							)
 		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message=f"Указано недостаточно аргументов."
+			print(4)
+			# По названию
+			curs.execute(
+					"SELECT food, steel, wood, b_cris, w_cris, build_name, name FROM builds WHERE name = %s",
+					(build_id,)
 					)
+			build = curs.fetchone( )
+			if build is None:
+				self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message="Здания с таким Названием не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
+						)
+			else:
+				print(5)
+				if user_profile[2] >= build[0]:
+					if user_profile[0] >= build[1]:
+						if user_profile[1] >= build[2]:
+							if user_profile[3] >= build[4]:
+								if user_profile[4] >= build[3]:
+									print(build)
+									print(f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+									      )
+									curs.execute(
+											f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
+											)
+									conn.commit( )
+									morph = pymorphy2.MorphAnalyzer( )
+									build_name = morph.parse(build[6])[0]
+									build_name = build_name.inflect({'gent'}).word.capitalize( )
+									self.vk.messages.send(
+											peer_id=self.peer_id,
+											random_id=random.randint(0, 10000000000),
+											message=f"Поздравляем вас с покупкой {build_name}!"
+											)
+								else:
+									self.vk.messages.send(
+											peer_id=self.peer_id,
+											random_id=random.randint(0, 10000000000),
+											message=f"У вас не хватает %s Тьмы." % (
+													numeral.get_plural(
+															build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+															))
+											)
+							else:
+								self.vk.messages.send(
+										peer_id=self.peer_id,
+										random_id=random.randint(0, 10000000000),
+										message=f"У вас не хватает %s Cвета." % (
+												numeral.get_plural(
+														build[4] - user_profile[3], ("Кристалла", "Кристаллов")
+														))
+										)
+						else:
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
+									)
+					else:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
+								)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
+							)
 	
 	def transaction(self):
 		# /trans [кол во] [адресат]
@@ -827,73 +819,67 @@ class Main(object):
 						(race,)
 						)
 				race_inv = curs.fetchone( )
-				if race_inv is None:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Расы с таким ID не существует."
-							)
-				else:
-					curs.execute(
-							"SELECT SUM(inf),SUM(mag),SUM(arch),SUM(ctpl),SUM(bllsts),SUM(clvr),SUM(plds) FROM users WHERE race_id = %s",
-							(race,)
-							)
-					mil_inv = curs.fetchone( )
-					
-					curs.execute(
-							"SELECT SUM(farm),SUM(swml),SUM(mine),SUM(vlg),SUM(city),SUM(tmpl),SUM(altr) FROM users WHERE race_id = %s",
-							(race,)
-							)
-					bld_inv = curs.fetchone( )
-					curs.execute(
-							"SELECT name FROM races WHERE race_id = %s",
-							(race,)
-							)
-					stats_pic_draw.text(
-							xy=(245, 71), text=curs.fetchone( )[0], fill="white",
-							font=ImageFont.truetype("Aqum.ttf", size=35)
-							)  # RACE NAME
-					"""MILITARY"""
-					stats_pic_draw.text(xy=(207, 419), text=str(mil_inv[0]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 518), text=str(mil_inv[2]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 617), text=str(mil_inv[5]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 716), text=str(mil_inv[6]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 814), text=str(mil_inv[1]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 912), text=str(mil_inv[3]), fill="black", font=font)
-					stats_pic_draw.text(xy=(207, 1011), text=str(mil_inv[4]), fill="black", font=font)
-					"""EXP"""
-					stats_pic_draw.text(
-							xy=(357, 174), text=str(round(race_inv[6], 3)), fill="white",
-							font=ImageFont.truetype("Aqum.ttf", size=25)
-							)
-					"""MONEY"""
-					stats_pic_draw.text(
-							xy=(835, 174), text=str(race_inv[0]), fill="white",
-							font=ImageFont.truetype("Aqum.ttf", size=25)
-							)
-					"""RESOURCES"""
-					stats_pic_draw.text(xy=(631, 419), text=str(race_inv[1]), fill="black", font=font)
-					stats_pic_draw.text(xy=(631, 518), text=str(race_inv[3]), fill="black", font=font)
-					stats_pic_draw.text(xy=(631, 617), text=str(race_inv[2]), fill="black", font=font)
-					stats_pic_draw.text(xy=(631, 716), text=str(race_inv[4]), fill="black", font=font)
-					stats_pic_draw.text(xy=(631, 814), text=str(race_inv[5]), fill="black", font=font)
-					"""BUILDS"""
-					stats_pic_draw.text(xy=(1055, 419), text=str(bld_inv[0]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 518), text=str(bld_inv[1]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 617), text=str(bld_inv[2]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 716), text=str(bld_inv[3]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 814), text=str(bld_inv[4]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 912), text=str(bld_inv[5]), fill="black", font=font)
-					stats_pic_draw.text(xy=(1055, 1011), text=str(bld_inv[6]), fill="black", font=font)
-					
-					stats_pic.save('stats.png')
-					
-					vk_upload = vk_api.VkUpload(self.vk_session)
-					photo = vk_upload.photo_messages(photos="stats.png")
-					photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
-					self.vk.messages.send(
-							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
-							)
+				
+				curs.execute(
+						"SELECT SUM(inf),SUM(mag),SUM(arch),SUM(ctpl),SUM(bllsts),SUM(clvr),SUM(plds) FROM users WHERE race_id = %s",
+						(race,)
+						)
+				mil_inv = curs.fetchone( )
+				
+				curs.execute(
+						"SELECT SUM(farm),SUM(swml),SUM(mine),SUM(vlg),SUM(city),SUM(tmpl),SUM(altr) FROM users WHERE race_id = %s",
+						(race,)
+						)
+				bld_inv = curs.fetchone( )
+				curs.execute(
+						"SELECT name FROM races WHERE race_id = %s",
+						(race,)
+						)
+				stats_pic_draw.text(
+						xy=(245, 71), text=curs.fetchone( )[0], fill="white",
+						font=ImageFont.truetype("Aqum.ttf", size=35)
+						)  # RACE NAME
+				"""MILITARY"""
+				stats_pic_draw.text(xy=(207, 419), text=str(mil_inv[0]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 518), text=str(mil_inv[2]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 617), text=str(mil_inv[5]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 716), text=str(mil_inv[6]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 814), text=str(mil_inv[1]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 912), text=str(mil_inv[3]), fill="black", font=font)
+				stats_pic_draw.text(xy=(207, 1011), text=str(mil_inv[4]), fill="black", font=font)
+				"""EXP"""
+				stats_pic_draw.text(
+						xy=(357, 174), text=str(round(race_inv[6], 3)), fill="white",
+						font=ImageFont.truetype("Aqum.ttf", size=25)
+						)
+				"""MONEY"""
+				stats_pic_draw.text(
+						xy=(835, 174), text=str(race_inv[0]), fill="white",
+						font=ImageFont.truetype("Aqum.ttf", size=25)
+						)
+				"""RESOURCES"""
+				stats_pic_draw.text(xy=(631, 419), text=str(race_inv[1]), fill="black", font=font)
+				stats_pic_draw.text(xy=(631, 518), text=str(race_inv[3]), fill="black", font=font)
+				stats_pic_draw.text(xy=(631, 617), text=str(race_inv[2]), fill="black", font=font)
+				stats_pic_draw.text(xy=(631, 716), text=str(race_inv[4]), fill="black", font=font)
+				stats_pic_draw.text(xy=(631, 814), text=str(race_inv[5]), fill="black", font=font)
+				"""BUILDS"""
+				stats_pic_draw.text(xy=(1055, 419), text=str(bld_inv[0]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 518), text=str(bld_inv[1]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 617), text=str(bld_inv[2]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 716), text=str(bld_inv[3]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 814), text=str(bld_inv[4]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 912), text=str(bld_inv[5]), fill="black", font=font)
+				stats_pic_draw.text(xy=(1055, 1011), text=str(bld_inv[6]), fill="black", font=font)
+				
+				stats_pic.save('stats.png')
+				
+				vk_upload = vk_api.VkUpload(self.vk_session)
+				photo = vk_upload.photo_messages(photos="stats.png")
+				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
+				self.vk.messages.send(
+						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
+						)
 			else:
 				curs.execute("SELECT race_id, name FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
@@ -1018,58 +1004,44 @@ class Main(object):
 							message="ID расы должно состоять только из цифр."
 							)
 			else:
-				if len(self.command.split(" ")) >= 2:
-					race = self.command.split(" ")[1]
-					if race.isdigit( ):
-						curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
-						maxi = curs.fetchone( )[0]
-						if maxi >= int(race) >= 1:
-							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
-							conn.commit( )
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Раса успешно установлена."
-									)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Указаны не все аргументы."
-							)
-		else:
-			if len(self.command.split(" ")) >= 2:
-				curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
-				if curs.fetchone( )[0] == 1:
-					race = self.command.split(" ")[1]
-					if race.isdigit( ):
-						curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
-						maxi = curs.fetchone( )[0]
-						if maxi >= int(race) >= 1:
-							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
-							conn.commit( )
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Раса успешно установлена."
-									)
-					else:
+				race = self.command.split(" ")[1]
+				if race.isdigit( ):
+					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
+					maxi = curs.fetchone( )[0]
+					if maxi >= int(race) >= 1:
+						curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
+						conn.commit( )
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="ID расы должно состоять только из цифр."
+								message="Раса успешно установлена."
+								)
+		else:
+			curs.execute(f"SELECT race_id FROM users WHERE user_id = {self.user_id}")
+			if curs.fetchone()[0] == 1:
+				race = self.command.split(" ")[1]
+				if race.isdigit( ):
+					curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
+					maxi = curs.fetchone( )[0]
+					if maxi >= int(race) >= 1:
+						curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
+						conn.commit( )
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Раса успешно установлена."
 								)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Вы уже выбрали свою расу. Для изменения расы требуется обратиться к Администрации."
+							message="ID расы должно состоять только из цифр."
 							)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
+						message="Вы уже выбрали свою расу. Для изменения расы требуется обратиться к Администрации."
 						)
 	
 	def changeNickname(self):
@@ -1133,82 +1105,72 @@ class Main(object):
 				)  # оформление
 	
 	def buyGood(self):
-		if len(self.command.split(" ")) >= 2:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
-					)
-			curs = conn.cursor( )
-			now_utc = datetime.now(timezone('UTC'))
-			time = now_utc.astimezone(timezone('Europe/Moscow'))
-			lot_id = self.command.split(" ")[1]
-			if lot_id.isdigit( ):
-				curs.execute("SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,))
-				lot = curs.fetchone( )
-				if lot[3] != self.user_id:
-					if lot is None:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Лота с таким ID не существует."
-								)  # оформление
-					else:
-						if lot[4] == 1:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Лот уже куплен."
-									)  # оформление
-						else:
-							curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
-							money = curs.fetchone( )[0]
-							if money >= lot[2]:
-								curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
-								res_name = curs.fetchone( )
-								curs.execute(
-										f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
-										)
-								conn.commit( )
-								curs.execute(
-										f"UPDATE users SET anders = anders + {lot[2]} WHERE user_id = {lot[3]}"
-										)
-								conn.commit( )
-								curs.execute(
-										f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1 WHERE lot_id = {lot_id}",
-										(time,)
-										)
-								conn.commit( )
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
-										)  # оформление
-							
-							else:
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message="У вас недостаточно Андеров."
-										)  # оформление
-				else:
+		conn = pymysql.connect(
+				host="remotemysql.com",
+				user=self.user,
+				password=self.passw,
+				db='IMR5jUaWZE'
+				)
+		curs = conn.cursor( )
+		now_utc = datetime.now(timezone('UTC'))
+		time = now_utc.astimezone(timezone('Europe/Moscow'))
+		lot_id = self.command.split(" ")[1]
+		if lot_id.isdigit( ):
+			curs.execute("SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,))
+			lot = curs.fetchone( )
+			if lot[3] != self.user_id:
+				if lot is None:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Нельзя купить свой же лот."
+							message="Лота с таким ID не существует."
 							)  # оформление
+				else:
+					if lot[4] == 1:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Лот уже куплен."
+								)  # оформление
+					else:
+						curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+						money = curs.fetchone( )[0]
+						if money >= lot[2]:
+							curs.execute("SELECT bd_name, name FROM resourses WHERE res_id = %s", (lot[1],))
+							res_name = curs.fetchone( )
+							curs.execute(
+									f"UPDATE users SET anders = anders - {lot[2]}, {res_name[0]} = {res_name[0]} + {lot[0]} WHERE user_id = {self.user_id}"
+									)
+							conn.commit( )
+							curs.execute(
+									f"UPDATE users SET anders = anders + {lot[2]}, {res_name[0]} = {res_name[0]} - {lot[0]} WHERE user_id = {lot[3]}"
+									)
+							conn.commit( )
+							curs.execute(f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1", (time,))
+							conn.commit( )
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
+									)  # оформление
+						
+						else:
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message="У вас недостаточно Андеров."
+									)  # оформление
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="ID лота должно состоять только из цифр."
+						message="Нельзя купить свой же лот."
 						)  # оформление
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="ID лота должно состоять только из цифр."
 					)  # оформление
 	
 	def addGood(self):
@@ -1218,10 +1180,16 @@ class Main(object):
 		[кол-во]
 		[стоимость за ед.]
 		"""
-		if len(self.command.split("\n")) >= 4:
-			res_name = self.command.split("\n")[1].capitalize( ).strip( )
-			res_count = self.command.split("\n")[2].strip( )
-			res_cost = self.command.split("\n")[3].strip( )
+		res_name = self.command.split("\n")[1].capitalize( ).strip( )
+		res_count = self.command.split("\n")[2].strip( )
+		res_cost = self.command.split("\n")[3].strip( )
+		if res_count == 0 and res_cost == 0:
+			self.vk.messages.send(
+					peer_id=self.peer_id,
+					random_id=random.randint(0, 10000000000),
+					message="Ни один из параметров не может быть равен нулю."
+					)  # оформление
+		else:
 			conn = pymysql.connect(
 					host="remotemysql.com",
 					user=self.user,
@@ -1241,63 +1209,46 @@ class Main(object):
 						)  # оформление
 			else:
 				if res_cost.isdigit( ) and res_count.isdigit( ):
-					if int(res_count) == 0 or int(res_cost) == 0:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество не были равны нулю."
-								)  # оформление
-					else:
-						curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
-						if curs.fetchone( )[0] >= int(res_count):
-							if res[0] <= int(res_cost):
-								cost = int(res_cost) * int(res_count)
-								curs.execute(
-										f"UPDATE users SET {res[2]} = {res[2]} - {res_count} WHERE user_id = {self.user_id}"
-										)
-								conn.commit( )
-								curs.execute(
-										"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
-										(self.user_id, cost, res[1], res_count, time)
-										)
-								conn.commit( )
-								curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
-								lot = curs.fetchone( )[0]
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message=f"Лот #{lot} выставлен на продажу!"
-										)  # оформление
-							else:
-								morph = pymorphy2.MorphAnalyzer( )
-								res_name = morph.parse(res_name)[0]
-								res_name = res_name.inflect({'gent'}).word.capitalize( )
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
-										)  # оформление
-						else:
-							morph = pymorphy2.MorphAnalyzer( )
-							res_name = morph.parse(res_name)[0]
-							res_name = res_name.inflect({'gent'}).word.capitalize( )
+					curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
+					if curs.fetchone( )[0] >= int(res_count):
+						if res[0] >= int(res_cost):
+							cost = int(res_cost) * int(res_count)
+							curs.execute(
+									"INSERT INTO market (from_user, cost, res_id, count, time) VALUE (%s,%s,%s,%s,%s)",
+									(self.user_id, cost, res[1], res_count, time)
+									)
+							conn.commit( )
+							curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
+							lot = curs.fetchone( )[0]
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"У вас недостаточно {res_name}."
+									message=f"Лот #{lot} выставлен на продажу!"
 									)  # оформление
+						else:
+							morph = pymorphy2.MorphAnalyzer( )
+							res_name = morph.parse(res_name[3])[0]
+							res_name = res_name.inflect({'gent'}).word.capitalize()
+							self.vk.messages.send(
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
+									)  # оформление
+					else:
+						morph = pymorphy2.MorphAnalyzer( )
+						res_name = morph.parse(res_name[3])[0]
+						res_name = res_name.inflect({'gent'}).word.capitalize()
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message=f"У вас недостаточно {res_name}."
+								)  # оформление
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
 							message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество были указаны числами."
 							)  # оформление
-		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
-					)  # оформление
 	
 	def rejectonLot(self):
 		"""
@@ -1606,7 +1557,6 @@ class Main(object):
 					random_id=random.randint(0, 10000000000),
 					message=self.event
 					)
-	
 	def help(self):
 		self.vk.messages.send(
 				peer_id=self.peer_id,
@@ -1614,515 +1564,3 @@ class Main(object):
 				message="Помощь:\nvk.com/@andwb-help",
 				attachment="article-205707057_62167_0d6cbb198060823369"
 				)
-	
-	def giveBan(self):
-		if self.user_id in self.adms:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
-					)
-			curs = conn.cursor( )
-			if len(self.command.split(" ")) >= 2:
-				if self.command.split(" ")[1].split("|")[0].startswith("[id"):
-					us = self.command.split(" ")[1].split("|")[0].replace("[id", "")
-					curs.execute(f"SELECT user_id FROM users WHERE user_id = {us}")
-					if curs.fetchone( ) is None:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Этого пользователя нет в базе данных."
-								)
-					else:
-						curs.execute(f"UPDATE users SET ban = 1 WHERE user_id = {us}")
-						conn.commit( )
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Бан выдан."
-								)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Вы указали неверную ссылку на пользователя."
-							)
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
-						)
-	
-	def giveUnban(self):
-		if self.user_id in self.adms:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
-					)
-			curs = conn.cursor( )
-			if len(self.command.split(" ")) >= 2:
-				if self.command.split(" ")[1].split("|")[0].startswith("[id"):
-					us = self.command.split(" ")[1].split("|")[0].replace("[id", "")
-					curs.execute(f"SELECT user_id FROM users WHERE user_id = {us}")
-					if curs.fetchone( ) is None:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Этого пользователя нет в базе данных."
-								)
-					else:
-						curs.execute(f"UPDATE users SET ban = 0 WHERE user_id = {us}")
-						conn.commit( )
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Бан снят."
-								)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Вы указали неверную ссылку на пользователя."
-							)
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
-						)
-	
-	def addResTransactions(self):
-		if len(self.command.split("\n")) >= 4:
-			user = self.command.split("\n")[1].strip( )
-			res = self.command.split("\n")[2].capitalize( ).strip( )
-			count = self.command.split("\n")[3].strip( )
-			cost = self.command.split("\n")[4].strip( )
-			if self.command.split("\n")[1].startswith("http") or self.command.split("\n")[1].startswith(
-					"https"
-					):
-				short_name = self.command.split(" ")[2].split("/")[3]
-				user = self.vk.users.get(user_ids=short_name)[0]['id']
-			
-			elif self.command.split("\n")[1].startswith("[id"):
-				user = self.command.split("\n")[1].split("|")[0].replace("[id", "")
-			else:
-				try:
-					if 'reply_message' in self.event.object["message"].keys( ):
-						if self.event.object["message"]["reply_message"]["from_id"] > 0:
-							user = self.event.object["message"]["reply_message"]["from_id"]
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
-									)
-				except Exception:
-					pass
-			if count.isdigit( ) and cost.isdigit( ):
-				conn = pymysql.connect(
-						host="remotemysql.com",
-						user=self.user,
-						password=self.passw,
-						db='IMR5jUaWZE'
-						)
-				curs = conn.cursor( )
-				curs.execute("SELECT bd_name, res_id, cost FROM resourses WHERE name = %s", (res,))
-				res_info = curs.fetchone( )
-				if res_info is None:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Ресурса с таким название не существует."
-							)
-				else:
-					curs.execute(f"SELECT ban, {res_info[0]}, peer_id FROM users WHERE user_id = {user}")
-					us = curs.fetchone( )
-					if us is None:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Этого пользователя нет в базе данных."
-								)
-					else:
-						if int(us[0]) == 1:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Этот пользователь сейчас заблокирован."
-									)
-						else:
-							if int(cost) < int(res_info[2]):
-								if int(cost) == 0:
-									cost = 0
-									if int(us[1]) >= int(count):
-										if int(count) != 0:
-											if self.user_id != user: 
-												now_utc = datetime.now(timezone('UTC'))
-												time = str(now_utc.astimezone(timezone('Europe/Moscow')))
-												curs.execute(
-														f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
-														)
-												conn.commit( )
-												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - %s WHERE user_id = {self.user_id}",(int(count), ))
-												conn.commit( )
-												curs.execute(
-														"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
-														)
-												last_trans = curs.fetchone( )[0]
-												self.vk.messages.send(
-														peer_id=int(us[2]),
-														random_id=random.randint(0, 10000000000),
-														message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
-														)
-												self.vk.messages.send(
-														peer_id=self.peer_id,
-														random_id=random.randint(0, 10000000000),
-														message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
-														)
-											else:
-												self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"Нельзя предложить сделку самому себе."
-												)  # оформление
-										else:
-											self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"Нельзя передать 0 ед. ресурса."
-												)  # оформление
-									else:
-										morph = pymorphy2.MorphAnalyzer( )
-										res_name = morph.parse(res)[0]
-										res_name = res_name.inflect({'gent'}).word.capitalize( )
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"У вас недостаточно {res_name}."
-												)  # оформление
-								else:
-									morph = pymorphy2.MorphAnalyzer( )
-									res_name = morph.parse(res)[0]
-									res_name = res_name.inflect({'gent'}).word.capitalize( )
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"Минимальная цена за 1 ед. {res_name}: {res_info[2]}."
-											)
-							else:
-								if int(us[1]) >= int(count):
-									cost = int(cost) * int(count)
-									now_utc = datetime.now(timezone('UTC'))
-									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
-									curs.execute(
-											f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
-											)
-									conn.commit( )
-									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
-									conn.commit( )
-									curs.execute("SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1")
-									last_trans = curs.fetchone( )[0]
-									self.vk.messages.send(
-											peer_id=int(us[2]),
-											random_id=random.randint(0, 10000000000),
-											message=f"[id{user}|Вам] предложили сделку!.\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
-											)
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"[id{self.user_id}|Вы] предложили сделку!.\nЕе ID: {last_trans}"
-											)
-								else:
-									morph = pymorphy2.MorphAnalyzer( )
-									res_name = morph.parse(res)[0]
-									res_name = res_name.inflect({'gent'}).word.capitalize( )
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"У вас недостаточно {res_name}."
-											)  # оформление
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Один из аргументов указан неверно."
-						)
-		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
-					)
-	
-	def acceptPersonalTrans(self):
-		if len(self.command.split(" ")) >= 2:
-			tr_id = self.command.split(" ")[1]
-			if tr_id.isdigit( ):
-				conn = pymysql.connect(
-						host="remotemysql.com",
-						user=self.user,
-						password=self.passw,
-						db='IMR5jUaWZE'
-						)
-				curs = conn.cursor( )
-				curs.execute(
-						f"SELECT res_id, cost, purch, rej, count, from_user, to_user FROM personal_trans WHERE trans_id = {tr_id}"
-						)
-				trans = curs.fetchone( )
-				if trans is not None:
-					if int(trans[6]) == self.user_id:
-						if int(trans[2]) == 0:
-							if int(trans[3]) == 0:
-								curs.execute(f"SELECT anders FROM users WHERE user_id = {self.user_id}")
-								if int(curs.fetchone( )[0]) >= int(trans[1]):
-									now_utc = datetime.now(timezone('UTC'))
-									time = str(now_utc.astimezone(timezone('Europe/Moscow')))
-									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[0]}")
-									res_name = curs.fetchone( )
-									curs.execute(
-											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
-											)
-									conn.commit( )
-									curs.execute(f"UPDATE users SET {res_name[0]} = {res_name[0]} + %s WHERE user_id = {self.user_id}", (trans[4], ))
-									conn.commit( )
-									curs.execute(
-											f"UPDATE personal_trans SET purch = 1, purch_time = %s WHERE trans_id = {tr_id}", (time, )
-											)
-									conn.commit( )
-									curs.execute(
-											f"UPDATE users SET anders = anders + {trans[1]} WHERE user_id = {trans[5]}"
-											)
-									conn.commit( )
-									conn.close()
-									conn = pymysql.connect(
-									host="remotemysql.com",
-									user=self.user,
-									password=self.passw,
-									db='IMR5jUaWZE'
-									)
-									curs = conn.cursor( )
-									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
-									self.vk.messages.send(
-											peer_id=int(curs.fetchone( )[0]),
-											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{tr_id} совершена!"
-											)
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{tr_id} совершена!"
-											)
-								else:
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message="У вас недостаточно Андеров!"
-											)
-							else:
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message="Сделка отменена."
-										)
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Сделка уже совершена."
-									)
-					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Эта сделка предложена не Вам."
-								)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Сделки с таким ID не существует."
-							)
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="ID сделки указано неверно."
-						)
-		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
-					)
-	
-	def personalTransRejection(self):
-		if len(self.command.split(" ")) >= 2:
-			trans_id = self.command.split(" ")[1]
-			if trans_id.isdigit( ):
-				conn = pymysql.connect(
-						host="remotemysql.com",
-						user=self.user,
-						password=self.passw,
-						db='IMR5jUaWZE'
-						)
-				curs = conn.cursor( )
-				curs.execute(f"SELECT from_user, rej, purch, res_id, count FROM personal_trans WHERE trans_id = {trans_id}")
-				trans = curs.fetchone( )
-				if trans is not None:
-					if int(trans[0]) == self.user_id:
-						if int(trans[1]) == 0:
-							if int(trans[2]) == 0:
-								
-								curs.execute(f"SELECT bd_name, name FROM resourses WHERE res_id = {trans[3]}")
-								res_name = curs.fetchone( )
-								curs.execute(f"UPDATE personal_trans SET rej = 1 WHERE trans_id = {trans_id}")
-								conn.commit( )
-								curs.execute(
-										f"UPDATE users SET {res_name[0]} = {res_name[0]} + {trans[4]} WHERE user_id = {self.user_id}"
-										)
-								conn.commit( )
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message=f"Сделка #{trans_id} отменена."
-										)
-							else:
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message="Нельзя отменить совершенную сделку."
-										)
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Вы уже отменили эту сделку."
-									)
-					else:
-						self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Вы не можете отменить чужую сделку."
-								)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Сделки с таким ID не существует."
-							)
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="ID сделки указано неверно."
-						)
-		else:
-			self.vk.messages.send(
-					peer_id=self.peer_id,
-					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
-					)
-	
-	def listOfPersonalTrans(self):
-		conn = pymysql.connect(
-				host="remotemysql.com",
-				user=self.user,
-				password=self.passw,
-				db='IMR5jUaWZE'
-				)
-		curs = conn.cursor( )
-		curs.execute(
-				f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user = {self.user_id} and purch = 0"
-				)
-		from_you = curs.fetchall( )
-		fr = ""
-		for i in from_you:
-			curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
-			fr += f"ID: #{i[4]}\nДля кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
-		
-		curs.execute(
-				f"SELECT from_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user != {self.user_id} and purch = 0"
-				)
-		for_you = curs.fetchall( )
-		fro = ""
-		for i in for_you:
-			curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
-			fro += f"ID: #{i[4]}\nОт кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
-		self.vk.messages.send(
-				peer_id=self.peer_id,
-				random_id=random.randint(0, 10000000000),
-				message=f"Для вас: {fro}\n Для кого-либо: {fr}.",
-				disable_mentions=1
-				)
-		
-	def PersonalTransRejForAdms(self):
-		if self.user_id in self.adms:
-			conn = pymysql.connect(
-					host="remotemysql.com",
-					user=self.user,
-					password=self.passw,
-					db='IMR5jUaWZE'
-					)
-			curs = conn.cursor( )
-			if len(self.command.split(" ")) >= 2:
-				trans_id = self.command.split(" ")[1]
-				if trans_id.isdigit():
-					curs.execute(f"SELECT purch, rej, to_user, from_user, accept, cost, res_id, count FROM personal_trans WHERE trans_id = {trans_id}")
-					trans = curs.fetchone()
-					if trans is not None:
-						if int(trans[0]) == 1:
-							if int(trans[1]) == 0:
-								if int(trans[4]) == 0:
-									curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {trans[6]}")
-									a = curs.fetchone()
-									curs.execute(f"UPDATE users SET anders = anders - {trans[5]}, {a[0]} = {a[0]} + {trans[7]} WHERE user_id = {trans[3]}")
-									conn.commit()
-									curs.execute(f"UPDATE users SET anders = anders + {trans[5]}, {a[0]} = {a[0]} - {trans[7]} WHERE user_id = {trans[2]}")
-									conn.commit()
-									curs.execute("UPDATE personal_trans SET accept = 1")
-									conn.commit()
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{trans_id} отменена."
-											)
-								else:
-									self.vk.messages.send(
-											peer_id=self.peer_id,
-											random_id=random.randint(0, 10000000000),
-											message="Эта сделка уже заблокирована."
-											)
-							else:
-								self.vk.messages.send(
-										peer_id=self.peer_id,
-										random_id=random.randint(0, 10000000000),
-										message="Эта сделка и так отменена."
-										)
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Нельзя отменить не совершенную сделку."
-									)
-					else:
-						self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Сделки с таким ID не существует."
-							)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="ID сделки указано неверно."
-							)
-			else:
-				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
-						)
