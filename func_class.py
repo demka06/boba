@@ -1897,7 +1897,7 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=int(curs.fetchone( )[0]),
 											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{tr_id} совершена!"
+											message=f"Сделка #{tr_id} совершена!\nand {trans[1]}"
 											)
 									self.vk.messages.send(
 											peer_id=self.peer_id,
