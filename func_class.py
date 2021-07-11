@@ -1176,7 +1176,7 @@ class Main(object):
 										)
 								conn.commit( )
 								curs.execute(
-										f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1",
+										f"UPDATE market SET purch_time = %s, to_user = {self.user_id}, purch = 1 WHERE lot_id = {lot_id}",
 										(time,)
 										)
 								conn.commit( )
