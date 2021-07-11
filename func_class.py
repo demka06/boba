@@ -1895,7 +1895,7 @@ class Main(object):
 											f"UPDATE users SET anders = anders - {trans[1]} WHERE user_id = {self.user_id}"
 											)
 									conn.commit( )
-									curs.execute(f"UPDATE users SET %s = %s + %s WHERE user_id = {self.user_id}", (res_name[0], res_name[0], trans[4]) )
+									curs.execute(f"UPDATE users SET {res_name[0]} = {res_name[0]} + %s WHERE user_id = {self.user_id}", (trans[4], ))
 									conn.commit( )
 									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
 									self.vk.messages.send(
