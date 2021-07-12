@@ -61,8 +61,10 @@ while True:
 						cls.addGood()
 					elif command.startswith("/buygood"):
 						cls.buyGood()
+					elif command.startswith("/rjgood"):
+						cls.lotRejection()
 					elif command.startswith("/rejg"):
-						cls.rejectonLot()
+						cls.rejectonLotForAdms()
 					elif command.startswith("/prof"):
 						cls.getProfile()
 					elif command.startswith("/races"):
@@ -91,6 +93,14 @@ while True:
 						cls.PersonalTransRejForAdms()
 					elif command.startswith("/lsttrn"):
 						cls.listOfPersonalTrans()
+					elif command.startswith("/pid"):
+						cls.setChat()
+					elif command.startswith("/delprof"):
+						cls.deleteProfile()
+					elif command.startswith("/setfort"):
+						cls.changeFortName()
+					elif command.startswith("/chngfort"):
+						cls.changeFortNameForAdms()
 							
 						
 		except Exception:
