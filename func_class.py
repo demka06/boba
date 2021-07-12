@@ -1,3 +1,4 @@
+
 import datetime
 import random
 from datetime import datetime
@@ -1706,7 +1707,6 @@ class Main(object):
 					):
 				short_name = self.command.split(" ")[2].split("/")[3]
 				user = self.vk.users.get(user_ids=short_name)[0]['id']
-			
 			elif self.command.split("\n")[1].startswith("[id"):
 				user = self.command.split("\n")[1].split("|")[0].replace("[id", "")
 			else:
@@ -1767,7 +1767,7 @@ class Main(object):
 														f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 														)
 												conn.commit( )
-												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - %s WHERE user_id = {self.user_id}",(int(count), ))
+												curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - %s WHERE user_id = %s",(int(count), self.user_id))
 												conn.commit( )
 												curs.execute(
 														"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
@@ -1822,7 +1822,7 @@ class Main(object):
 											f"INSERT INTO personal_trans (from_user, to_user, res_id, cost, count, time) VALUES ({self.user_id}, {user}, {res_info[1]}, {cost}, {count}, %s)", (time, )
 											)
 									conn.commit( )
-									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count}")
+									curs.execute(f"UPDATE users SET {res_info[0]} = {res_info[0]} - {count} WHERE user_id = {self.user_id}")
 									conn.commit( )
 									curs.execute("SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1")
 									last_trans = curs.fetchone( )[0]
