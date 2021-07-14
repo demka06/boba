@@ -27,10 +27,10 @@ class Main(object):
 	
 	def registrationConv(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT peer_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
@@ -53,10 +53,10 @@ class Main(object):
 	
 	def registrarionUser(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT user_id FROM users WHERE user_id = %s", (self.user_id,))
@@ -83,10 +83,10 @@ class Main(object):
 			res_name = self.txt.split("\n")[1].strip( )
 			if res_cost.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				res = curs.execute("SELECT * FROM resourses WHERE name = %s", (res_name,))
@@ -131,10 +131,10 @@ class Main(object):
 			# mil_expn = self.txt.split("\n")[4].strip( ) - затраты не требуются по ТЗ
 			if mil_cost.isdigit( ) and mil_count.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				mil_check = curs.execute("SELECT * FROM military WHERE name = %s", (mil_name,))
@@ -179,10 +179,10 @@ class Main(object):
 			res_id = self.txt.split("\n")[4]
 			if cost.isdigit( ) and res_id.isdigit( ) and prof.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				build_check = curs.execute("SELECT * FROM builds WHERE name = %s", (name,))
@@ -223,10 +223,10 @@ class Main(object):
 		now_utc = datetime.now(timezone('UTC'))
 		time = now_utc.astimezone(timezone('Europe/Moscow'))
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -271,10 +271,10 @@ class Main(object):
 		now_utc = datetime.now(timezone('UTC'))
 		time = now_utc.astimezone(timezone('Europe/Moscow'))
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -316,10 +316,10 @@ class Main(object):
 	
 	def listOfMillitaryObj(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		
@@ -341,10 +341,10 @@ class Main(object):
 	
 	def listOfBuilds(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		
@@ -367,10 +367,10 @@ class Main(object):
 	def buyMilitaryObj(self):
 		if len(self.command.split(" ")) >= 2:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -446,10 +446,10 @@ class Main(object):
 	def buyBuild(self):
 		if len(self.command.split(" ")) >= 2:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT steel, wood, food, w_cris, b_cris FROM users WHERE user_id = %s", (self.user_id,))
@@ -599,10 +599,10 @@ class Main(object):
 	def transaction(self):
 		# /trans [кол во] [адресат]
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		
@@ -707,10 +707,10 @@ class Main(object):
 	def transactionRejection(self):
 		if self.user_id in self.adms:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			trans_id = self.command.split(" ")[1]
@@ -745,10 +745,10 @@ class Main(object):
 	
 	def raceInformation(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		
@@ -972,10 +972,10 @@ class Main(object):
 	
 	def setRace(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1048,7 +1048,7 @@ class Main(object):
 					if race.isdigit( ):
 						curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
 						maxi = curs.fetchone( )[0]
-						if maxi >= int(race) >= 1 and int(race) != 1 and int(race) != 4:
+						if maxi >= int(race) >= 1 and int(race) != 1:
 							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
 							conn.commit( )
 							self.vk.messages.send(
@@ -1083,10 +1083,10 @@ class Main(object):
 	
 	def changeNickname(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if len(self.txt.split(" ")) >= 2:
@@ -1123,10 +1123,10 @@ class Main(object):
 	
 	def listOfGoods(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT lot_id, from_user, res_id, count, cost FROM market WHERE purch = 0")
@@ -1145,10 +1145,10 @@ class Main(object):
 	def buyGood(self):
 		if len(self.command.split(" ")) >= 2:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1233,10 +1233,10 @@ class Main(object):
 			res_count = self.command.split("\n")[2].strip( )
 			res_cost = self.command.split("\n")[3].strip( )
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1324,10 +1324,10 @@ class Main(object):
 		if self.user_id in self.adms:
 			lot_id = self.command.split(" ")[1]
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			if lot_id.isdigit( ):
@@ -1390,10 +1390,10 @@ class Main(object):
 			except Exception:
 				pass
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -1417,20 +1417,20 @@ class Main(object):
 				stats_pic = Image.open(f"{race[1]}.png")
 				stats_pic_draw = ImageDraw.Draw(stats_pic)
 				stats_pic_draw.text(
-						xy=(164, 240), text=prof[3], fill="white", font=ImageFont.truetype("Aqum.ttf", size=25)
+						xy=(164, 240), text=prof[3], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
-						xy=(164, 155), text=prof[23], fill="white", font=ImageFont.truetype("Aqum.ttf", size=25)
+						xy=(164, 155), text=prof[23], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
-						xy=(838, 155), text=prof[2], fill="white", font=ImageFont.truetype("Aqum.ttf", size=25)
+						xy=(838, 155), text=prof[2], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
-						xy=(610, 186), text=race_count, fill="white", font=ImageFont.truetype("Aqum.ttf", size=25)
+						xy=(610, 186), text=race_count, fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
-				stats_pic_draw.text(xy=(838, 240), text=str(user_id), fill="white", font=font)
-				stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill="white", font=font)
-				stats_pic_draw.text(xy=(838, 68), text=str(prof[2]), fill="white", font=font)
+				stats_pic_draw.text(xy=(838, 240), text=str(user_id), fill=str(race[2]), font=font)
+				stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill=str(race[2]), font=font)
+				stats_pic_draw.text(xy=(838, 68), text=str(prof[2]), fill=str(race[2]), font=font)
 				
 				stats_pic_draw.text(xy=(170, 485), text=str(prof[15]), fill="black", font=font)
 				stats_pic_draw.text(xy=(170, 585), text=str(prof[16]), fill="black", font=font)
@@ -1504,10 +1504,10 @@ class Main(object):
 	
 	def races(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT name, adm, race_id FROM races")
@@ -1523,10 +1523,10 @@ class Main(object):
 	
 	def getCount(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1548,10 +1548,10 @@ class Main(object):
 	
 	def getLot(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1588,10 +1588,10 @@ class Main(object):
 	
 	def getTransaction(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1610,7 +1610,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"TRANS_ID: {trans[0]}\nFROM: @id{trans[1]}\nTO: @id{trans[2]}\nSUMM: {trans[3]}\nTIME: {trans[4]}\nACCEPT: {trans[6]}"
+								message=f"TRANS_ID: {trans[0]}\nFROM: @id{trans[1]}\nTO: @id{trans[2]}\nSUMM: {trans[3]}\nTIME: {trans[4]}\nACCEPT: {trans[5]}"
 								)
 				else:
 					self.vk.messages.send(
@@ -1631,10 +1631,10 @@ class Main(object):
 		"""
 		if self.user_id in self.adms:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 3:
@@ -1696,10 +1696,10 @@ class Main(object):
 	def giveBan(self):
 		if self.user_id in self.adms:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1736,10 +1736,10 @@ class Main(object):
 	def giveUnban(self):
 		if self.user_id in self.adms:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1801,10 +1801,10 @@ class Main(object):
 					pass
 			if count.isdigit( ) and cost.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -1959,10 +1959,10 @@ class Main(object):
 			tr_id = self.command.split(" ")[1]
 			if tr_id.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -1999,10 +1999,10 @@ class Main(object):
 									conn.commit( )
 									conn.close( )
 									conn = pymysql.connect(
-											host="remotemysql.com",
+											host="triniti.ru-hoster.com",
 											user=self.user,
 											password=self.passw,
-											db='IMR5jUaWZE'
+											db='demkaXvl'
 											)
 									curs = conn.cursor( )
 									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
@@ -2064,10 +2064,10 @@ class Main(object):
 			trans_id = self.command.split(" ")[1]
 			if trans_id.isdigit( ):
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -2131,10 +2131,10 @@ class Main(object):
 	
 	def listOfPersonalTrans(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -2164,10 +2164,10 @@ class Main(object):
 	def PersonalTransRejForAdms(self):
 		if self.user_id in self.adms:
 			conn = pymysql.connect(
-					host="remotemysql.com",
+					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='IMR5jUaWZE'
+					db='demkaXvl'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -2237,10 +2237,10 @@ class Main(object):
 	
 	def lotRejection(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		if len(self.command.split(" ")) >= 2:
@@ -2311,10 +2311,10 @@ class Main(object):
 					user = user.split("|")[0].replace("[id", "")
 					if user.isdigit( ):
 						conn = pymysql.connect(
-								host="remotemysql.com",
+								host="triniti.ru-hoster.com",
 								user=self.user,
 								password=self.passw,
-								db='IMR5jUaWZE'
+								db='demkaXvl'
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {user}")
@@ -2353,10 +2353,10 @@ class Main(object):
 	
 	def setChat(self):
 		conn = pymysql.connect(
-				host="remotemysql.com",
+				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='IMR5jUaWZE'
+				db='demkaXvl'
 				)
 		curs = conn.cursor( )
 		curs.execute(f"SELECT peer_id FROM users WHERE user_id = {self.user_id}")
@@ -2379,10 +2379,10 @@ class Main(object):
 			name = self.txt.split(" ", 1)[1]
 			if len(name) <= 20:
 				conn = pymysql.connect(
-						host="remotemysql.com",
+						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='IMR5jUaWZE'
+						db='demkaXvl'
 						)
 				curs = conn.cursor( )
 				curs.execute(f"UPDATE users SET fort_name = %s WHERE user_id = {self.user_id}", (name,))
@@ -2414,10 +2414,10 @@ class Main(object):
 					user = user.split("|")[0].replace("[id", "")
 					if user.isdigit( ):
 						conn = pymysql.connect(
-								host="remotemysql.com",
+								host="triniti.ru-hoster.com",
 								user=self.user,
 								password=self.passw,
-								db='IMR5jUaWZE'
+								db='demkaXvl'
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {self.user_id}")
