@@ -269,7 +269,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]} (По Московскому времени)"
+					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]}"
 					)
 		else:
 			
@@ -325,7 +325,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)"
 					)
 	
 	def listOfMillitaryObj(self):
