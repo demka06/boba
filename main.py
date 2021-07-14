@@ -109,3 +109,4 @@ while True:
 					random_id=random.randint(0, 10000000000),
 					message=f"[ERROR]\n{traceback.format_exc()}\n\nLAST_EVENT: {event}"
 					)
+			print(traceback.format_exc())
