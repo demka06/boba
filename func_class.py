@@ -1056,10 +1056,11 @@ class Main(object):
 									random_id=random.randint(0, 10000000000),
 									message="Раса успешно установлена."
 									)
-						self.vk.messages.send(
+						else:
+							self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Расы с таким ID не существует."
+								message="Расы с таким ID не существует или вы не можете установить ID этой расы"
 								)
 					else:
 						self.vk.messages.send(
