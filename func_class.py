@@ -1465,7 +1465,7 @@ class Main(object):
 				stats_pic_draw.text(
 						xy=(164, 240), text=prof[3], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
-				if race[23] is None:
+				if prof[23] is None:
 					stats_pic_draw.text(
 						xy=(164, 155), text="Не указано", fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
