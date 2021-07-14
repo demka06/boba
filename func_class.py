@@ -269,14 +269,14 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]}"
+					message=f"Ресурсы собраны!\nДерево: {res[6]}\nМеталлы: {res[0]}\nПродовольствие: {res[2]}\nКристаллы Тьмы: {res[4]}\nКристаллы Света:{res[5]}\nАндеры: {res[1] + res[3]} (По Московскому времени)"
 					)
 		else:
 			
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')}"
+					message=f"Вы уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)"
 					)
 	
 	def collectExpirience(self):
