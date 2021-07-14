@@ -31,7 +31,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT peer_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
@@ -59,7 +59,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT user_id FROM users WHERE user_id = %s", (self.user_id,))
@@ -91,7 +91,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				res = curs.execute("SELECT * FROM resourses WHERE name = %s", (res_name,))
@@ -141,7 +141,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				mil_check = curs.execute("SELECT * FROM military WHERE name = %s", (mil_name,))
@@ -191,7 +191,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				build_check = curs.execute("SELECT * FROM builds WHERE name = %s", (name,))
@@ -237,7 +237,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -287,7 +287,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -334,7 +334,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		
@@ -361,7 +361,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		
@@ -389,7 +389,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -471,7 +471,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT steel, wood, food, w_cris, b_cris FROM users WHERE user_id = %s", (self.user_id,))
@@ -627,7 +627,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		val = self.command.split(" ")[1]
@@ -736,7 +736,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			trans_id = self.command.split(" ")[1]
@@ -775,7 +775,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		
@@ -1006,7 +1006,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1121,7 +1121,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if len(self.txt.split(" ")) >= 2:
@@ -1163,7 +1163,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT lot_id, from_user, res_id, count, cost FROM market WHERE purch = 0")
@@ -1187,7 +1187,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1277,7 +1277,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1370,7 +1370,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			if lot_id.isdigit( ):
@@ -1438,7 +1438,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -1553,7 +1553,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT name, adm, race_id FROM races")
@@ -1573,7 +1573,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1599,7 +1599,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1640,7 +1640,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1684,7 +1684,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 3:
@@ -1750,7 +1750,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1791,7 +1791,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1857,7 +1857,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -2016,7 +2016,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -2114,7 +2114,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -2182,7 +2182,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -2216,7 +2216,7 @@ class Main(object):
 					user=self.user,
 					password=self.passw,
 					db='demkaXvl',
-					charset="utf8_unicode_ci"
+					charset='utf8', init_command='SET NAMES UTF8'
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -2290,7 +2290,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		if len(self.command.split(" ")) >= 2:
@@ -2365,7 +2365,7 @@ class Main(object):
 								user=self.user,
 								password=self.passw,
 								db='demkaXvl',
-								charset="utf8_unicode_ci"
+								charset='utf8', init_command='SET NAMES UTF8'
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {user}")
@@ -2408,7 +2408,7 @@ class Main(object):
 				user=self.user,
 				password=self.passw,
 				db='demkaXvl',
-				charset="utf8_unicode_ci"
+				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
 		curs.execute(f"SELECT peer_id FROM users WHERE user_id = {self.user_id}")
@@ -2435,7 +2435,7 @@ class Main(object):
 						user=self.user,
 						password=self.passw,
 						db='demkaXvl',
-						charset="utf8_unicode_ci"
+						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
 				curs.execute(f"UPDATE users SET fort_name = %s WHERE user_id = {self.user_id}", (name,))
@@ -2471,7 +2471,7 @@ class Main(object):
 								user=self.user,
 								password=self.passw,
 								db='demkaXvl',
-								charset="utf8_unicode_ci"
+								charset='utf8', init_command='SET NAMES UTF8'
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {self.user_id}")
