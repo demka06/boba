@@ -1480,8 +1480,7 @@ class Main(object):
 						xy=(610, 186), text=race_count, fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(xy=(838, 240), text=str(user_id), fill=str(race[2]), font=font)
-				stats_pic_draw.text(xy=(552, 239), text=str(prof[1]), fill=str(race[2]), font=font)
-				stats_pic_draw.text(xy=(838, 68), text=str(prof[2]), fill=str(race[2]), font=font)
+				stats_pic_draw.text(xy=(838, 68), text=str(prof[1]), fill=str(race[2]), font=font)
 				
 				stats_pic_draw.text(xy=(170, 485), text=str(prof[15]), fill="black", font=font)
 				stats_pic_draw.text(xy=(170, 585), text=str(prof[16]), fill="black", font=font)
