@@ -30,7 +30,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT peer_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
@@ -50,13 +51,15 @@ class Main(object):
 						(self.peer_id, 0, 0)
 						)
 				conn.commit( )
+		
 	
 	def registrarionUser(self):
 		conn = pymysql.connect(
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		res = curs.execute("SELECT user_id FROM users WHERE user_id = %s", (self.user_id,))
@@ -68,6 +71,7 @@ class Main(object):
 					(self.user_id, self.peer_id, 0, user_name, 10)
 					)
 			conn.commit( )
+			
 	
 	def addResourse(self):
 		"""
@@ -86,7 +90,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				res = curs.execute("SELECT * FROM resourses WHERE name = %s", (res_name,))
@@ -96,6 +101,7 @@ class Main(object):
 							(res_name, res_cost)
 							)
 					conn.commit( )
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
@@ -134,7 +140,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				mil_check = curs.execute("SELECT * FROM military WHERE name = %s", (mil_name,))
@@ -144,6 +151,7 @@ class Main(object):
 							(mil_name, mil_count, mil_cost)
 							)
 					conn.commit( )
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
@@ -182,7 +190,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				build_check = curs.execute("SELECT * FROM builds WHERE name = %s", (name,))
@@ -200,6 +209,7 @@ class Main(object):
 								(name, cost, prof, res_id)
 								)
 						conn.commit( )
+						
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
@@ -226,7 +236,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -254,6 +265,7 @@ class Main(object):
 					f"INSERT INTO res_collect (steel, anders, food, w_cris, b_cris, wood, time, user_id) VALUES ({res[0]}, {res[1] + res[3]}, {res[2]},{res[4]}, {res[5]}, {res[6]}, {now}, {self.user_id})"
 					)
 			conn.commit( )
+			
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
@@ -274,7 +286,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		now = int(time.timestamp( ))
@@ -302,6 +315,7 @@ class Main(object):
 				conn.commit( )
 				curs.execute(f"INSERT INTO exp_collect (exp, time, user_id) VALUES ({res}, {now}, {self.user_id})")
 				conn.commit( )
+				
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
@@ -319,11 +333,13 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		
 		curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+		
 		builds = curs.fetchone( )
 		stats_pic = Image.open("voyska_v2.png")
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
@@ -344,11 +360,13 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		
 		curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
+		
 		builds = curs.fetchone( )
 		stats_pic = Image.open("stroenia_v2.png")
 		stats_pic_draw = ImageDraw.Draw(stats_pic)
@@ -370,7 +388,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -385,6 +404,7 @@ class Main(object):
 								f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
 								)
 						conn.commit( )
+						
 						morph = pymorphy2.MorphAnalyzer( )
 						mil_name = morph.parse(mil[3])[0]
 						mil_name = mil_name.inflect({'gent'}).word.capitalize( )
@@ -415,6 +435,7 @@ class Main(object):
 								f"UPDATE users SET {mil[2]} = {mil[2]} + {mil[1]}, anders = anders - {mil[0]} WHERE user_id = {self.user_id}"
 								)
 						conn.commit( )
+						
 						morph = pymorphy2.MorphAnalyzer( )
 						mil_name = morph.parse(mil[3])[0]
 						mil_name = mil_name.inflect({'gent'}).word.capitalize( )
@@ -449,7 +470,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			curs.execute("SELECT steel, wood, food, w_cris, b_cris FROM users WHERE user_id = %s", (self.user_id,))
@@ -478,6 +500,7 @@ class Main(object):
 												f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
 												)
 										conn.commit( )
+										
 										morph = pymorphy2.MorphAnalyzer( )
 										build_name = morph.parse(build[6])[0]
 										build_name = build_name.inflect({'gent'}).word.capitalize( )
@@ -545,6 +568,7 @@ class Main(object):
 												f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {build[2]}, steel = steel - {build[1]}, food = food - {build[0]}, b_cris = b_cris - {build[3]}, w_cris = w_cris - {build[4]} WHERE user_id = {self.user_id}"
 												)
 										conn.commit( )
+										
 										morph = pymorphy2.MorphAnalyzer( )
 										build_name = morph.parse(build[6])[0]
 										build_name = build_name.inflect({'gent'}).word.capitalize( )
@@ -602,10 +626,10 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
-		
 		val = self.command.split(" ")[1]
 		if val.isdigit( ):
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -658,6 +682,7 @@ class Main(object):
 							conn.commit( )
 							curs.execute("SELECT trans_id FROM transactions ORDER BY trans_id DESC LIMIT 1")
 							last_post = curs.fetchone( )[0]
+							
 							self.vk.messages.send(
 									peer_id=self.adms_chat,
 									random_id=random.randint(0, 10000000000),
@@ -710,7 +735,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			trans_id = self.command.split(" ")[1]
@@ -748,7 +774,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		
@@ -821,6 +848,7 @@ class Main(object):
 			vk_upload = vk_api.VkUpload(self.vk_session)
 			photo = vk_upload.photo_messages(photos="stats.png")
 			photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
+			
 			self.vk.messages.send(peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo)
 		else:
 			race = self.command.split(" ", 1)[1]
@@ -894,6 +922,7 @@ class Main(object):
 					vk_upload = vk_api.VkUpload(self.vk_session)
 					photo = vk_upload.photo_messages(photos="stats.png")
 					photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 							)
@@ -966,6 +995,7 @@ class Main(object):
 					vk_upload = vk_api.VkUpload(self.vk_session)
 					photo = vk_upload.photo_messages(photos="stats.png")
 					photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 							)
@@ -975,7 +1005,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1003,6 +1034,7 @@ class Main(object):
 							else:
 								curs.execute("UPDATE users SET race_id = %s WHERE user_id = %s", (race, user))
 								conn.commit( )
+								
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
@@ -1029,6 +1061,7 @@ class Main(object):
 						if maxi >= int(race) >= 1:
 							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
 							conn.commit( )
+							
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
@@ -1051,6 +1084,7 @@ class Main(object):
 						if maxi >= int(race) >= 1 and int(race) != 1:
 							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
 							conn.commit( )
+							
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
@@ -1058,10 +1092,10 @@ class Main(object):
 									)
 						else:
 							self.vk.messages.send(
-								peer_id=self.peer_id,
-								random_id=random.randint(0, 10000000000),
-								message="Расы с таким ID не существует или вы не можете установить ID этой расы"
-								)
+									peer_id=self.peer_id,
+									random_id=random.randint(0, 10000000000),
+									message="Расы с таким ID не существует или вы не можете установить ID этой расы"
+									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
@@ -1086,7 +1120,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if len(self.txt.split(" ")) >= 2:
@@ -1103,6 +1138,7 @@ class Main(object):
 					curs.execute("UPDATE users SET nickname = %s WHERE user_id = %s", (name, self.user_id))
 					conn.commit( )
 					# нужно переложить ответственность за ник на пользователя - ГОТОВО
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
@@ -1126,7 +1162,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT lot_id, from_user, res_id, count, cost FROM market WHERE purch = 0")
@@ -1135,6 +1172,7 @@ class Main(object):
 		for i in goods:
 			curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[2]}")
 			a += f"ID: {i[0]}\nПродавец: @id{i[1]}\nСтоимость: {i[4]} Андеров \nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[3]}\n\n"
+		
 		self.vk.messages.send(
 				peer_id=self.peer_id,
 				random_id=random.randint(0, 10000000000),
@@ -1148,7 +1186,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1190,6 +1229,7 @@ class Main(object):
 										(time,)
 										)
 								conn.commit( )
+								
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
@@ -1236,7 +1276,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			now_utc = datetime.now(timezone('UTC'))
@@ -1275,6 +1316,7 @@ class Main(object):
 									conn.commit( )
 									curs.execute("SELECT lot_id FROM market ORDER BY lot_id DESC LIMIT 1")
 									lot = curs.fetchone( )[0]
+									
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
@@ -1327,7 +1369,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			if lot_id.isdigit( ):
@@ -1348,6 +1391,7 @@ class Main(object):
 					conn.commit( )
 					curs.execute(f"UPDATE market SET access = 0 WHERE lot_id = {lot_id}")
 					conn.commit( )
+					
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
@@ -1393,7 +1437,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -1410,7 +1455,7 @@ class Main(object):
 		else:
 			curs.execute("SELECT name, low_name, color FROM races WHERE race_id = %s", (prof[0],))
 			race = curs.fetchone( )
-			curs.fetchone(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0].lower()}")
+			curs.fetchone(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0].lower( )}")
 			race_count = str(curs.fetchone( )[0])
 			font = ImageFont.truetype("Aqum.ttf", size=20)
 			if int(prof[0]) != 1:
@@ -1507,7 +1552,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		curs.execute("SELECT name, adm, race_id FROM races")
@@ -1526,7 +1572,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1551,7 +1598,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1591,7 +1639,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if self.user_id in self.adms:
@@ -1634,7 +1683,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 3:
@@ -1699,7 +1749,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1739,7 +1790,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -1804,7 +1856,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -1962,7 +2015,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -1997,14 +2051,6 @@ class Main(object):
 											f"UPDATE users SET anders = anders + {trans[1]} WHERE user_id = {trans[5]}"
 											)
 									conn.commit( )
-									conn.close( )
-									conn = pymysql.connect(
-											host="triniti.ru-hoster.com",
-											user=self.user,
-											password=self.passw,
-											db='demkaXvl'
-											)
-									curs = conn.cursor( )
 									curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
 									self.vk.messages.send(
 											peer_id=int(curs.fetchone( )[0]),
@@ -2067,7 +2113,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				curs.execute(
@@ -2134,7 +2181,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		curs.execute(
@@ -2167,7 +2215,8 @@ class Main(object):
 					host="triniti.ru-hoster.com",
 					user=self.user,
 					password=self.passw,
-					db='demkaXvl'
+					db='demkaXvl',
+					charset="utf-8"
 					)
 			curs = conn.cursor( )
 			if len(self.command.split(" ")) >= 2:
@@ -2240,7 +2289,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		if len(self.command.split(" ")) >= 2:
@@ -2314,7 +2364,8 @@ class Main(object):
 								host="triniti.ru-hoster.com",
 								user=self.user,
 								password=self.passw,
-								db='demkaXvl'
+								db='demkaXvl',
+								charset="utf-8"
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {user}")
@@ -2356,7 +2407,8 @@ class Main(object):
 				host="triniti.ru-hoster.com",
 				user=self.user,
 				password=self.passw,
-				db='demkaXvl'
+				db='demkaXvl',
+				charset="utf-8"
 				)
 		curs = conn.cursor( )
 		curs.execute(f"SELECT peer_id FROM users WHERE user_id = {self.user_id}")
@@ -2382,7 +2434,8 @@ class Main(object):
 						host="triniti.ru-hoster.com",
 						user=self.user,
 						password=self.passw,
-						db='demkaXvl'
+						db='demkaXvl',
+						charset="utf-8"
 						)
 				curs = conn.cursor( )
 				curs.execute(f"UPDATE users SET fort_name = %s WHERE user_id = {self.user_id}", (name,))
@@ -2417,7 +2470,8 @@ class Main(object):
 								host="triniti.ru-hoster.com",
 								user=self.user,
 								password=self.passw,
-								db='demkaXvl'
+								db='demkaXvl',
+								charset="utf-8"
 								)
 						curs = conn.cursor( )
 						curs.execute(f"SELECT user_id FROM users WHERE user_id = {self.user_id}")
