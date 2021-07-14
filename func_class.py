@@ -1409,7 +1409,7 @@ class Main(object):
 		else:
 			curs.execute("SELECT name, low_name, color FROM races WHERE race_id = %s", (prof[0],))
 			race = curs.fetchone( )
-			curs.fetchone(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0]}")
+			curs.fetchone(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0].lower()}")
 			race_count = str(curs.fetchone( )[0])
 			font = ImageFont.truetype("Aqum.ttf", size=20)
 			if int(prof[0]) != 1:
