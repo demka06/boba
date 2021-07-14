@@ -1459,12 +1459,18 @@ class Main(object):
 			race_count = str(curs.fetchone( )[0])
 			font = ImageFont.truetype("Aqum.ttf", size=20)
 			if int(prof[0]) != 1:
+				
 				stats_pic = Image.open(f"{race[1]}.png")
 				stats_pic_draw = ImageDraw.Draw(stats_pic)
 				stats_pic_draw.text(
 						xy=(164, 240), text=prof[3], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
-				stats_pic_draw.text(
+				if race[2] is None:
+					stats_pic_draw.text(
+						xy=(164, 155), text="Не указано", fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
+						)
+				else:
+					stats_pic_draw.text(
 						xy=(164, 155), text=prof[23], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
