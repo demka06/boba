@@ -1474,7 +1474,7 @@ class Main(object):
 						xy=(164, 155), text=prof[23], fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
-						xy=(838, 155), text=int(prof[2]), fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
+						xy=(838, 155), text=str(prof[2]), fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
 						)
 				stats_pic_draw.text(
 						xy=(610, 186), text=race_count, fill=str(race[2]), font=ImageFont.truetype("Aqum.ttf", size=25)
