@@ -2335,7 +2335,7 @@ class Main(object):
 			fr = ""
 			for i in from_you:
 				curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
-				fr += f"ID: #{i[4]}\nДля кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
+				fr += f"ID: #{i[4]}\nДля кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}\n\n"
 			
 			curs.execute(
 					f"SELECT from_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user = {self.user_id} and purch = 0"
@@ -2446,7 +2446,7 @@ class Main(object):
 			if len(self.command.split(" ")) >= 2:
 				lot_id = self.command.split(" ")[1]
 				if lot_id.isdigit( ):
-					curs.execute(f"SELECT from_user, res_id, count, access, purch WHERE lot_id = {lot_id}")
+					curs.execute(f"SELECT from_user, res_id, count, access, purch FROM personal_trans WHERE lot_id = {lot_id}")
 					lot = curs.fetchone( )
 					if lot is None:
 						self.vk.messages.send(
