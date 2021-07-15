@@ -1524,7 +1524,6 @@ class Main(object):
 			prof = curs.fetchone( )
 			curs.execute(f"SELECT verif FROM conversations WHERE peer_id = {prof[24]}")
 			chat = curs.fetchone( )[0]
-			print(chat)
 			if prof is None:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
@@ -1555,15 +1554,13 @@ class Main(object):
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					if chat == 1:
-						print(2)
 						stats_pic_draw.text(
-								xy=(627, 256), text="V", fill=str(race[2]),
+								xy=(627, 256), text="V", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					else:
-						print(3)
 						stats_pic_draw.text(
-								xy=(627, 256), text="X", fill=str(race[2]),
+								xy=(627, 256), text="X", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					stats_pic_draw.text(
