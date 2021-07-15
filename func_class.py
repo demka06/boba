@@ -2513,7 +2513,7 @@ class Main(object):
 		if self.user_id in self.adms:
 			if len(self.command.split(" ")) >= 2:
 				user = self.command.split(" ")[1]
-				if user.startswith("[id") and user.endwith("]"):
+				if user.startswith("[id") and user.endswith("]"):
 					user = user.split("|")[0].replace("[id", "")
 					if user.isdigit( ):
 						conn = pymysql.connect(
