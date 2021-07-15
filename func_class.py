@@ -1536,7 +1536,7 @@ class Main(object):
 				curs.execute(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0]}")
 				race_count = str(curs.fetchone( )[0])
 				font = ImageFont.truetype("Aqum.ttf", size=20)
-				if int(prof[0]) != 1:
+				if int(prof[0]) !=1:
 					
 					stats_pic = Image.open(f"{race[1]}.png")
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
