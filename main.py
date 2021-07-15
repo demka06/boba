@@ -29,49 +29,49 @@ while True:
 					cls = func_class.Main(vk, event, vk_session)
 					cls.registrationConv()
 					cls.registrarionUser()
-					if command.split()[0] in ("/addres", ""):
+					if command.split(" ")[0] in ("/addres", ""):
 						cls.addResourse()
-					elif command.split()[0] in ("/addmil", ""):
+					elif command.split(" ")[0] in ("/addmil", ""):
 						cls.addMilitary()
-					elif command.split()[0] in ("/addbld", ""):
+					elif command.split(" ")[0] in ("/addbld", ""):
 						cls.addBuild()
-					elif command.split()[0] in ("/collres", ""):
+					elif command.split(" ")[0] in ("/collres", ""):
 						cls.collectResourses()
-					elif command.split()[0] in ("/collexp", ""):
+					elif command.split(" ")[0] in ("/collexp", ""):
 						cls.collectExpirience()
-					elif command.split()[0] in ("/listbld", ""):
+					elif command.split(" ")[0] in ("/listbld", ""):
 						cls.listOfBuilds()
-					elif command.split()[0] in ("/listmil", ""):
+					elif command.split(" ")[0] in ("/listmil", ""):
 						cls.listOfMillitaryObj()
-					elif command.split()[0] in ("/buybld", ""):
+					elif command.split(" ")[0] in ("/buybld", ""):
 						cls.buyBuild()
-					elif command.split()[0] in ("/buymil", ""):
+					elif command.split(" ")[0] in ("/buymil", ""):
 						cls.buyMilitaryObj()
-					elif command.split()[0] in ("/transm", ""):
+					elif command.split(" ")[0] in ("/transm", ""):
 						cls.transaction()
-					elif command.split()[0] in ("/rejt", ""):
+					elif command.split(" ")[0] in ("/rejt", ""):
 						cls.transactionRejection()
-					elif command.split()[0] in ("/setrace", ""):
+					elif command.split(" ")[0] in ("/setrace", ""):
 						cls.setRace()
-					elif command.split()[0] in ("/st", ""):
+					elif command.split(" ")[0] in ("/st", ""):
 						cls.raceInformation()
-					elif command.split()[0] in ("/goods", ""):
+					elif command.split(" ")[0] in ("/goods", ""):
 						cls.listOfGoods()
-					elif command.split()[0] in ("/addgood", ""):
+					elif command.split(" ")[0] in ("/addgood", ""):
 						cls.addGood()
-					elif command.split()[0] in ("/buygood", ""):
+					elif command.split(" ")[0] in ("/buygood", ""):
 						cls.buyGood()
-					elif command.split()[0] in ("/rjgood", ""):
+					elif command.split(" ")[0] in ("/rjgood", ""):
 						cls.lotRejection()
-					elif command.split()[0] in ("/rejg", ""):
+					elif command.split(" ")[0] in ("/rejg", ""):
 						cls.rejectonLotForAdms()
-					elif command.split()[0] in ("/prof", ""):
+					elif command.split(" ")[0] in ("/prof", ""):
 						cls.getProfile()
-					elif command.split()[0] in ("/races", ""):
+					elif command.split(" ")[0] in ("/races", ""):
 						cls.races()
-					elif command.split()[0] in ("/nickname", ""):
+					elif command.split(" ")[0] in ("/nickname", ""):
 						cls.changeNickForAdms()
-					elif command.split()[0] in ("/nick", ""):
+					elif command.split(" ")[0] in ("/nick", ""):
 						cls.changeNickname()
 					elif command.startswith("/getstats"):
 						cls.getCount()
@@ -81,25 +81,25 @@ while True:
 						cls.getTransaction()
 					elif command.startswith("/event"):
 						cls.showEvent()
-					elif command.split()[0] in ("/help", ""):
+					elif command.split(" ")[0] in ("/help", ""):
 						cls.help()
-					elif command.split()[0] in ("/transr", ""):
+					elif command.split(" ")[0] in ("/transr", ""):
 						cls.addResTransactions()
-					elif command.split()[0] in ("/trnacc", ""):
+					elif command.split(" ")[0] in ("/trnacc", ""):
 						cls.acceptPersonalTrans()
-					elif command.split()[0] in ("/trnrej", ""):
+					elif command.split(" ")[0] in ("/trnrej", ""):
 						cls.personalTransRejection()
-					elif command.split()[0] in ("/rjtrns", ""):
+					elif command.split(" ")[0] in ("/rjtrns", ""):
 						cls.PersonalTransRejForAdms()
-					elif command.split()[0] in ("/lsttrn", ""):
+					elif command.split(" ")[0] in ("/lsttrn", ""):
 						cls.listOfPersonalTrans()
-					elif command.split()[0] in ("/pid", ""):
+					elif command.split(" ")[0] in ("/pid", ""):
 						cls.setChat()
 					elif command.startswith("/delprof"):
 						cls.deleteProfile()
-					elif command.split()[0] in ("/setfort", ""):
+					elif command.split(" ")[0] in ("/setfort", ""):
 						cls.changeFortName()
-					elif command.split()[0] in ("/chngfort", ""):
+					elif command.split(" ")[0] in ("/chngfort", ""):
 						cls.changeFortNameForAdms()
 					elif command.startswith("/verif"):
 						cls.verificationConv()
