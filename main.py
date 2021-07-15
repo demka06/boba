@@ -58,7 +58,7 @@ while True:
 						cls.raceInformation( )
 					elif command.split(" ")[0] in ("/goods", " "):
 						cls.listOfGoods( )
-					elif command.split(" ")[0] in ("/addgood", " "):
+					elif command.split("\n")[0] in ("/addgood", " "):
 						cls.addGood( )
 					elif command.split(" ")[0] in ("/buygood", " "):
 						cls.buyGood( )
@@ -84,7 +84,7 @@ while True:
 						cls.showEvent( )
 					elif command.split(" ")[0] in ("/help", " "):
 						cls.help( )
-					elif command.split(" ")[0] in ("/transr", " "):
+					elif command.split("\n")[0] in ("/transr", " "):
 						cls.addResTransactions( )
 					elif command.split(" ")[0] in ("/trnacc", " "):
 						cls.acceptPersonalTrans( )
