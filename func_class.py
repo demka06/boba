@@ -278,10 +278,10 @@ class Main(object):
 				font = ImageFont.truetype("Aqum.ttf", size=23)
 				stats_pic_draw.text(xy=(165, 179), text=str(res[2]), fill="black", font=font)
 				stats_pic_draw.text(xy=(165, 279), text=str(res[6]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 379), text=str(res[0]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 478), text=str(res[5]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 575), text=str(res[4]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 673), text=str(res[1] + res[3]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 378), text=str(res[0]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 477), text=str(res[5]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 574), text=str(res[4]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 672), text=str(res[1] + res[3]), fill="black", font=font)
 				
 				stats_pic.save('r.png')
 				
@@ -1244,7 +1244,7 @@ class Main(object):
 					)
 			curs = conn.cursor( )
 			curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-			if curs.fetchone( )[0] == 1:
+			if int(curs.fetchone( )[0])==1:
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
 				lot_id = self.command.split(" ")[1]
