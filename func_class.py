@@ -1555,12 +1555,12 @@ class Main(object):
 								)
 					if chat == 1:
 						stats_pic_draw.text(
-								xy=(636, 256), text="V", fill="#080808",
+								xy=(632, 256), text="V", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					else:
 						stats_pic_draw.text(
-								xy=(636, 256), text="X", fill="#080808",
+								xy=(632, 256), text="X", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					stats_pic_draw.text(
