@@ -1536,7 +1536,7 @@ class Main(object):
 				curs.execute(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0]}")
 				race_count = str(curs.fetchone( )[0])
 				font = ImageFont.truetype("Aqum.ttf", size=20)
-				if int(prof[0]) !=1:
+				if int(prof[0]) != 1:
 					
 					stats_pic = Image.open(f"{race[1]}.png")
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
@@ -2030,8 +2030,6 @@ class Main(object):
 																"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
 																)
 														last_trans = curs.fetchone( )[0]
-														print(int(us[2]) != self.peer_id)
-														print(us[2])
 														if int(us[2]) != self.peer_id:
 															self.vk.messages.send(
 																	peer_id=int(us[2]),
@@ -2041,12 +2039,7 @@ class Main(object):
 															self.vk.messages.send(
 																	peer_id=self.peer_id,
 																	random_id=random.randint(0, 10000000000),
-																	message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}\n\n{int(us[2]) != self.peer_id}\n{us[2]}"
-																	)
-															self.vk.messages.send(
-																	peer_id=self.peer_id,
-																	random_id=random.randint(0, 10000000000),
-																	message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}\n\n{int(us[2]) != self.peer_id}\n{us[2]}"
+																	message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
 																	)
 														else:
 															self.vk.messages.send(
@@ -2102,16 +2095,17 @@ class Main(object):
 													"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
 													)
 											last_trans = curs.fetchone( )[0]
-											self.vk.messages.send(
-													peer_id=int(us[2]),
-													random_id=random.randint(0, 10000000000),
-													message=f"[id{user}|Вам] предложили сделку!.\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
-													)
-											self.vk.messages.send(
-													peer_id=self.peer_id,
-													random_id=random.randint(0, 10000000000),
-													message=f"&#9989; [id{self.user_id}|Вы] предложили сделку!.\nЕе ID: {last_trans}"
-													)
+											if int(us[2]) != self.peer_id:
+												self.vk.messages.send(
+														peer_id=int(us[2]),
+														random_id=random.randint(0, 10000000000),
+														message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
+														)
+												self.vk.messages.send(
+														peer_id=self.peer_id,
+														random_id=random.randint(0, 10000000000),
+														message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}"
+														)
 										else:
 											morph = pymorphy2.MorphAnalyzer( )
 											res_name = morph.parse(res)[0]

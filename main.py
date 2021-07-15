@@ -14,8 +14,6 @@ vk_session = vk_api.VkApi(token=token)  # Обработка access_token
 longpoll = VkBotLongPoll(vk_session, group_id)  # Данные для работы в сообществе
 vk = vk_session.get_api( )  # For api requests
 
-user = str(os.environ.get("SQL-USER"))
-passw = str(os.environ.get("SQL-PASS"))
 
 # ----------------[ ENIGNE ]-----------------
 while True:
