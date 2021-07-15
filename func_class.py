@@ -1830,7 +1830,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="&#10062; аточно аргументов."
+						message="&#10062; недостаточно аргументов."
 						)
 	
 	def showEvent(self):
