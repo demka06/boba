@@ -30,11 +30,11 @@ while True:
 					cls = func_class.Main(vk, event, vk_session)
 					cls.registrationConv( )
 					cls.registrarionUser( )
-					if command.split("\n")[0] in ("/addres", " "):
+					if command.split(" ")[0] in ("/addres", "/addres "):
 						cls.addResourse( )
-					elif command.split("\n")[0] in ("/addmil", " "):
+					elif command.split(" ")[0] in ("/addmil", "/addmil "):
 						cls.addMilitary( )
-					elif command.split("\n")[0] in ("/addbld", " "):
+					elif command.split(" ")[0] in ("/addbld", "/addbld "):
 						cls.addBuild( )
 					elif command.split(" ")[0] in ("/collres", " "):
 						cls.collectResourses( )
@@ -58,7 +58,7 @@ while True:
 						cls.raceInformation( )
 					elif command.split(" ")[0] in ("/goods", " "):
 						cls.listOfGoods( )
-					elif command.split("\n")[0] in ("/addgood", " "):
+					elif command.split(" ")[0] in ("/addgood", "/addgood "):
 						cls.addGood( )
 					elif command.split(" ")[0] in ("/buygood", " "):
 						cls.buyGood( )
@@ -84,7 +84,7 @@ while True:
 						cls.showEvent( )
 					elif command.split(" ")[0] in ("/help", " "):
 						cls.help( )
-					elif command.split(" ")[0] in ("/transr", " "):
+					elif command.split(" ")[0] in ("/transr", "/transr "):
 						cls.addResTransactions( )
 					elif command.split(" ")[0] in ("/trnacc", " "):
 						cls.acceptPersonalTrans( )
