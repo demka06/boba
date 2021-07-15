@@ -1218,7 +1218,7 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		if int(curs.fetchone( )[0]) == 1:
 			curs.execute("SELECT lot_id, from_user, res_id, count, cost FROM market WHERE purch = 0")
 			goods = curs.fetchall( )
 			a = ""
@@ -1339,6 +1339,7 @@ class Main(object):
 			curs = conn.cursor( )
 			curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
 			if int(curs.fetchone( )[0]) == 1:
+                                print(self.user_id)
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
 				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id}")
