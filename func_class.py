@@ -247,7 +247,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			now = int(time.timestamp( ))
 			curs.execute("SELECT last_res_coll FROM users WHERE user_id = %s", (self.user_id,))
 			resp = int(curs.fetchone( )[0])
@@ -278,10 +279,10 @@ class Main(object):
 				font = ImageFont.truetype("Aqum.ttf", size=23)
 				stats_pic_draw.text(xy=(165, 179), text=str(res[2]), fill="black", font=font)
 				stats_pic_draw.text(xy=(165, 279), text=str(res[6]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 378), text=str(res[0]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 477), text=str(res[5]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 574), text=str(res[4]), fill="black", font=font)
-				stats_pic_draw.text(xy=(165, 672), text=str(res[1] + res[3]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 376), text=str(res[0]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 475), text=str(res[5]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 572), text=str(res[4]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 670), text=str(res[1] + res[3]), fill="black", font=font)
 				
 				stats_pic.save('r.png')
 				
@@ -295,7 +296,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"[id{self.user_id}|Вы] уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)",
+						message=f"&#128339; [id{self.user_id}|Вы] уже собирали ресурсы.\n Повторно вы сможете их собрать только {datetime.fromtimestamp(resp + 86400).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)",
 						disable_mentions=1
 						)
 	
@@ -311,7 +312,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			now = int(time.timestamp( ))
 			curs.execute("SELECT last_exp_coll FROM users WHERE user_id = %s", (self.user_id,))
 			resp = int(curs.fetchone( )[0])
@@ -328,7 +330,7 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"[id{self.user_id}|Вы] сейчас можете собрать только 0 ед. Опыта. Лучше увеличьте численность армии и попробуйте вновь собрать опыт.",
+							message=f"&#128339; [id{self.user_id}|Вы] сейчас можете собрать только 0 ед. Опыта. Лучше увеличьте численность армии и попробуйте вновь собрать опыт.",
 							disable_mentions=1
 							)
 				else:
@@ -356,7 +358,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"[id{self.user_id}|Вы] уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)",
+						message=f"&#128339; [id{self.user_id}|Вы] уже собирали опыт. Повторно вы сможете его собрать только {datetime.fromtimestamp(resp + 259200).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (По Московскому времени)",
 						disable_mentions=1
 						)
 	
@@ -370,7 +372,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
 			
 			builds = curs.fetchone( )
@@ -398,7 +401,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
 			
 			builds = curs.fetchone( )
@@ -447,13 +451,13 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
+									message=f"&#9989; Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
 									)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"Вам нужно еще %s" % (
+									message=f"&#10062; Вам нужно еще %s" % (
 											numeral.get_plural(
 													mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")
 													))
@@ -462,7 +466,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Войска с таким ID не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+								message="&#10062; Войска с таким ID не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
 								)
 				else:
 					curs.execute("SELECT cost, count, bd_name FROM military WHERE name = %s", (mil_id,))
@@ -480,13 +484,13 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
+									message=f"&#9989; Поздравляем!\nВы приобрели {mil[1]} {mil_name}!"
 									)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"Вам нужно еще %s" % (
+									message=f"&#10062; Вам нужно еще %s" % (
 											numeral.get_plural(
 													mil[0] - user_profile[0], ("Андер", "Андеров", "Андера")
 													))
@@ -495,13 +499,13 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Войска с таким названием не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
+								message="&#10062; Войска с таким названием не существует. Чтобы узнать все виды войск, напишите: '/listmil' (Без кавычек)"
 								)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Указано недостаточно аргументов."
+					message=f"&#10062; Указано недостаточно аргументов."
 					)
 	
 	def buyBuild(self):
@@ -530,7 +534,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Здания с таким ID не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
+								message="&#10062;Здания с таким ID не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
 								)
 					else:
 						if user_profile[2] >= build[0]:
@@ -549,13 +553,13 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"Поздравляем вас с покупкой {build_name}!"
+													message=f"&#9989; Поздравляем вас с покупкой {build_name}!"
 													)
 										else:
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"У вас не хватает %s Тьмы." % (
+													message=f"&#10062; У вас не хватает %s Тьмы." % (
 															numeral.get_plural(
 																	build[4] - user_profile[3],
 																	("Кристалла", "Кристаллов")
@@ -565,7 +569,7 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"У вас не хватает %s Cвета." % (
+												message=f"&#10062; У вас не хватает %s Cвета." % (
 														numeral.get_plural(
 																build[4] - user_profile[3], ("Кристалла", "Кристаллов")
 																))
@@ -574,19 +578,19 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
+											message=f"&#10062; У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
+										message=f"&#10062; У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
+									message=f"&#10062; У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
 									)
 				else:
 					# По названию
@@ -599,7 +603,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Здания с таким Названием не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
+								message="&#10062; Здания с таким Названием не существует. Чтобы узнать все о Зданиях, напишите '/listbld' (Без кавычек)"
 								)
 					else:
 						if user_profile[2] >= build[0]:
@@ -618,13 +622,13 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"Поздравляем вас с покупкой {build_name}!"
+													message=f"&#9989; Поздравляем вас с покупкой {build_name}!"
 													)
 										else:
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"У вас не хватает %s Тьмы." % (
+													message=f"&#10062; У вас не хватает %s Тьмы." % (
 															numeral.get_plural(
 																	build[4] - user_profile[3],
 																	("Кристалла", "Кристаллов")
@@ -634,7 +638,7 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"У вас не хватает %s Cвета." % (
+												message=f"&#10062; У вас не хватает %s Cвета." % (
 														numeral.get_plural(
 																build[4] - user_profile[3], ("Кристалла", "Кристаллов")
 																))
@@ -643,25 +647,25 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
+											message=f"&#10062; У вас не хватает {build[2] - user_profile[1]} ед. Дерева."
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
+										message=f"&#10062; У вас не хватает {build[1] - user_profile[0]} ед. Металлов."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
+									message=f"&#10062; У вас не хватает {build[0] - user_profile[2]} ед. Продовольствия."
 									)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Указано недостаточно аргументов."
+					message=f"&#10062; Указано недостаточно аргументов."
 					)
 	
 	def transaction(self):
@@ -675,7 +679,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			val = self.command.split(" ")[1]
 			if val.isdigit( ):
 				curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -700,7 +705,7 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+												message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 												)
 							except Exception:
 								pass
@@ -711,7 +716,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[id{to_user}|Этот пользователь] не зарегистрирован в Боте."
+									message=f"&#10062; [id{to_user}|Этот пользователь] не зарегистрирован в Боте."
 									)
 						else:
 							if int(to_user) != self.user_id:
@@ -738,24 +743,24 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"[id{self.user_id}|Вы] отправили {val} ед. Андеров на счет @id{to_user}"
+										message=f"&#9989; [id{self.user_id}|Вы] отправили {val} ед. Андеров на счет @id{to_user}"
 										)
 								self.vk.messages.send(
 										peer_id=int(to_chat[0]),
 										random_id=random.randint(0, 10000000000),
-										message=f"[id{to_user}|Вам] пришло {val} ед. Андеров от @id{self.user_id}"
+										message=f"&#9989; [id{to_user}|Вам] пришло {val} ед. Андеров от @id{self.user_id}"
 										)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message=f"Нельзя совершить перевод самому себе."
+										message=f"&#10062; Нельзя совершить перевод самому себе."
 										)
 					except Exception:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"Произошла ошибка. Возможно данная ссылка не ведет на страницу пользователя\n{traceback.format_exc( )}"
+								message=f"&#10062; Произошла ошибка. Возможно данная ссылка не ведет на страницу пользователя\n{traceback.format_exc( )}"
 								)
 						self.vk.messages.send(
 								peer_id=2e9 + 4,
@@ -766,13 +771,13 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="У вас недостаточно средств."
+							message="&#10062; У вас недостаточно средств."
 							)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Вы неверно указали сумму перевода."
+						message="&#10062; Вы неверно указали сумму перевода."
 						)
 	
 	def transactionRejection(self):
@@ -825,7 +830,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			stats_pic = Image.open("interfeys_dlya_bota_v3.png")
 			stats_pic_draw = ImageDraw.Draw(stats_pic)
 			font = ImageFont.truetype("Aqum.ttf", size=20)
@@ -909,7 +915,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Расы с таким ID не существует."
+								message="&#10062; Расы с таким ID не существует."
 								)
 					else:
 						curs.execute(
@@ -980,7 +986,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Расы с таким названием не существует."
+								message="&#10062; Расы с таким названием не существует."
 								)
 					else:
 						curs.execute(
@@ -1066,7 +1072,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Расы с таким ID не существует."
+								message="&#10062; Расы с таким ID не существует."
 								)
 					else:
 						if user.startswith("[id"):
@@ -1076,7 +1082,7 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Данный пользователь не зарегистрирован в базе данных."
+										message="&#10062; Данный пользователь не зарегистрирован в базе данных."
 										)
 							else:
 								curs.execute("UPDATE users SET race_id = %s WHERE user_id = %s", (race, user))
@@ -1085,19 +1091,19 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Вы изменили расу пользователю."
+										message="&#9989; Вы изменили расу пользователю."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Гиперссылка должна вести на страницу человека."
+									message="&#10062; Гиперссылка должна вести на страницу человека."
 									)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="ID расы должно состоять только из цифр."
+							message="&#10062; ID расы должно состоять только из цифр."
 							)
 			else:
 				if len(self.command.split(" ")) >= 2:
@@ -1105,20 +1111,20 @@ class Main(object):
 					if race.isdigit( ):
 						curs.execute("SELECT race_id FROM races ORDER BY race_id DESC LIMIT 1")
 						maxi = curs.fetchone( )[0]
-						if maxi >= int(race) >= 1:
+						if maxi >= int(race) > 1:
 							curs.execute(f"UPDATE users SET race_id = {race} WHERE user_id = {self.user_id}")
 							conn.commit( )
 							
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Раса успешно установлена."
+									message="&#9989; Раса успешно установлена."
 									)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Указаны не все аргументы."
+							message="&#10062; Указаны не все аргументы."
 							)
 		else:
 			curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
@@ -1137,31 +1143,31 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Раса успешно установлена."
+										message="&#9989; Раса успешно установлена."
 										)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Расы с таким ID не существует или вы не можете установить ID этой расы"
+										message="&#10062; Расы с таким ID не существует или вы не можете установить ID этой расы"
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="ID расы должно состоять только из цифр."
+									message="&#10062; ID расы должно состоять только из цифр."
 									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Вы уже выбрали свою расу. Для изменения расы требуется обратиться к Администрации."
+								message="&#10062; Вы уже выбрали свою расу. Для изменения расы требуется обратиться к Администрации."
 								)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Указаны не все аргументы."
+							message="&#10062; Указаны не все аргументы."
 							)
 	
 	def changeNickname(self):
@@ -1174,14 +1180,15 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			if len(self.txt.split(" ")) >= 2:
 				name = self.txt.split(" ", 1)[1]
 				if len(name) > 20:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Ваш ник слишком длинный."
+							message="&#10062; Ваш ник слишком длинный."
 							)
 				else:
 					curs.execute("SELECT user_id FROM users WHERE nickname = %s", (name,))
@@ -1193,19 +1200,19 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Ник успешно изменен."
+								message="&#9989; Ник успешно изменен."
 								)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Этот ник уже кем-то занят."
+								message="&#10062; Этот ник уже кем-то занят."
 								)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указано недостаточно аргументов."
+						message="&#10062; Указано недостаточно аргументов."
 						)
 	
 	def listOfGoods(self):
@@ -1229,7 +1236,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Список лотов:\n{a}ЧТОБЫ КУПИТЬ ЛОТ НАПИШИТЕ '/buygood [ID лота]' (без кавычек)",
+					message=f"&#128177; Список лотов:\n{a}ЧТОБЫ КУПИТЬ ЛОТ НАПИШИТЕ '/buygood [ID лота]' (без кавычек)",
 					disable_mentions=1
 					)  # оформление
 	
@@ -1244,7 +1251,7 @@ class Main(object):
 					)
 			curs = conn.cursor( )
 			curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-			if int(curs.fetchone( )[0])==1:
+			if int(curs.fetchone( )[0]) == 1:
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
 				lot_id = self.command.split(" ")[1]
@@ -1258,14 +1265,14 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Лота с таким ID не существует."
+									message="&#10062; Лота с таким ID не существует."
 									)  # оформление
 						else:
 							if lot[4] == 1:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Лот уже куплен."
+										message="&#10062; Лот уже куплен."
 										)  # оформление
 							else:
 								curs.execute("SELECT anders FROM users WHERE user_id = %s", (self.user_id,))
@@ -1290,32 +1297,32 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
+											message=f"&#9989; Вы купили {lot[0]} ед. {res_name[1]}!\n\n[id{lot[3]}|Лот #{lot_id}] продан!"
 											)  # оформление
 								
 								else:
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message="У вас недостаточно Андеров."
+											message="&#10062; У вас недостаточно Андеров."
 											)  # оформление
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Нельзя купить свой же лот."
+								message="&#10062; Нельзя купить свой же лот."
 								)  # оформление
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="ID лота должно состоять только из цифр."
+							message="&#10062; ID лота должно состоять только из цифр."
 							)  # оформление
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="&#10062; Указаны не все аргументы."
 					)  # оформление
 	
 	def addGood(self):
@@ -1350,7 +1357,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Ресурса с таким названием не существует."
+								message="&#10062; Ресурса с таким названием не существует."
 								)  # оформление
 					else:
 						if res_cost.isdigit( ) and res_count.isdigit( ):
@@ -1358,7 +1365,7 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество не были равны нулю."
+										message="&#10062; Аргументы указаны неверно. Проверьте, чтоб стоимость и количество не были равны нулю."
 										)  # оформление
 							else:
 								curs.execute(f"SELECT {res[2]} FROM users WHERE user_id = {self.user_id}")
@@ -1380,7 +1387,7 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"Лот #{lot} выставлен на продажу!"
+												message=f"&#9989; Лот #{lot} выставлен на продажу!"
 												)  # оформление
 									else:
 										morph = pymorphy2.MorphAnalyzer( )
@@ -1389,7 +1396,7 @@ class Main(object):
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message=f"Минимальная цена за 1 ед. {res_name}: {res[0]}."
+												message=f"&#10062; Минимальная цена за 1 ед. {res_name}: {res[0]}."
 												)  # оформление
 								else:
 									morph = pymorphy2.MorphAnalyzer( )
@@ -1398,25 +1405,25 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"У вас недостаточно {res_name}."
+											message=f"&#10062; У вас недостаточно {res_name}."
 											)  # оформление
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Аргументы указаны неверно. Проверьте, чтоб стоимость и количество были указаны числами."
+									message="&#10062; Аргументы указаны неверно. Проверьте, чтоб стоимость и количество были указаны числами."
 									)  # оформление
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Один пользователь может одновременно продавать не более 3 товаров."
+							message="&#10062; Один пользователь может одновременно продавать не более 3 товаров."
 							)  # оформление
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="&#10062; Указаны не все аргументы."
 					)  # оформление
 	
 	def rejectonLotForAdms(self):
@@ -1438,42 +1445,48 @@ class Main(object):
 						"SELECT to_user, from_user, cost, res_id, count, purch FROM market WHERE lot_id = %s", (lot_id,)
 						)
 				lot = curs.fetchone( )
-				if lot[5] == 1:
-					curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {lot[3]}")
-					res_name = curs.fetchone( )[0]
-					curs.execute(
-							f"UPDATE users SET anders = anders + {lot[2]}, {res_name} = {res_name} - {lot[4]} WHERE user_id = {lot[0]}"
-							)
-					conn.commit( )
-					curs.execute(
-							f"UPDATE users SET anders = anders - {lot[2]}, {res_name} = {res_name} + {lot[4]} WHERE user_id = {lot[1]}"
-							)
-					conn.commit( )
-					curs.execute(f"UPDATE market SET access = 0 WHERE lot_id = {lot_id}")
-					conn.commit( )
-					
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message=f"Лот {lot_id} заблокирован."
-							)  # оформление
+				if lot is not None:
+					if lot[5] == 1:
+						curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {lot[3]}")
+						res_name = curs.fetchone( )[0]
+						curs.execute(
+								f"UPDATE users SET anders = anders + {lot[2]}, {res_name} = {res_name} - {lot[4]} WHERE user_id = {lot[0]}"
+								)
+						conn.commit( )
+						curs.execute(
+								f"UPDATE users SET anders = anders - {lot[2]}, {res_name} = {res_name} + {lot[4]} WHERE user_id = {lot[1]}"
+								)
+						conn.commit( )
+						curs.execute(f"UPDATE market SET access = 0 WHERE lot_id = {lot_id}")
+						conn.commit( )
+						
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message=f"&#9989; Лот {lot_id} заблокирован."
+								)  # оформление
+					else:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message=f"&#10062; Лот {lot_id} еще не продан."
+								)  # оформление
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"Лот {lot_id} еще не продан."
+							message="&#10062; Лота с таким ID не существует."
 							)  # оформление
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="ID лота должно состоять только из цифр."
+						message="&#10062; ID лота должно состоять только из цифр."
 						)  # оформление
 	
 	def getProfile(self):
 		user_id = self.user_id
 		if len(self.command.split(" ")) >= 2:
-			
 			if self.command.split(" ")[1].startswith("http") or self.command.split(" ")[1].startswith("https"):
 				short_name = self.command.split(" ")[1].split("/")[3]
 				user_id = self.vk.users.get(user_ids=short_name)[0]['id']
@@ -1489,7 +1502,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+								message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 								)
 			except:
 				pass
@@ -1502,12 +1515,15 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute(
-					"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml, fort_name FROM users WHERE user_id = %s",
+					"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml, fort_name, peer_id FROM users WHERE user_id = %s",
 					(user_id,)
 					)
 			prof = curs.fetchone( )
+			curs.execute(f"SELECT verif FROM conversations WHERE peer_id = {prof[24]}")
+			chat = curs.fetchone( )[0]
 			if prof is None:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
@@ -1535,6 +1551,16 @@ class Main(object):
 					else:
 						stats_pic_draw.text(
 								xy=(164, 155), text=prof[23], fill=str(race[2]),
+								font=ImageFont.truetype("Aqum.ttf", size=25)
+								)
+					if chat == 1:
+						stats_pic_draw.text(
+								xy=(838, 155), text="V", fill=str(race[2]),
+								font=ImageFont.truetype("Aqum.ttf", size=25)
+								)
+					else:
+						stats_pic_draw.text(
+								xy=(838, 155), text="X", fill=str(race[2]),
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					stats_pic_draw.text(
@@ -1634,7 +1660,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute("SELECT name, adm, race_id FROM races")
 			
 			a = "\n\n"
@@ -1710,7 +1737,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указано недостаточно аргументов."
+						message="&#10062; Указано недостаточно аргументов."
 						)
 	
 	def getTransaction(self):
@@ -1750,7 +1777,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указано недостаточно аргументов."
+						message="&#10062; Указано недостаточно аргументов."
 						)
 	
 	def changeNickForAdms(self):
@@ -1790,7 +1817,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"[id{user}|Этот пользователь] не зарегистрирован в Боте."
+								message=f"&#10062; [id{user}|Этот пользователь] не зарегистрирован в Боте."
 								)
 				
 				else:
@@ -1803,7 +1830,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указано недостаточно аргументов."
+						message="&#10062; аточно аргументов."
 						)
 	
 	def showEvent(self):
@@ -1824,11 +1851,12 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Помощь:\nvk.com/@andwb-help",
+					message="&#9981; Помощь:\nvk.com/@andwb-help",
 					attachment="article-205707057_62167_0d6cbb198060823369"
 					)
 	
@@ -1936,7 +1964,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+									message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 									)
 				except Exception:
 					pass
@@ -1961,7 +1989,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Ресурса с таким название не существует."
+									message="&#10062; Ресурса с таким название не существует."
 									)
 						else:
 							curs.execute(f"SELECT ban, {res_info[0]}, peer_id FROM users WHERE user_id = {user}")
@@ -1970,14 +1998,14 @@ class Main(object):
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Этого пользователя нет в базе данных."
+										message="&#10062; Этого пользователя нет в базе данных."
 										)
 							else:
 								if int(us[0]) == 1:
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message="Этот пользователь сейчас заблокирован."
+											message="&#10062; Этот пользователь сейчас заблокирован."
 											)
 								else:
 									if int(cost) < int(res_info[2]):
@@ -2016,13 +2044,13 @@ class Main(object):
 														self.vk.messages.send(
 																peer_id=self.peer_id,
 																random_id=random.randint(0, 10000000000),
-																message=f"Нельзя предложить сделку самому себе."
+																message="&#10062; Нельзя предложить сделку самому себе."
 																)  # оформление
 												else:
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"Нельзя передать 0 ед. ресурса."
+															message="&#10062; Нельзя передать 0 ед. ресурса."
 															)  # оформление
 											else:
 												morph = pymorphy2.MorphAnalyzer( )
@@ -2031,7 +2059,7 @@ class Main(object):
 												self.vk.messages.send(
 														peer_id=self.peer_id,
 														random_id=random.randint(0, 10000000000),
-														message=f"У вас недостаточно {res_name}."
+														message=f"&#10062; У вас недостаточно {res_name}."
 														)  # оформление
 										else:
 											morph = pymorphy2.MorphAnalyzer( )
@@ -2040,7 +2068,7 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"Минимальная цена за 1 ед. {res_name}: {res_info[2]}."
+													message=f"М&#10062; инимальная цена за 1 ед. {res_name}: {res_info[2]}."
 													)
 									else:
 										if int(us[1]) >= int(count):
@@ -2068,7 +2096,7 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"[id{self.user_id}|Вы] предложили сделку!.\nЕе ID: {last_trans}"
+													message=f"&#9989; [id{self.user_id}|Вы] предложили сделку!.\nЕе ID: {last_trans}"
 													)
 										else:
 											morph = pymorphy2.MorphAnalyzer( )
@@ -2077,19 +2105,19 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"У вас недостаточно {res_name}."
+													message=f"&#10062; У вас недостаточно {res_name}."
 													)  # оформление
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message=f"Каждый пользователь может иметь не более 3 активных сделок."
+								message="&#10062; Каждый пользователь может иметь не более 3 активных сделок."
 								)  # оформление
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Один из аргументов указан неверно."
+						message="&#10062; Один из аргументов указан неверно."
 						)
 		else:
 			self.vk.messages.send(
@@ -2145,57 +2173,65 @@ class Main(object):
 												)
 										conn.commit( )
 										curs.execute(f"SELECT peer_id FROM users WHERE user_id = {trans[5]}")
-										self.vk.messages.send(
-												peer_id=int(curs.fetchone( )[0]),
-												random_id=random.randint(0, 10000000000),
-												message=f"Сделка #{tr_id} совершена!"
-												)
-										self.vk.messages.send(
-												peer_id=self.peer_id,
-												random_id=random.randint(0, 10000000000),
-												message=f"Сделка #{tr_id} совершена!"
-												)
+										chat = int(curs.fetchone( )[0])
+										if chat != self.peer_id:
+											self.vk.messages.send(
+													peer_id=int(curs.fetchone( )[0]),
+													random_id=random.randint(0, 10000000000),
+													message=f"&#9989; Сделка #{tr_id} совершена!"
+													)
+											self.vk.messages.send(
+													peer_id=self.peer_id,
+													random_id=random.randint(0, 10000000000),
+													message=f"&#9989; Сделка #{tr_id} совершена!"
+													)
+										else:
+											self.vk.messages.send(
+													peer_id=self.peer_id,
+													random_id=random.randint(0, 10000000000),
+													message=f"&#9989; Сделка #[id{trans[5]}|{tr_id}] совершена!"
+													)
 									else:
 										self.vk.messages.send(
 												peer_id=self.peer_id,
 												random_id=random.randint(0, 10000000000),
-												message="У вас недостаточно Андеров!"
+												message="&#10062; У вас недостаточно Андеров!"
 												)
 								else:
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message="Сделка отменена."
+											message="&#10062; Сделка отменена."
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Сделка уже совершена."
+										message="&#10062; Сделка уже совершена."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Эта сделка предложена не Вам."
+									message="&#10062; Эта сделка предложена не Вам."
 									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Сделки с таким ID не существует."
+								message="&#10062; Сделки с таким ID не существует."
 								)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="ID сделки указано неверно."
+						message="&#10062; ID сделки указано неверно."
 						)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="&#10062; Указаны не все аргументы."
 					)
 	
 	def personalTransRejection(self):
@@ -2232,43 +2268,43 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message=f"Сделка #{trans_id} отменена."
+											message=f"&#9989; Сделка #{trans_id} отменена."
 											)
 								else:
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message="Нельзя отменить совершенную сделку."
+											message="&#10062; Нельзя отменить совершенную сделку."
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Вы уже отменили эту сделку."
+										message="&#10062; Вы уже отменили эту сделку."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Вы не можете отменить чужую сделку."
+									message="&#10062; Вы не можете отменить чужую сделку."
 									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="Сделки с таким ID не существует."
+								message="&#10062; Сделки с таким ID не существует."
 								)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="ID сделки указано неверно."
+						message="&#10062; ID сделки указано неверно."
 						)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="&#10062; Указаны не все аргументы."
 					)
 	
 	def listOfPersonalTrans(self):
@@ -2281,7 +2317,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute(
 					f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and to_user = {self.user_id} and purch = 0"
 					)
@@ -2299,6 +2336,10 @@ class Main(object):
 			for i in for_you:
 				curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
 				fro += f"ID: #{i[4]}\nОт кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
+			if fr == "":
+				fr = "Нет сделок"
+			elif fro == "":
+				fro = "Нет сделок"
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
@@ -2391,7 +2432,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			if len(self.command.split(" ")) >= 2:
 				lot_id = self.command.split(" ")[1]
 				if lot_id.isdigit( ):
@@ -2401,7 +2443,7 @@ class Main(object):
 						self.vk.messages.send(
 								peer_id=self.peer_id,
 								random_id=random.randint(0, 10000000000),
-								message="ID лота указано неверно."
+								message="&#10062; ID лота указано неверно."
 								)
 					else:
 						if self.user_id == int(lot[0]):
@@ -2425,31 +2467,31 @@ class Main(object):
 									self.vk.messages.send(
 											peer_id=self.peer_id,
 											random_id=random.randint(0, 10000000000),
-											message="Этот лот уже куплен."
+											message="&#10062; Этот лот уже куплен."
 											)
 							else:
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
-										message="Этот лот уже отменен."
+										message="&#10062; Этот лот уже отменен."
 										)
 						else:
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message="Вы не можете отменить чужой лот."
+									message="&#10062; Вы не можете отменить чужой лот."
 									)
 				else:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="ID лота указано неверно."
+							message="&#10062; ID лота указано неверно."
 							)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Указаны не все аргументы."
+						message="&#10062; Указаны не все аргументы."
 						)
 	
 	def deleteProfile(self):
@@ -2511,7 +2553,8 @@ class Main(object):
 				)
 		curs = conn.cursor( )
 		curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-		if curs.fetchone( )[0] == 1:
+		ch = int(curs.fetchone( )[0])
+		if ch == 1:
 			curs.execute(f"SELECT peer_id FROM users WHERE user_id = {self.user_id}")
 			ch = curs.fetchone( )[0]
 			self.vk.messages.send(
@@ -2524,7 +2567,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Вы изменили основную беседу."
+					message="&#9989; Вы изменили основную беседу."
 					)
 	
 	def changeFortName(self):
@@ -2540,25 +2583,26 @@ class Main(object):
 						)
 				curs = conn.cursor( )
 				curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-				if curs.fetchone( )[0] == 1:
+				ch = int(curs.fetchone( )[0])
+				if ch == 1:
 					curs.execute(f"UPDATE users SET fort_name = %s WHERE user_id = {self.user_id}", (name,))
 					conn.commit( )
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message="Название установлено."
+							message="&#9989; Название установлено."
 							)
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message="Название слишком длинное."
+						message="&#10062; Название слишком длинное."
 						)
 		else:
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="Указаны не все аргументы."
+					message="&#10062; Указаны не все аргументы."
 					)
 	
 	def changeFortNameForAdms(self):
@@ -2683,7 +2727,7 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+							message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 							)
 			else:
 				self.vk.messages.send(
@@ -2713,7 +2757,7 @@ class Main(object):
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
-									message=f"[club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
+									message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 									)
 				except Exception:
 					pass
