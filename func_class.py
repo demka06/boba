@@ -1949,7 +1949,7 @@ class Main(object):
 						)
 				curs = conn.cursor( )
 				curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
-				if curs.fetchone( )[0] == 1:
+				if int(curs.fetchone( )[0]) == 1:
 					curs.execute(
 							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_id = {self.user_id} and purch = 0 and rej = 0 and accept = 0"
 							)
