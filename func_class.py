@@ -276,12 +276,12 @@ class Main(object):
 				stats_pic = Image.open("res.png")
 				stats_pic_draw = ImageDraw.Draw(stats_pic)
 				font = ImageFont.truetype("Aqum.ttf", size=23)
-				stats_pic_draw.text(xy=(165, 182), text=str(res[2]), fill="white", font=font)
-				stats_pic_draw.text(xy=(165, 282), text=str(res[6]), fill="white", font=font)
-				stats_pic_draw.text(xy=(165, 382), text=str(res[0]), fill="white", font=font)
-				stats_pic_draw.text(xy=(165, 481), text=str(res[5]), fill="white", font=font)
-				stats_pic_draw.text(xy=(165, 578), text=str(res[4]), fill="white", font=font)
-				stats_pic_draw.text(xy=(165, 676), text=str(res[1] + res[3]), fill="white", font=font)
+				stats_pic_draw.text(xy=(165, 179), text=str(res[2]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 279), text=str(res[6]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 379), text=str(res[0]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 478), text=str(res[5]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 575), text=str(res[4]), fill="black", font=font)
+				stats_pic_draw.text(xy=(165, 673), text=str(res[1] + res[3]), fill="black", font=font)
 				
 				stats_pic.save('r.png')
 				
