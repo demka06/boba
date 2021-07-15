@@ -342,7 +342,7 @@ class Main(object):
 					stats_pic = Image.open("exp.png")
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
 					font = ImageFont.truetype("Aqum.ttf", size=23)
-					stats_pic_draw.text(xy=(165, 182), text=str(res), fill="white", font=font)
+					stats_pic_draw.text(xy=(165, 179), text=str(res), fill="black", font=font)
 					
 					stats_pic.save('ex.png')
 					
