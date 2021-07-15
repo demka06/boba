@@ -1943,6 +1943,7 @@ class Main(object):
 						)
 	
 	def addResTransactions(self):
+		print(2)
 		if len(self.command.split("\n")) >= 4:
 			user = self.command.split("\n")[1].strip( )
 			res = self.command.split("\n")[2].capitalize( ).strip( )
@@ -2030,6 +2031,7 @@ class Main(object):
 																"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
 																)
 														last_trans = curs.fetchone( )[0]
+														print(1)
 														if int(us[2]) != self.peer_id:
 															self.vk.messages.send(
 																	peer_id=int(us[2]),
