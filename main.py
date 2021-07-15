@@ -30,11 +30,11 @@ while True:
 					cls = func_class.Main(vk, event, vk_session)
 					cls.registrationConv( )
 					cls.registrarionUser( )
-					if command.split(" ")[0] in ("/addres", " "):
+					if command.split("\n")[0] in ("/addres", " "):
 						cls.addResourse( )
-					elif command.split(" ")[0] in ("/addmil", " "):
+					elif command.split("\n")[0] in ("/addmil", " "):
 						cls.addMilitary( )
-					elif command.split(" ")[0] in ("/addbld", " "):
+					elif command.split("\n")[0] in ("/addbld", " "):
 						cls.addBuild( )
 					elif command.split(" ")[0] in ("/collres", " "):
 						cls.collectResourses( )
