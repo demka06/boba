@@ -526,7 +526,7 @@ class Main(object):
 				if build_id.isdigit( ):
 					# По ID
 					curs.execute(
-							"SELECT food, steel, wood, b_cris, w_cris, build_name, name FROM builds WHERE build_id = %s",
+							"SELECT food, steel, wood, b_cris, w_cris, bd_name, name FROM builds WHERE build_id = %s",
 							(build_id,)
 							)
 					build = curs.fetchone( )
@@ -2076,7 +2076,7 @@ class Main(object):
 											self.vk.messages.send(
 													peer_id=self.peer_id,
 													random_id=random.randint(0, 10000000000),
-													message=f"М&#10062; инимальная цена за 1 ед. {res_name}: {res_info[2]}."
+													message=f"&#10062; Минимальная цена за 1 ед. {res_name}: {res_info[2]}."
 													)
 									else:
 										if int(us[1]) >= int(count):
