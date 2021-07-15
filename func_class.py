@@ -1332,6 +1332,7 @@ class Main(object):
 		[кол-во]
 		[стоимость за ед.]
 		"""
+		print(3)
 		if len(self.command.split("\n")) >= 4:
 			print(1)
 			res_name = self.command.split("\n")[1].capitalize( ).strip( )
