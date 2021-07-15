@@ -1332,9 +1332,7 @@ class Main(object):
 		[кол-во]
 		[стоимость за ед.]
 		"""
-		print(3)
 		if len(self.command.split("\n")) >= 4:
-			print(1)
 			res_name = self.command.split("\n")[1].capitalize( ).strip( )
 			res_count = self.command.split("\n")[2].strip( )
 			res_cost = self.command.split("\n")[3].strip( )
@@ -1348,9 +1346,7 @@ class Main(object):
 			curs = conn.cursor( )
 			curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
 			a = curs.fetchone( )[0]
-			print(2)
 			if int(a) == 1:
-				print(3)
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
 				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id}")
@@ -1981,10 +1977,8 @@ class Main(object):
 						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
-				print("tres 1")
 				curs.execute(f'SELECT verif FROM conversations WHERE peer_id = {self.peer_id}')
 				if int(curs.fetchone( )[0]) == 1:
-					print("tres 2")
 					curs.execute(
 							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_user = {self.user_id} and purch = 0 and rej = 0 and accept = 0"
 							)
