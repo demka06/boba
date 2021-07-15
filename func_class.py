@@ -2041,7 +2041,7 @@ class Main(object):
 															self.vk.messages.send(
 																	peer_id=self.peer_id,
 																	random_id=random.randint(0, 10000000000),
-																	message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}\n\n{us[2]) != self.peer_id}\n{us[2]}"
+																	message=f"[id{self.user_id}|Вы] предложили сделку!\nЕе ID: {last_trans}\n\n{int(us[2]) != self.peer_id}\n{us[2]}"
 																	)
 														else:
 															self.vk.messages.send(
