@@ -2446,7 +2446,7 @@ class Main(object):
 			if len(self.command.split(" ")) >= 2:
 				lot_id = self.command.split(" ")[1]
 				if lot_id.isdigit( ):
-					curs.execute(f"SELECT from_user, res_id, count, accept, purch FROM personal_trans WHERE lot_id = {lot_id}")
+					curs.execute(f"SELECT from_user, res_id, count, access, purch FROM market WHERE lot_id = {lot_id}")
 					lot = curs.fetchone( )
 					if lot is None:
 						self.vk.messages.send(
@@ -2465,7 +2465,7 @@ class Main(object):
 											(lot[2])
 											)
 									conn.commit( )
-									curs.execute(f"UPDATE market SET accept = 0 WHERE lot_id = {lot_id}")
+									curs.execute(f"UPDATE market SET access = 0 WHERE lot_id = {lot_id}")
 									conn.commit( )
 									self.vk.messages.send(
 											peer_id=self.peer_id,
