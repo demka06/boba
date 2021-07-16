@@ -65,7 +65,7 @@ class Main(object):
 				chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
 				admin_id = chat["owner_id"]
 				user_count = chat["members_count"]
-				curs.execute(f"UPDATE chats SET adm = {admin_id}, user_count = {user_count} WHERE %s", (self.peer_id,))
+				curs.execute(f"UPDATE chats SET admin_id = {admin_id}, user_count = {user_count} WHERE %s", (self.peer_id,))
 				conn.commit()
 	def registrarionUser(self):
 		conn = pymysql.connect(
