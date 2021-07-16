@@ -2026,7 +2026,7 @@ class Main(object):
 										if int(cost) == 0:
 											cost = 0
 											curs.execute(f"SELECT {res_info[0]} FROM users WHERE user_id = {self.user_id}")
-											if int(us[1]) >= int(curs.fetchone()[0]):
+											if int(count) >= int(curs.fetchone()[0]):
 												if int(count) != 0:
 													if self.user_id != user:
 														now_utc = datetime.now(timezone('UTC'))
@@ -2093,7 +2093,8 @@ class Main(object):
 													message=f"&#10062; Минимальная цена за 1 ед. {res_name}: {res_info[2]}."
 													)
 									else:
-										if int(us[1]) >= int(count):
+										curs.execute(f"SELECT {res_info[0]} FROM users WHERE user_id = {self.user_id}")
+										if int(count) >= int(curs.fetchone()[0]):
 											cost = int(cost) * int(count)
 											now_utc = datetime.now(timezone('UTC'))
 											time = str(now_utc.astimezone(timezone('Europe/Moscow')))
@@ -2110,7 +2111,7 @@ class Main(object):
 													"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
 													)
 											last_trans = curs.fetchone( )[0]
-											if int(us[2]) != self.peer_id:
+											if int(us[1]) != self.peer_id:
 												self.vk.messages.send(
 														peer_id=int(us[2]),
 														random_id=random.randint(0, 10000000000),
