@@ -60,7 +60,7 @@ class Main(object):
 						)
 				conn.commit( )
 		else:
-			curs.execute("SELECT adm FROM conversations WHERE peer_id = %s", (self.peer_id,))
+			curs.execute("SELECT admin_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
 			if curs.fetchone([0]) == 0:
 				chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
 				admin_id = chat["owner_id"]
