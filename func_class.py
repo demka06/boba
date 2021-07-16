@@ -2350,7 +2350,7 @@ class Main(object):
 		ch = int(curs.fetchone( )[0])
 		if ch == 1:
 			curs.execute(
-					f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and to_user = {self.user_id} and purch = 0"
+					f"SELECT to_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and to_user = {self.user_id} and purch = 0"
 					)
 			from_you = curs.fetchall( )
 			fr = ""
@@ -2359,7 +2359,7 @@ class Main(object):
 				fr += f"ID: #{i[4]}\nДля кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}\n\n"
 			
 			curs.execute(
-					f"SELECT from_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and accept = 0 and from_user = {self.user_id} and purch = 0"
+					f"SELECT from_user, res_id, count, cost, trans_id FROM personal_trans WHERE rej = 0 and from_user = {self.user_id} and purch = 0"
 					)
 			for_you = curs.fetchall( )
 			fro = ""
@@ -2373,7 +2373,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Для вас:\n{fro}\nДля кого-либо:\n{fr}",
+					message=f"Для вас:\n{fr}\nДля кого-либо:\n{fro}",
 					disable_mentions=1
 					)
 	
