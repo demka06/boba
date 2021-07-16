@@ -1260,7 +1260,7 @@ class Main(object):
 							"SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,)
 							)
 					lot = curs.fetchone( )
-					if lot not is None:
+					if lot is not None:
 						if lot[3] == self.user_id:
 							self.vk.messages.send(
 								peer_id=self.peer_id,
