@@ -1260,13 +1260,13 @@ class Main(object):
 							"SELECT count, res_id, cost, from_user, purch FROM market WHERE lot_id = %s", (lot_id,)
 							)
 					lot = curs.fetchone( )
-					if lot[3] != self.user_id:
-						if lot is None:
+					if lot not is None:
+						if lot[3] == self.user_id:
 							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="&#10062; Лота с таким ID не существует."
-									)  # оформление
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="&#10062; Нельзя купить свой же лот."
+								)  # оформление
 						else:
 							if lot[4] == 1:
 								self.vk.messages.send(
