@@ -1349,7 +1349,7 @@ class Main(object):
 			if int(a) == 1:
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
-				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id}")
+				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id} and (purch = 0 and accept = 0)")
 				if int(curs.fetchone( )[0]) < 3:
 					curs.execute("SELECT cost, res_id, bd_name FROM resourses WHERE name = %s", (res_name,))
 					res = curs.fetchone( )
@@ -1981,7 +1981,7 @@ class Main(object):
 				ch = int(curs.fetchone( )[0])
 				if ch == 1:
 					curs.execute(
-							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_user = {self.user_id} and purch = 0 and rej = 0 and accept = 0"
+							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_user = {self.user_id} and (purch = 0 or (rej = 0 and accept = 0))"
 							)
 					if int(curs.fetchone( )[0]) < 3:
 						curs.execute("SELECT bd_name, res_id, cost FROM resourses WHERE name = %s", (res,))
@@ -1993,7 +1993,7 @@ class Main(object):
 									message="&#10062; Ресурса с таким название не существует."
 									)
 						else:
-							curs.execute(f"SELECT ban, {res_info[0]}, peer_id FROM users WHERE user_id = {user}")
+							curs.execute(f"SELECT ban, peer_id FROM users WHERE user_id = {user}")
 							us = curs.fetchone( )
 							if us is None:
 								self.vk.messages.send(
@@ -2012,7 +2012,8 @@ class Main(object):
 									if int(cost) < int(res_info[2]):
 										if int(cost) == 0:
 											cost = 0
-											if int(us[1]) >= int(count):
+											curs.execute(f"SELECT {res_info[0]} FROM users WHERE user_id = {self.user_id}")
+											if int(us[1]) >= int(curs.fetchone()[0]):
 												if int(count) != 0:
 													if self.user_id != user:
 														now_utc = datetime.now(timezone('UTC'))
@@ -2031,9 +2032,9 @@ class Main(object):
 																"SELECT trans_id FROM personal_trans ORDER BY trans_id DESC LIMIT 1"
 																)
 														last_trans = curs.fetchone( )[0]
-														if int(us[2]) != self.peer_id:
+														if int(us[1]) != self.peer_id:
 															self.vk.messages.send(
-																	peer_id=int(us[2]),
+																	peer_id=int(us[1]),
 																	random_id=random.randint(0, 10000000000),
 																	message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
 																	)
@@ -2191,7 +2192,7 @@ class Main(object):
 										chat = int(curs.fetchone( )[0])
 										if chat != self.peer_id:
 											self.vk.messages.send(
-													peer_id=int(curs.fetchone( )[0]),
+													peer_id=chat,
 													random_id=random.randint(0, 10000000000),
 													message=f"&#9989; Сделка #{tr_id} совершена!"
 													)
