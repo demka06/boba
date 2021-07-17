@@ -1362,7 +1362,7 @@ class Main(object):
 			if int(a) == 1:
 				now_utc = datetime.now(timezone('UTC'))
 				time = now_utc.astimezone(timezone('Europe/Moscow'))
-				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id} and (purch = 0 and accept = 0)")
+				curs.execute(f"SELECT COUNT(lot_id) FROM market WHERE from_user = {self.user_id} and (purch = 0 and access = 0)")
 				if int(curs.fetchone( )[0]) < 3:
 					curs.execute("SELECT cost, res_id, bd_name FROM resourses WHERE name = %s", (res_name,))
 					res = curs.fetchone( )
