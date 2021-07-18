@@ -2368,7 +2368,7 @@ class Main(object):
 			fro = ""
 			for i in for_you:
 				curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
-				fro += f"ID: #{i[4]}\nОт кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}"
+				fro += f"ID: #{i[4]}\nОт кого: @id{i[0]}\nРесурс: {curs.fetchone( )[0]}\nКол-во: {i[2]}\nСтоимость: {i[3]}\n\n"
 			if fr == "":
 				fr = "Нет сделок"
 			elif fro == "":
