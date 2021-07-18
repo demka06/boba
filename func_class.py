@@ -1994,7 +1994,7 @@ class Main(object):
 				ch = int(curs.fetchone( )[0])
 				if ch == 1:
 					curs.execute(
-							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_user = {self.user_id} and purch = 0 or (rej = 0 and accept = 0)"
+							f"SELECT COUNT(trans_id) FROM personal_trans WHERE from_user = {self.user_id} and purch = 0 and rej = 0 and accept = 0"
 							)
 					if int(curs.fetchone( )[0]) < 3:
 						curs.execute("SELECT bd_name, res_id, cost FROM resourses WHERE name = %s", (res,))
