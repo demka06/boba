@@ -60,19 +60,22 @@ class Main(object):
 						)
 				conn.commit( )
 		else:
-			curs.execute("SELECT admin_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
-			if curs.fetchone()[0] == 0:
-				chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
-				admin_id = chat["owner_id"]
-				user_count = chat["members_count"]
-				curs.execute(f"UPDATE conversations SET admin_id = {admin_id}, user_count = {user_count} WHERE peer_id = %s", (self.peer_id,))
-				conn.commit()
-			else:
-				chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
-				admin_id = chat["owner_id"]
-				user_count = chat["members_count"]
-				curs.execute(f"UPDATE conversations SET admin_id = {admin_id}, user_count = {user_count} WHERE peer_id = %s", (self.peer_id,))
-				conn.commit()
+			try:
+				curs.execute("SELECT admin_id FROM conversations WHERE peer_id = %s", (self.peer_id,))
+				if curs.fetchone()[0] == 0:
+					chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
+					admin_id = chat["owner_id"]
+					user_count = chat["members_count"]
+					curs.execute(f"UPDATE conversations SET admin_id = {admin_id}, user_count = {user_count} WHERE peer_id = %s", (self.peer_id,))
+					conn.commit()
+				else:
+					chat = self.vk.messages.getConversationsById(peer_ids=self.peer_id)['items'][0]["chat_settings"]
+					admin_id = chat["owner_id"]
+					user_count = chat["members_count"]
+					curs.execute(f"UPDATE conversations SET admin_id = {admin_id}, user_count = {user_count} WHERE peer_id = %s", (self.peer_id,))
+					conn.commit()
+			except:
+				pass
 	def registrarionUser(self):
 		conn = pymysql.connect(
 				host="triniti.ru-hoster.com",
