@@ -2735,7 +2735,7 @@ class Main(object):
 					curs = conn.cursor( )
 					check = curs.execute(f"SELECT user_id FROM forms WHERE user_id = {user}")
 					if check == 0:
-						curs.execute("INSERT INTO from VALUES (%s,%s)", (user, form))
+						curs.execute("INSERT INTO form VALUES (%s,%s)", (user, form))
 					else:
 						curs.execute("UPDATE forms SET from = %s", (user, form))
 					self.vk.messages.send(
@@ -2818,3 +2818,9 @@ class Main(object):
 					random_id=random.randint(0, 10000000000),
 					message="Указаны не все аргументы."
 					)
+
+	def getMap(self):
+		pass
+
+	def setMap(self):
+		pass
