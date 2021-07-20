@@ -1538,8 +1538,6 @@ class Main(object):
 					(user_id,)
 					)
 			prof = curs.fetchone( )
-			curs.execute(f"SELECT verif FROM conversations WHERE peer_id = {prof[24]}")
-			chat = curs.fetchone( )[0]
 			if prof is None:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
@@ -1547,6 +1545,8 @@ class Main(object):
 						message="Этого пользователя нет в базе данных."
 						)  # оформление
 			else:
+				curs.execute(f"SELECT verif FROM conversations WHERE peer_id = {prof[24]}")
+				chat = curs.fetchone( )[0]
 				curs.execute("SELECT name, low_name, color FROM races WHERE race_id = %s", (prof[0],))
 				race = curs.fetchone( )
 				curs.execute(f"SELECT COUNT(*) FROM users WHERE race_id = {prof[0]}")
@@ -1571,12 +1571,12 @@ class Main(object):
 								)
 					if chat == 1:
 						stats_pic_draw.text(
-								xy=(632, 256), text="V", fill="#080808",
+								xy=(632, 260), text="V", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					else:
 						stats_pic_draw.text(
-								xy=(632, 256), text="X", fill="#080808",
+								xy=(632, 260), text="X", fill="#080808",
 								font=ImageFont.truetype("Aqum.ttf", size=25)
 								)
 					stats_pic_draw.text(
@@ -1959,7 +1959,7 @@ class Main(object):
 						)
 	
 	def addResTransactions(self):
-		if len(self.command.split("\n")) >= 4:
+		if len(self.command.split("\n")) >= 5:
 			user = self.command.split("\n")[1].strip( )
 			res = self.command.split("\n")[2].capitalize( ).strip( )
 			count = self.command.split("\n")[3].strip( )
@@ -1971,19 +1971,6 @@ class Main(object):
 				user = self.vk.users.get(user_ids=short_name)[0]['id']
 			elif self.command.split("\n")[1].startswith("[id"):
 				user = self.command.split("\n")[1].split("|")[0].replace("[id", "")
-			else:
-				try:
-					if 'reply_message' in self.event.object["message"].keys( ):
-						if self.event.object["message"]["reply_message"]["from_id"] > 0:
-							user = self.event.object["message"]["reply_message"]["from_id"]
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
-									)
-				except Exception:
-					pass
 			if count.isdigit( ) and cost.isdigit( ):
 				conn = pymysql.connect(
 						host="triniti.ru-hoster.com",
