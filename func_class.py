@@ -2790,7 +2790,7 @@ class Main(object):
 						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
-				curs.execute(f"SELECT form FROM froms WHERE user_id = {user}")
+				curs.execute(f"SELECT form FROM forms WHERE user_id = {user}")
 				form = curs.fetchone( )
 				if form is None:
 					self.vk.messages.send(
