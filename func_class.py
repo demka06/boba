@@ -1872,7 +1872,7 @@ class Main(object):
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message="&#9981; Помощь:\nvk.com/@andwb-help",
+					message="&#9981; Помощь:\nvk.com/@andwb-help\n\nПравила:\nhttps://vk.com/@andwb-rule",
 					attachment="article-205707057_62167_0d6cbb198060823369"
 					)
 	
