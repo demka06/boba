@@ -2760,7 +2760,7 @@ class Main(object):
 		if self.user_id in self.adms or self.user_id in self.race_adms:
 			user = self.command.split(" ")
 			if len(user) >= 2:
-				user = user.strip( )
+				user = user[1].strip( )
 				if self.command.split(" ")[1].startswith("http") or self.command.split(" ")[1].startswith(
 						"https"
 						):
