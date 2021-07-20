@@ -2735,7 +2735,7 @@ class Main(object):
 					curs = conn.cursor( )
 					check = curs.execute(f"SELECT user_id FROM forms WHERE user_id = {user}")
 					if check == 0:
-						curs.execute("INSERT INTO form VALUES (%s,%s)", (user, form))
+						curs.execute("INSERT INTO forms VALUES (%s,%s)", (user, form))
 					else:
 						curs.execute("UPDATE forms SET from = %s", (user, form))
 					self.vk.messages.send(
