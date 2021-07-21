@@ -2103,7 +2103,7 @@ class Main(object):
 											last_trans = curs.fetchone( )[0]
 											if int(us[1]) != self.peer_id:
 												self.vk.messages.send(
-														peer_id=int(us[2]),
+														peer_id=int(us[1]),
 														random_id=random.randint(0, 10000000000),
 														message=f"[id{user}|Вам] предложили сделку!\nЕе ID: {last_trans}\n\nЧтобы посмотреть все свои сделки напишите: '/lsttrn' (Без кавычек!)"
 														)
