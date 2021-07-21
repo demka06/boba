@@ -2084,7 +2084,7 @@ class Main(object):
 													)
 									else:
 										curs.execute(f"SELECT {res_info[0]} FROM users WHERE user_id = {self.user_id}")
-										if int(count) >= int(curs.fetchone()[0]):
+										if int(count) <= int(curs.fetchone()[0]):
 											cost = int(cost) * int(count)
 											now_utc = datetime.now(timezone('UTC'))
 											time = str(now_utc.astimezone(timezone('Europe/Moscow')))
