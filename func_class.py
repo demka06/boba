@@ -2290,7 +2290,7 @@ class Main(object):
 					stats_pic.save('prof.png')
 				else:
 					
-					stats_pic = Image.open("profil_igroka_v2.png")
+					stats_pic = Image.open("interfeys_dlya_bota_v3.png")
 					"""
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
 					stats_pic_draw.text(
