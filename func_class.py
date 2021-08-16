@@ -290,19 +290,19 @@ class Main(object):
 				res = []
 				if hps >= 95:
 					for i in range(count):
-						mine = data[i] * random.randint(prof[i][0], prof[i][1]) * 1.5
+						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]) * 1.5)
 						res.append(mine)
 				elif 60 >= hps >= 50:
 					for i in range(count):
-						mine = data[i] * random.randint(prof[i][0], prof[i][1]) / 1.2
+						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]) / 1.2)
 						res.append(mine)
 				elif hps <= 20:
 					for i in range(count):
-						mine = data[i] * random.randint(prof[i][0], prof[i][1]) / 2
+						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]) / 2)
 						res.append(mine)
 				elif 40 <= hps <= 35:
 					for i in range(count):
-						mine = data[i] * random.randint(prof[i][0], prof[i][1])
+						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]))
 						res.append(mine)
 				curs.execute(
 						f"UPDATE users SET steel = steel + {res[0]}, anders = anders +{res[1] + res[3]}, food = food + {res[2]}, w_cris = w_cris + {res[4]}, b_cris = b_cris + {res[5]}, wood = wood + {res[6]},stone = stone + {res[7]}, last_res_coll = {now} WHERE user_id = %s",
