@@ -497,7 +497,7 @@ class Main(object):
 					mil = curs.fetchone( )
 					if mil is not None:
 						curs.execute(
-								f"SELECT SUM(inf, arch, bllsts, ctpl, mag, plds, clvr), vlg*3000+city*4000 FROM users WHERE user_id = {self.user_id}"
+								f"SELECT inf + arch + bllsts + ctpl + mag + plds + clvr, vlg *3000 + city *4000 FROM users WHERE user_id = {self.user_id}"
 								)
 						chk = curs.fetchone( )
 						if chk[0] < chk[1]:
@@ -549,7 +549,7 @@ class Main(object):
 					mil = curs.fetchone( )
 					if mil is not None:
 						curs.execute(
-								f"SELECT SUM(inf, arch, bllsts, ctpl, mag, plds, clvr), vlg*3000+city*4000 FROM users WHERE user_id = {self.user_id}"
+								f"SELECT inf + arch + bllsts + ctpl + mag + plds + clvr, vlg *3000 + city *4000 FROM users WHERE user_id = {self.user_id}"
 								)
 						chk = curs.fetchone( )
 						if chk[0] + mil[1] < chk[1]:
@@ -617,7 +617,7 @@ class Main(object):
 							mil = curs.fetchone( )
 							if mil is not None:
 								curs.execute(
-										f"SELECT SUM(inf, arch, bllsts, ctpl, mag, plds, clvr), vlg*3000+city*4000 FROM users WHERE user_id = {self.user_id}"
+										f"SELECT inf + arch + bllsts + ctpl + mag + plds + clvr, vlg *3000 + city *4000 FROM users WHERE user_id = {self.user_id}"
 										)
 								chk = curs.fetchone( )
 								if chk[0] + mil[1] < chk[1]:
@@ -684,7 +684,7 @@ class Main(object):
 							mil = curs.fetchone( )
 							if mil is not None:
 								curs.execute(
-										f"SELECT SUM(inf, arch, bllsts, ctpl, mag, plds, clvr), vlg*3000+city*4000 FROM users WHERE user_id = {self.user_id}"
+										f"SELECT inf + arch + bllsts + ctpl + mag + plds + clvr, vlg *3000 + city *4000 FROM users WHERE user_id = {self.user_id}"
 										)
 								chk = curs.fetchone( )
 								if chk[0] + mil[1] < chk[1]:
@@ -892,12 +892,8 @@ class Main(object):
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает %s" % (
-																	numeral.get_plural(
-																			build[7] - user_profile[5],
-																			("Камня", "Камней")
-																			))
-															)
+															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
+															)				
 											else:
 												self.vk.messages.send(
 														peer_id=self.peer_id,
@@ -999,14 +995,10 @@ class Main(object):
 																	)
 														else:
 															self.vk.messages.send(
-																	peer_id=self.peer_id,
-																	random_id=random.randint(0, 10000000000),
-																	message=f"&#10062; У вас не хватает %s" % (
-																			numeral.get_plural(
-																					build[7] - user_profile[5],
-																					("Камня", "Камней")
-																					))
-																	)
+															peer_id=self.peer_id,
+															random_id=random.randint(0, 10000000000),
+															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
+															)
 													else:
 														self.vk.messages.send(
 																peer_id=self.peer_id,
@@ -1107,14 +1099,10 @@ class Main(object):
 																	)
 														else:
 															self.vk.messages.send(
-																	peer_id=self.peer_id,
-																	random_id=random.randint(0, 10000000000),
-																	message=f"&#10062; У вас не хватает %s" % (
-																			numeral.get_plural(
-																					build[7] - user_profile[5],
-																					("Камня", "Камней")
-																					))
-																	)
+															peer_id=self.peer_id,
+															random_id=random.randint(0, 10000000000),
+															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
+															)
 													else:
 														self.vk.messages.send(
 																peer_id=self.peer_id,
