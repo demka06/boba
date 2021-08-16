@@ -1422,7 +1422,8 @@ class Main(object):
 					
 					stats_pic.save('stats.png')
 				else:
-					"""stats_pic = Image.open(f"interfeys_dlya_bota_v3.png")
+					stats_pic = Image.open(f"interfeys_dlya_bota_v3.png")
+					"""
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
 					font = ImageFont.truetype("Aqum.ttf", size=20)
 					
@@ -1462,11 +1463,11 @@ class Main(object):
 					stats_pic_draw.text(xy=(1055, 814), text=str(bld_inv[4]), fill="black", font=font)
 					stats_pic_draw.text(xy=(1055, 912), text=str(bld_inv[5]), fill="black", font=font)
 					stats_pic_draw.text(xy=(1055, 1011), text=str(bld_inv[6]), fill="black", font=font)
-					
-					stats_pic.save('stats.png')"""
+					"""
+					stats_pic.save('stats.png')
 				
 				vk_upload = vk_api.VkUpload(self.vk_session)
-				photo = vk_upload.photo_messages(photos="interfeys_dlya_bota_v3.png")
+				photo = vk_upload.photo_messages(photos="stats.png")
 				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 				
 				self.vk.messages.send(peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo)
@@ -2189,11 +2190,6 @@ class Main(object):
 					pass
 			except:
 				pass
-		self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message=user_id
-						)  # оформление
 		conn = pymysql.connect(
 				host="triniti.ru-hoster.com",
 				user=self.user,
@@ -2294,7 +2290,8 @@ class Main(object):
 					stats_pic.save('prof.png')
 				else:
 					
-					"""stats_pic = Image.open("old/profil_igroka_v2.png")
+					stats_pic = Image.open("profil_igroka_v2.png")
+					"""
 					stats_pic_draw = ImageDraw.Draw(stats_pic)
 					stats_pic_draw.text(
 							xy=(230, 65), text=race[0], fill="white", font=ImageFont.truetype("Aqum.ttf", size=40)
@@ -2327,11 +2324,11 @@ class Main(object):
 					stats_pic_draw.text(xy=(970, 879), text=str(prof[10]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 978), text=str(prof[12]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 1077), text=str(prof[13]), fill="black", font=font)
-					
-					stats_pic.save('prof.png')"""
+					"""
+					stats_pic.save('prof.png')
 				
 				vk_upload = vk_api.VkUpload(self.vk_session)
-				photo = vk_upload.photo_messages(photos="interfeys_dlya_bota_v3.png")
+				photo = vk_upload.photo_messages(photos="prof.png")
 				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 				self.vk.messages.send(
 						peer_id=self.peer_id,
