@@ -278,7 +278,7 @@ class Main(object):
 				curs.execute("SELECT profit FROM builds")
 				prof = curs.fetchall( )
 				res = []
-				for i in count:
+				for i in range(count):
 					mine = data[i] * prof[i][0]
 					res.append(mine)
 				curs.execute(
