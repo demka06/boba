@@ -2190,11 +2190,7 @@ class Main(object):
 								message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 								)
 				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message=f"&#10062; Указаны не все аргументы."
-							)
+					pass
 			except:
 				pass
 		conn = pymysql.connect(
@@ -4120,11 +4116,7 @@ class Main(object):
 								message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 								)
 				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message=f"&#10062; Указаны не все аргументы."
-							)
+					pass
 			except:
 				pass
 		conn = pymysql.connect(
@@ -4179,11 +4171,7 @@ class Main(object):
 								message=f"&#10062; [club{str(self.event.object['message']['reply_message']['from_id']).replace('-', '')}|Эта страница] не является страницей пользователя."
 								)
 				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message=f"&#10062; Указаны не все аргументы."
-							)
+					pass
 			except:
 				pass
 		conn = pymysql.connect(
