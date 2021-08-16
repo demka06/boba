@@ -270,7 +270,7 @@ class Main(object):
 			resp = int(curs.fetchone( )[0])
 			if resp == 0 or now - resp >= 86400:
 				curs.execute(
-						"SELECT mine, vlg, farm, city, tmpl, altr, swml FROM users WHERE user_id = %s", (self.user_id,)
+						"SELECT mine, vlg, farm, city, tmpl, altr, swml, stone FROM users WHERE user_id = %s", (self.user_id,)
 						)
 				data = curs.fetchone( )
 				curs.execute("SELECT build_id FROM builds ORDER BY build_id DESC")
@@ -278,7 +278,7 @@ class Main(object):
 				curs.execute("SELECT profit FROM builds")
 				prof = curs.fetchall( )
 				res = []
-				for i in range(count):
+				for i in count:
 					mine = data[i] * prof[i][0]
 					res.append(mine)
 				curs.execute(
