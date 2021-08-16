@@ -1,7 +1,6 @@
 import random
 import traceback
 
-import pymysql
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import func_class
@@ -14,64 +13,65 @@ vk_session = vk_api.VkApi(token=token)  # Обработка access_token
 longpoll = VkBotLongPoll(vk_session, group_id)  # Данные для работы в сообществе
 vk = vk_session.get_api( )  # For api requests
 
-
 # ----------------[ ENIGNE ]-----------------
 while True:
 	for event in longpoll.listen( ):
 		try:
 			if event.type == VkBotEventType.MESSAGE_NEW:
 				if event.object.message['peer_id'] != event.object.message['from_id'] and event.object.message[
-					'from_id'] > 0:
+					'from_id'] > 0 and event.object.message['peer_id'] != 2e9 + 20:
 					command = event.obj.message["text"].lower( )
 					user_id = event.object.message["from_id"]
 					peer_id = event.object.message["peer_id"]
 					cls = func_class.Main(vk, event, vk_session)
-					cls.registrationConv( )
-					cls.registrarionUser( )
-					if command.split("\n")[0] in ("/addres", "/addres "):
+					# cls.registrationConv( ) - перенесено на многопоточку
+					# cls.registrarionUser( ) - переход на анкетную форму регистрации
+					if command.startswith(("/addres", "")):
 						cls.addResourse( )
-					elif command.split("\n")[0] in ("/addmil", "/addmil "):
+					elif command.startswith(("/addmil", "")):
 						cls.addMilitary( )
-					elif command.split("\n")[0] in ("/addbld", "/addbld "):
+					elif command.startswith(("/addbld", "")):
 						cls.addBuild( )
-					elif command.split(" ")[0] in ("/collres", " "):
+					elif command.startswith(("/collres", "/ресы")):
 						cls.collectResourses( )
-					elif command.split(" ")[0] in ("/collexp", " "):
+					elif command.startswith(("/collexp", "/опыт")):
 						cls.collectExpirience( )
-					elif command.split(" ")[0] in ("/listbld", " "):
+					elif command.startswith(("/listbld", "/постройки")):
 						cls.listOfBuilds( )
-					elif command.split(" ")[0] in ("/listmil", " "):
+					elif command.startswith(("/listmil", "/войска")):
 						cls.listOfMillitaryObj( )
-					elif command.split(" ")[0] in ("/buybld", " "):
+					elif command.startswith(("/buybld", "/+постройка")):
 						cls.buyBuild( )
-					elif command.split(" ")[0] in ("/buymil", " "):
+					elif command.startswith(("/buymil", "/+армия")):
 						cls.buyMilitaryObj( )
-					elif command.split(" ")[0] in ("/transm", " "):
+					elif command.startswith(("/transm", "/переводм")):
 						cls.transaction( )
-					elif command.split(" ")[0] in ("/rejt", " "):
+					elif command.startswith(("/rejt", "")):
 						cls.transactionRejection( )
-					elif command.split(" ")[0] in ("/setrace", " "):
-						cls.setRace( )
-					elif command.split(" ")[0] in ("/st", " "):
+					# elif command.split(" ")[0] in ("/setrace", " "):
+					# можно убирать в связи с готовой анкетной системой
+					# cls.setRace( )
+					elif command.startswith(("/st", "/раса")):
 						cls.raceInformation( )
-					elif command.split(" ")[0] in ("/goods", " "):
+					elif command.startswith(("/goods", "/сделки")):
 						cls.listOfGoods( )
-					elif command.split("\n")[0] in ("/addgood", "/addgood "):
+					elif command.startswith(("/addgood", "/добавитьсделку")):
 						cls.addGood( )
-					elif command.split(" ")[0] in ("/buygood", " "):
+					elif command.startswith(("/buygood", "/+сделка")):
 						cls.buyGood( )
-					elif command.split(" ")[0] in ("/rjgood", " "):
+					elif command.startswith(("/rjgood", "/-сделка")):
 						cls.lotRejection( )
-					elif command.split(" ")[0] in ("/rejg", " "):
+					elif command.startswith(("/rejg", "")):
 						cls.rejectonLotForAdms( )
-					elif command.split(" ")[0] in ("/prof", " "):
+					elif command.startswith(("/prof", "/проф")):
 						cls.getProfile( )
-					elif command.split(" ")[0] in ("/races", " "):
+					elif command.startswith(("/races", "/расы")):
 						cls.races( )
-					elif command.split(" ")[0] in ("/nickname", " "):
+					elif command.startswith(("/nickname", "")):
 						cls.changeNickForAdms( )
-					elif command.split(" ")[0] in ("/nick", " "):
-						cls.changeNickname( )
+					# elif command.startswith(("/nick", "")):
+					# можно убирать в связи с готовой анкетной системой
+					# cls.changeNickname( )
 					elif command.startswith("/getstats"):
 						cls.getCount( )
 					elif command.startswith("/getlot"):
@@ -80,36 +80,54 @@ while True:
 						cls.getTransaction( )
 					elif command.startswith("/event"):
 						cls.showEvent( )
-					elif command.split(" ")[0] in ("/help", " "):
+					elif command.startswith(("/help", "/помощь")):
 						cls.help( )
-					elif command.split("\n")[0] in ("/transr", "/transr "):
+					elif command.startswith(("/transr", "/переводр")):
 						cls.addResTransactions( )
-					elif command.split(" ")[0] in ("/trnacc", " "):
+					elif command.startswith(("/trnacc", "/+сделка")):
 						cls.acceptPersonalTrans( )
-					elif command.split(" ")[0] in ("/trnrej", " "):
+					elif command.startswith(("/trnrej", "")):
 						cls.personalTransRejection( )
-					elif command.split(" ")[0] in ("/rjtrns", " "):
+					elif command.startswith(("/rjtrns", "")):
 						cls.PersonalTransRejForAdms( )
-					elif command.split(" ")[0] in ("/lsttrn", " "):
+					elif command.startswith(("/lsttrn", "")):
 						cls.listOfPersonalTrans( )
-					elif command.split(" ")[0] in ("/pid", " "):
+					elif command.startswith(("/pid", "")):
 						cls.setChat( )
 					elif command.startswith("/delprof"):
 						cls.deleteProfile( )
-					elif command.split(" ")[0] in ("/setfort", " "):
+					elif command.startswith(("/setfort", "/форт")):
 						cls.changeFortName( )
-					elif command.split(" ")[0] in ("/chngfort", " "):
+					elif command.startswith(("/chngfort", "/названиефрт")):
 						cls.changeFortNameForAdms( )
 					elif command.startswith("/verif"):
 						cls.verificationConv( )
 					elif command.startswith("/unverif"):
 						cls.unverificationConv( )
-					elif command.startswith("/form"):
-						cls.attachForm( )
+					# elif command.startswith("/form"):
+					# cls.attachForm( )
 					elif command.startswith("/getform"):
 						cls.getForm( )
-					elif command.split(" ")[0] in ("/rjg", " "):
-						cls.lotRejection()
+					elif command.startswith(("/rjg", "/-лот")):
+						cls.lotRejection( )
+					elif command.startswith(("/maps", "/карта")):
+						cls.getMap( )
+					elif command.startswith(("/setmap", "")):
+						cls.setMap( )
+					elif command.startswith(("/acform", "")):
+						cls.accessForm( )
+					elif command.startswith(("/rjform", "")):
+						cls.rejectionForm( )
+					elif command.startswith(("/msgto", "")):
+						cls.sendMessageToUser( )
+					elif command.startswith(("/rb", "/removebld")):
+						cls.removeBuild( )
+					elif command.startswith(("/fortst", "/статафорта")):
+						cls.getFortStats( )
+					elif command.startswith(("/milst", "/статаармии")):
+						cls.getMilitaryStats( )
+					elif command.startswith(("/costs", "/цены")):
+						cls.getCostOnRes( )
 		
 		except Exception:
 			vk.messages.send(
