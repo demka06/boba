@@ -787,7 +787,7 @@ class Main(object):
 											if user_profile[4] >= build[3]:
 												if user_profile[5] >= build[7]:
 													curs.execute(
-															f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])}
+															f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}
 													conn.commit( )
 													
 													morph = pymorphy2.MorphAnalyzer( )
@@ -875,7 +875,7 @@ class Main(object):
 											if user_profile[4] >= build[3]:
 												if user_profile[5] >= build[7]:
 													curs.execute(
-															f"UPDATE users SET {build[5]} = {build[5]} + 1 wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])}
+															f"UPDATE users SET {build[5]} = {build[5]} + 1 wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}
 													conn.commit( )
 													
 													morph = pymorphy2.MorphAnalyzer( )
@@ -979,7 +979,7 @@ class Main(object):
 													if user_profile[4] >= build[3]:
 														if user_profile[5] >= build[7]:
 															curs.execute(
-																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])}
+																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}"
 															conn.commit( )
 															
 															morph = pymorphy2.MorphAnalyzer( )
@@ -1082,7 +1082,7 @@ class Main(object):
 													if user_profile[4] >= build[3]:
 														if user_profile[5] >= build[7]:
 															curs.execute(
-																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])}
+																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}
 															conn.commit( )
 															
 															morph = pymorphy2.MorphAnalyzer( )
