@@ -48,9 +48,6 @@ while True:
 						cls.transaction( )
 					elif command.startswith(("/rejt", " ")):
 						cls.transactionRejection( )
-					# elif command.split(" ")[0] in ("/setrace", " "):
-					# можно убирать в связи с готовой анкетной системой
-					# cls.setRace( )
 					elif command.startswith(("/st", " ")):
 						cls.raceInformation( )
 					elif command.startswith(("/goods", " ")):
@@ -69,9 +66,6 @@ while True:
 						cls.races( )
 					elif command.startswith(("/nickname", " ")):
 						cls.changeNickForAdms( )
-					# elif command.startswith(("/nick", "")):
-					# можно убирать в связи с готовой анкетной системой
-					# cls.changeNickname( )
 					elif command.startswith("/getstats"):
 						cls.getCount( )
 					elif command.startswith("/getlot"):
@@ -86,13 +80,13 @@ while True:
 						cls.addResTransactions( )
 					elif command.startswith(("/trnacc", " ")):
 						cls.acceptPersonalTrans( )
-					elif command.startswith(("/trnrej", "")):
+					elif command.startswith(("/trnrej", " ")):
 						cls.personalTransRejection( )
-					elif command.startswith(("/rjtrns", "")):
+					elif command.startswith(("/rjtrns", " ")):
 						cls.PersonalTransRejForAdms( )
-					elif command.startswith(("/lsttrn", "")):
+					elif command.startswith(("/lsttrn", " ")):
 						cls.listOfPersonalTrans( )
-					elif command.startswith(("/pid", "")):
+					elif command.startswith(("/pid", " ")):
 						cls.setChat( )
 					elif command.startswith("/delprof"):
 						cls.deleteProfile( )
