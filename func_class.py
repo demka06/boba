@@ -472,7 +472,7 @@ class Main(object):
 				morph = pymorphy2.MorphAnalyzer( )
 				name = morph.parse(res)[0]
 				name = name.inflect({'gent'}).word.capitalize( )
-				a += f"\n{i[9]}\nID: {i[0]}\nДоход: {i[2]} - {i[3]} ед. {name}\nСтоимость:\nПродовольствие: {round(i[4] + i[4] / 100 * 0.1 * count)}\nДерево: {round(i[5] + i[5] / 100 * 0.1 * count)}\nМеталлы: {round(i[6] + i[6] / 100 * 0.1 * count)}\nКамень: {round(i[7] + i[7] / 100 * 0.1 * count})\n"
+				a += f"\n{i[9]}\nID: {i[0]}\nДоход: {i[2]} - {i[3]} ед. {name}\nСтоимость:\nПродовольствие: {round(i[4] + i[4] / 100 * 0.1 * count)}\nДерево: {round(i[5] + i[5] / 100 * 0.1 * count)}\nМеталлы: {round(i[6] + i[6] / 100 * 0.1 * count)}\nКамень: {round(i[7] + i[7] / 100 * 0.1 * count)}\n"
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
