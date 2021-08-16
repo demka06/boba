@@ -278,7 +278,7 @@ class Main(object):
 			resp = int(curs.fetchone( )[0])
 			if resp == 0 or now - resp >= 86400:
 				curs.execute(
-						"SELECT mine, vlg, farm, city, tmpl, altr, swml FROM users WHERE user_id = %s", (self.user_id,)
+						"SELECT mine, vlg, farm, city, tmpl, altr, swml, qry FROM users WHERE user_id = %s", (self.user_id,)
 						)
 				data = curs.fetchone( )
 				curs.execute("SELECT hps FROM forts WHERE user_id = %s", (self.user_id,))
