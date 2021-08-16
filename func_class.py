@@ -282,7 +282,7 @@ class Main(object):
 						)
 				data = curs.fetchone( )
 				curs.execute("SELECT hps FROM forts WHERE user_id = %s", (self.user_id,))
-				hps = curs.fetchone( )
+				hps = curs.fetchone( )[0]
 				curs.execute("SELECT build_id FROM builds ORDER BY build_id DESC")
 				count = curs.fetchone( )[0]
 				curs.execute("SELECT profit, max_profit FROM builds")
