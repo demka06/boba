@@ -26,48 +26,48 @@ while True:
 					cls = func_class.Main(vk, event, vk_session)
 					# cls.registrationConv( ) - перенесено на многопоточку
 					# cls.registrarionUser( ) - переход на анкетную форму регистрации
-					if command.startswith(("/addres", "")):
+					if command.startswith(("/addres", " ")):
 						cls.addResourse( )
-					elif command.startswith(("/addmil", "")):
+					elif command.startswith(("/addmil", " ")):
 						cls.addMilitary( )
-					elif command.startswith(("/addbld", "")):
+					elif command.startswith(("/addbld", " ")):
 						cls.addBuild( )
-					elif command.startswith(("/collres", "/ресы")):
+					elif command.startswith(("/collres", " ")):
 						cls.collectResourses( )
-					elif command.startswith(("/collexp", "/опыт")):
+					elif command.startswith(("/collexp", " ")):
 						cls.collectExpirience( )
-					elif command.startswith(("/listbld", "/постройки")):
+					elif command.startswith(("/listbld", " ")):
 						cls.listOfBuilds( )
-					elif command.startswith(("/listmil", "/войска")):
+					elif command.startswith(("/listmil", " ")):
 						cls.listOfMillitaryObj( )
-					elif command.startswith(("/buybld", "/+постройка")):
+					elif command.startswith(("/buybld", " ")):
 						cls.buyBuild( )
-					elif command.startswith(("/buymil", "/+армия")):
+					elif command.startswith(("/buymil", " ")):
 						cls.buyMilitaryObj( )
-					elif command.startswith(("/transm", "/переводм")):
+					elif command.startswith(("/transm", " ")):
 						cls.transaction( )
-					elif command.startswith(("/rejt", "")):
+					elif command.startswith(("/rejt", " ")):
 						cls.transactionRejection( )
 					# elif command.split(" ")[0] in ("/setrace", " "):
 					# можно убирать в связи с готовой анкетной системой
 					# cls.setRace( )
-					elif command.startswith(("/st", "/раса")):
+					elif command.startswith(("/st", " ")):
 						cls.raceInformation( )
-					elif command.startswith(("/goods", "/сделки")):
+					elif command.startswith(("/goods", " ")):
 						cls.listOfGoods( )
-					elif command.startswith(("/addgood", "/добавитьсделку")):
+					elif command.startswith(("/addgood", " ")):
 						cls.addGood( )
-					elif command.startswith(("/buygood", "/+сделка")):
+					elif command.startswith(("/buygood", " ")):
 						cls.buyGood( )
-					elif command.startswith(("/rjgood", "/-сделка")):
+					elif command.startswith(("/rjgood", " ")):
 						cls.lotRejection( )
-					elif command.startswith(("/rejg", "")):
+					elif command.startswith(("/rejg", " ")):
 						cls.rejectonLotForAdms( )
-					elif command.startswith(("/prof", "/проф")):
+					elif command.startswith(("/prof", " ")):
 						cls.getProfile( )
-					elif command.startswith(("/races", "/расы")):
+					elif command.startswith(("/races", " ")):
 						cls.races( )
-					elif command.startswith(("/nickname", "")):
+					elif command.startswith(("/nickname", " ")):
 						cls.changeNickForAdms( )
 					# elif command.startswith(("/nick", "")):
 					# можно убирать в связи с готовой анкетной системой
@@ -80,11 +80,11 @@ while True:
 						cls.getTransaction( )
 					elif command.startswith("/event"):
 						cls.showEvent( )
-					elif command.startswith(("/help", "/помощь")):
+					elif command.startswith(("/help", " ")):
 						cls.help( )
-					elif command.startswith(("/transr", "/переводр")):
+					elif command.startswith(("/transr", " ")):
 						cls.addResTransactions( )
-					elif command.startswith(("/trnacc", "/+сделка")):
+					elif command.startswith(("/trnacc", " ")):
 						cls.acceptPersonalTrans( )
 					elif command.startswith(("/trnrej", "")):
 						cls.personalTransRejection( )
@@ -96,9 +96,9 @@ while True:
 						cls.setChat( )
 					elif command.startswith("/delprof"):
 						cls.deleteProfile( )
-					elif command.startswith(("/setfort", "/форт")):
+					elif command.startswith(("/setfort", " ")):
 						cls.changeFortName( )
-					elif command.startswith(("/chngfort", "/названиефрт")):
+					elif command.startswith(("/chngfort", " ")):
 						cls.changeFortNameForAdms( )
 					elif command.startswith("/verif"):
 						cls.verificationConv( )
@@ -108,25 +108,25 @@ while True:
 					# cls.attachForm( )
 					elif command.startswith("/getform"):
 						cls.getForm( )
-					elif command.startswith(("/rjg", "/-лот")):
+					elif command.startswith(("/rjg", " ")):
 						cls.lotRejection( )
-					elif command.startswith(("/maps", "/карта")):
+					elif command.startswith(("/maps", " ")):
 						cls.getMap( )
-					elif command.startswith(("/setmap", "")):
+					elif command.startswith(("/setmap", " ")):
 						cls.setMap( )
-					elif command.startswith(("/acform", "")):
+					elif command.startswith(("/acform", " ")):
 						cls.accessForm( )
-					elif command.startswith(("/rjform", "")):
+					elif command.startswith(("/rjform", " ")):
 						cls.rejectionForm( )
-					elif command.startswith(("/msgto", "")):
+					elif command.startswith(("/msgto", " ")):
 						cls.sendMessageToUser( )
-					elif command.startswith(("/rb", "/removebld")):
+					elif command.startswith(("/rb", " ")):
 						cls.removeBuild( )
-					elif command.startswith(("/fortst", "/статафорта")):
+					elif command.startswith(("/fortst", " ")):
 						cls.getFortStats( )
-					elif command.startswith(("/milst", "/статаармии")):
+					elif command.startswith(("/milst", " ")):
 						cls.getMilitaryStats( )
-					elif command.startswith(("/costs", "/цены")):
+					elif command.startswith(("/costs", " ")):
 						cls.getCostOnRes( )
 		
 		except Exception:
