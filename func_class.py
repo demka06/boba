@@ -803,7 +803,7 @@ class Main(object):
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает {build[5] - user_profile[7]} ед. Камня"
+															message=f"&#10062; У вас не хватает {int(build[5])-int(user_profile[7])} ед. Камня"
 															)
 											else:
 												self.vk.messages.send(
