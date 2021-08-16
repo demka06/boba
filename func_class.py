@@ -803,11 +803,7 @@ class Main(object):
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает %s." % (
-																	numeral.get_plural(
-																			build[7] - user_profile[5],
-																			("Камня", "Камней")
-																			))
+															message=f"&#10062; У вас не хватает {build[5] - user_profile[7] ед. Камня"
 															)
 											else:
 												self.vk.messages.send(
@@ -2193,6 +2189,11 @@ class Main(object):
 					pass
 			except:
 				pass
+		self.vk.messages.send(
+						peer_id=self.peer_id,
+						random_id=random.randint(0, 10000000000),
+						message=user_id
+						)  # оформление
 		conn = pymysql.connect(
 				host="triniti.ru-hoster.com",
 				user=self.user,
