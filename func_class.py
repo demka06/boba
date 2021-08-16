@@ -305,7 +305,7 @@ class Main(object):
 						mine = data[i] * random.randint(prof[i][0], prof[i][1])
 						res.append(mine)
 				curs.execute(
-						f"UPDATE users SET steel = steel + {res[0]}, anders = anders +{res[1] + res[3]}, food = food + {res[2]}, w_cris = w_cris + {res[4]}, b_cris = b_cris + {res[5]}, wood = wood + {res[6]}, last_res_coll = {now} WHERE user_id = %s",
+						f"UPDATE users SET steel = steel + {res[0]}, anders = anders +{res[1] + res[3]}, food = food + {res[2]}, w_cris = w_cris + {res[4]}, b_cris = b_cris + {res[5]}, wood = wood + {res[6]},stone = stone + {res[7]}, last_res_coll = {now} WHERE user_id = %s",
 						(self.user_id,)
 						)
 				conn.commit( )
@@ -2261,7 +2261,7 @@ class Main(object):
 					stats_pic_draw.text(xy=(570, 683), text=str(prof[6]), fill="black", font=font)
 					stats_pic_draw.text(xy=(570, 783), text=str(prof[8]), fill="black", font=font)
 					stats_pic_draw.text(xy=(570, 879), text=str(prof[7]), fill="black", font=font)
-					stats_pic_draw.text(xy=(570, 977), text=str(prof[22]), fill="black", font=font)
+					stats_pic_draw.text(xy=(570, 977), text=str(prof[25]), fill="black", font=font)
 					
 					stats_pic_draw.text(xy=(970, 485), text=str(prof[11]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 585), text=str(prof[22]), fill="black", font=font)
