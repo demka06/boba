@@ -4174,7 +4174,7 @@ class Main(object):
 			prof = curs.fetchone( )
 			if prof is not None:
 				curs.execute("SELECT expns, res_id, name, bd_name FROM military")
-				a = curs.fetchone( )
+				a = curs.fetchall( )
 				b = ""
 				for i in a:
 					curs.execute(f"SELECT {i[3]}, {i[3]}*{i[0]} FROM users WHERE user_id = {user_id}")
