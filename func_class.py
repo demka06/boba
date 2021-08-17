@@ -4177,7 +4177,7 @@ class Main(object):
 				a = curs.fetchall( )
 				b = ""
 				for i in a:
-					curs.execute(f"SELECT count FROM military WHERE bd_name = {i[3]}")
+					curs.execute(f"SELECT count FROM military WHERE bd_name = '{i[3]}'")
 					c = curs.fetchone()[0]
 					curs.execute(f"SELECT {i[3]}, {i[3]}*{i[0]}/{c} FROM users WHERE user_id = {user_id}")
 					count = curs.fetchone( )
