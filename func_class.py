@@ -4123,7 +4123,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"Название Форта: {data[0]}\nНаселение: {data[1]}\nБлагосостояние: {data[2]}\nПоследняя оплата за Форт: {data[3]}\n\nКол-во городов: {data[4]}\nКол-во деревень: {data[5]}\nПотребление продовольствия: {data[6]}\n\nВладелец: @id{user_id}",
+						message=f"Название Форта: {data[0]}\nНаселение: {data[1]}\nБлагосостояние: {data[2]}\nПоследняя оплата за Форт: {data[3]}\n\nКол-во городов: {data[4]}\nКол-во деревень: {data[5]}\nПотребление продовольствия в сутки: {data[6]}\n\nВладелец: @id{user_id}",
 						disable_mentions=1
 						)
 			else:
