@@ -294,7 +294,7 @@ class Main(object):
 						res.append(mine)
 				elif 60 >= hps >= 50:
 					for i in range(count):
-						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]) / 1.2)
+						mine = round(data[i] * random.randint(prof[i][0], prof[i][1]) * 1.2)
 						res.append(mine)
 				elif hps <= 20:
 					for i in range(count):
