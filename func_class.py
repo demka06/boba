@@ -4169,7 +4169,7 @@ class Main(object):
 		ch = int(curs.fetchone( )[0])
 		if ch == 1:
 			curs.execute(
-					f"SELECT SUM(users.inf, users.arch, users.clvr, users.plds, users.ctpl, users.mag, users.bllsts), users.vlg*3000+users.city*4000, last_pay_mil FROM users WHERE user_id = {user_id}"
+					f"SELECT users.inf+users.arch+users.clvr+users.plds+users.ctpl+users.mag+users.bllsts, users.vlg*3000+users.city*4000, last_pay_mil FROM users WHERE user_id = {user_id}"
 					)
 			prof = curs.fetchone( )
 			if prof is not None:
