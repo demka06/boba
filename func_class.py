@@ -4190,7 +4190,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"Армия @id{user_id} :\nНазвание : Кол-во войска : Потребление\n\n{b}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
+						message=f"Армия @id{user_id} :\nНазвание : Кол-во войска : Потребление\n\n{round(b)}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
 						disable_mentions=1
 						)
 			else:
