@@ -4117,8 +4117,9 @@ class Main(object):
 					)
 			data = curs.fetchone( )
 			if data is not None:
-				if data[0] is None:
-					data[0] = "Не указано"
+				none = data[0]
+				if none is None:
+					none = "Не указано"
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
