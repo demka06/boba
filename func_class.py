@@ -4184,11 +4184,11 @@ class Main(object):
 					morph = pymorphy2.MorphAnalyzer( )
 					name = morph.parse(res)[0]
 					name = name.inflect({'gent'}).word.capitalize( )
-					b += f"\n{i[2]} : {count[0]} : {count[1]} ед. {name} в 3 дня\n"
+					b += f"{i[2]} : {count[0]} : {count[1]} ед. {name} в 3 дня\n"
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"Армия @id{user_id}\n{b}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
+						message=f"Армия @id{user_id}\n\n{b}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
 						disable_mentions=1
 						)
 			else:
@@ -4214,9 +4214,9 @@ class Main(object):
 			costs = curs.fetchall( )
 			a = ""
 			for i in costs:
-				a += f"\n{i[1]}: {i[0]} ед. Андеров\n"
+				a += f"{i[1]}: {i[0]} ед. Андеров\n"
 			self.vk.messages.send(
 					peer_id=self.peer_id,
 					random_id=random.randint(0, 10000000000),
-					message=f"Кореектные цены на ресурсы:{a}"
+					message=f"Кореектные цены на ресурсы:\n\n{a}"
 					)
