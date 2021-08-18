@@ -2644,7 +2644,7 @@ class Main(object):
 						random_id=random.randint(0, 10000000000),
 						message="&#10062; Получатель указан неверно."
 						)
-			if count.isdigit( ) and cost.isdigit( ) and user.isdigit():
+			if count.isdigit( ) and cost.isdigit( ) and user.isdigit( ):
 				conn = pymysql.connect(
 						host="triniti.ru-hoster.com",
 						user=self.user,
@@ -3491,37 +3491,24 @@ class Main(object):
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 							)
 				else:
-					curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
-					map = curs.fetchone( )
-					resource = urllib.request.urlopen(map[0])
-					out = open("map.png", 'wb')
-					out.write(resource.read( ))
-					out.close( )
-					vk_upload = vk_api.VkUpload(self.vk_session)
-					photo = vk_upload.document_message(doc = "map.png")
-					photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
 					self.vk.messages.send(
-							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Указанной расы не существует."
 							)
 			else:
+				curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
+				map = curs.fetchone( )
+				resource = urllib.request.urlopen(map[0])
+				out = open("map.png", 'wb')
+				out.write(resource.read( ))
+				out.close( )
+				vk_upload = vk_api.VkUpload(self.vk_session)
+				photo = vk_upload.document_message(doc="map.png")
+				photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
 				self.vk.messages.send(
-						peer_id=self.peer_id,
-						random_id=random.randint(0, 10000000000),
-						message="Указанной расы не существует."
+						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 						)
-		else:
-			curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
-			map = curs.fetchone( )
-			resource = urllib.request.urlopen(map[0])
-			out = open("map.png", 'wb')
-			out.write(resource.read( ))
-			out.close( )
-			vk_upload = vk_api.VkUpload(self.vk_session)
-			photo = vk_upload.document_message(doc="map.png")
-			photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
-			self.vk.messages.send(
-					peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
-					)
 	
 	def setMap(self):
 		if self.user_id in self.adms:
