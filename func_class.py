@@ -3433,7 +3433,7 @@ class Main(object):
 						)
 				curs = conn.cursor( )
 				curs.execute(f"SELECT form, time, access FROM forms WHERE user_id = {user}")
-				form = curs.fetchall( )
+				form = curs.fetchone( )
 				if form is None:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -3442,7 +3442,7 @@ class Main(object):
 							disable_mentions=1
 							)
 				else:
-					acc = form[0][2]
+					acc = form[2]
 					if acc == 0:
 						acc = "На рассмотрении"
 					elif acc == 1:
@@ -3452,7 +3452,7 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"Анкета @id{user}:\n\n{form[0][0]}\n\nВремя: {form[0][1]}\nВердикт: {acc}",
+							message=f"Анкета @id{user}:\n\n{form[0]}\n\nВремя: {form[1]}\nВердикт: {acc}",
 							disable_mentions=1
 							)
 			else:
