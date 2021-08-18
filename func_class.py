@@ -3474,8 +3474,8 @@ class Main(object):
 		ch = int(curs.fetchone( )[0])
 		if ch == 1:
 			if len(self.command.split(" ")) >= 2:
-				race = self.command.split(" ")[1].capitalize( )
-				curs.execute("SELECT race_id FROM races WHERE name = %s", (race,))
+				race = self.command.split(" ")[1]
+				curs.execute("SELECT race_id FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
 				if race is not None:
 					curs.execute(f"SELECT link FROM maps WHERE race_id = {race_id[0]} ORDER BY time DESC")
@@ -3567,7 +3567,7 @@ class Main(object):
 								charset='utf8', init_command='SET NAMES UTF8'
 								)
 						curs = conn.cursor( )
-						curs.execute(f"SELECT race_id FROM races WHERE race_id = {map_race}")
+						curs.execute(f"SELECT race_id FROM races WHERE low_name = {map_race}")
 						if curs.fetchone( ) is not None:
 							map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
 							map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
