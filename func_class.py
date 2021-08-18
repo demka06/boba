@@ -3477,7 +3477,7 @@ class Main(object):
 				race = self.command.split(" ", 1)[1]
 				curs.execute("SELECT race_id FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
-				if race is not None:
+				if race_id is not None:
 					curs.execute(f"SELECT link FROM maps WHERE race_id = {race_id[0]} ORDER BY time DESC")
 					map = curs.fetchone( )
 					if map is None:
@@ -3620,7 +3620,7 @@ class Main(object):
 		curs.execute(f"SELECT access FROM forms WHERE user_id = {self.user_id}")
 		a = curs.fetchone( )
 		if a is None:
-			if len(self.txt) < 20:
+			if len(self.txt) < 30:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),

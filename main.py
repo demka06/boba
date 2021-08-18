@@ -98,8 +98,8 @@ while True:
 						cls.verificationConv( )
 					elif command.startswith("/unverif"):
 						cls.unverificationConv( )
-					# elif command.startswith("/form"):
-					# cls.attachForm( )
+					elif command.startswith("/form"):
+						cls.attachForm( )
 					elif command.startswith("/getform"):
 						cls.getForm( )
 					elif command.startswith(("/rjg", " ")):
@@ -122,7 +122,13 @@ while True:
 						cls.getMilitaryStats( )
 					elif command.startswith(("/costs", " ")):
 						cls.getCostOnRes( )
-		
+				if event.object.message['peer_id'] == event.object.message['from_id']:
+					command = event.obj.message["text"].lower( )
+					user_id = event.object.message["from_id"]
+					peer_id = event.object.message["peer_id"]
+					cls = func_class.Main(vk, event, vk_session)
+					if command.startswith(("/анкета", " ")):
+						cls.addForm()
 		except Exception:
 			vk.messages.send(
 					peer_id=2e9 + 4,
