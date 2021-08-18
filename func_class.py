@@ -3480,6 +3480,39 @@ class Main(object):
 				if race is not None:
 					curs.execute(f"SELECT link FROM maps WHERE race_id = {race_id[0]} ORDER BY time DESC")
 					map = curs.fetchone( )
+					if map is None:
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Карты нема..."
+								)
+					else:
+						resource = urllib.request.urlopen(map[0])
+						out = open("map.png", 'wb')
+						out.write(resource.read( ))
+						out.close( )
+						vk_upload = vk_api.VkUpload(self.vk_session)
+						photo = vk_upload.photo_messages(photos="map.png")
+						photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
+						self.vk.messages.send(
+								peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
+								)
+				else:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Указанной расы не существует."
+							)
+			else:
+				curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
+				map = curs.fetchone( )
+				if map is None:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message="Карты нема..."
+							)
+				else:
 					resource = urllib.request.urlopen(map[0])
 					out = open("map.png", 'wb')
 					out.write(resource.read( ))
@@ -3490,25 +3523,6 @@ class Main(object):
 					self.vk.messages.send(
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 							)
-				else:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message="Указанной расы не существует."
-							)
-			else:
-				curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
-				map = curs.fetchone( )
-				resource = urllib.request.urlopen(map[0])
-				out = open("map.png", 'wb')
-				out.write(resource.read( ))
-				out.close( )
-				vk_upload = vk_api.VkUpload(self.vk_session)
-				photo = vk_upload.photo_messages(photos="map.png")
-				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
-				self.vk.messages.send(
-						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
-						)
 	
 	def setMap(self):
 		if self.user_id in self.adms:
@@ -3525,10 +3539,17 @@ class Main(object):
 					map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
 					map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
 						map_size - 1]["src"]
-					curs.execute(
-							f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
-							(map, self.user_id)
-							)
+					try:
+						curs.execute(
+								f"INSERT INTO maps(link, from_user) VALUES ( %s, %s, %s)",
+								(map, self.user_id)
+								)
+						conn.commit( )
+					except:
+						curs.execute(
+								f"UPDATE maps SET link = %s, from_user = %s WHERE race_id = 0",
+								(map, self.user_id)
+								)
 					conn.commit( )
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -3551,11 +3572,19 @@ class Main(object):
 							map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
 							map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
 								map_size - 1]["src"]
-							curs.execute(
-									f"INSERT INTO maps(link, from_user, race_id) VALUES (%s, %s, %s)",
-									(map, self.user_id, map_race)
-									)
-							conn.commit( )
+							
+							try:
+								curs.execute(
+										f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
+										(map, self.user_id)
+										)
+								conn.commit( )
+							except:
+								curs.execute(
+										f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = 0",
+										(map, self.user_id)
+										)
+								conn.commit( )
 							self.vk.messages.send(
 									peer_id=self.peer_id,
 									random_id=random.randint(0, 10000000000),
