@@ -3512,7 +3512,7 @@ class Main(object):
 	
 	def setMap(self):
 		if self.user_id in self.adms:
-			if "doc" in self.event.object["message"].keys( ):
+			if "doc" in self.event.object["message"]["attachments"][0].keys( ):
 				if len(self.command.split(" ")) == 1:
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
@@ -4183,12 +4183,6 @@ class Main(object):
 				a = curs.fetchall( )
 				b = ""
 				for i in a:
-					self.vk.messages.send(
-							peer_id=self.peer_id,
-							random_id=random.randint(0, 10000000000),
-							message=i[3],
-							disable_mentions=1
-							)
 					curs.execute(f"SELECT count FROM military WHERE bd_name = '{i[3]}'")
 					c = curs.fetchone( )[0]
 					curs.execute(f"SELECT {i[3]}, {i[3]}*{i[0]}/{c} FROM users WHERE user_id = {user_id}")
@@ -4198,7 +4192,7 @@ class Main(object):
 					morph = pymorphy2.MorphAnalyzer( )
 					name = morph.parse(res)[0]
 					name = name.inflect({'gent'}).word.capitalize( )
-					b += f"{i[2]} : {count[0]} : {round(count[1])} ед. {name} в 3 дня\n\n"
+					b += f"{i[2]} : {count[0]} : {round(count[1])} ед. {name} в 3 дня\n"
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),

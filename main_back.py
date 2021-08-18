@@ -236,7 +236,7 @@ def checkAndPayForMilitary( ):
 				mil = curs.fetchone( )
 				curs.execute(f"SELECT bd_name FROM resourses WHERE res_id = {mil[1]}")
 				res = curs.fetchone( )[0]
-				curs.execute(f"SELECT {res}, {c}/count*{mil[0]} FROM users WHERE user_id = {i[0]}")
+				curs.execute(f"SELECT {res}, {c}/count/{mil[2]}*{mil[0]} FROM users WHERE user_id = {i[0]}")
 				user = curs.fetchone( )
 				if user[0] >= user[1]:
 					curs.execute(f"UPDATE users SET {res} = {res} - {user[1]}, last_pay_mil = {times} WHERE user_id = {i[0]}")
@@ -244,7 +244,7 @@ def checkAndPayForMilitary( ):
 					txt1 += f"\n@id{i[0]} оплатил все за {mil[3]}"
 				else:
 					r = random.randint(1, 3)
-					curs.execute(f"UPDATE {c} = c - c/100*{r} WHERE user_id = {i[0]}")
+					curs.execute(f"UPDATE {c} = {c} - ROUND(c/100*{r}, -1) WHERE user_id = {i[0]}")
 					conn.commit( )
 					txt1 += f"\n@id{i[0]} не оплатил оплатил за {mil[3]}"
 					break
