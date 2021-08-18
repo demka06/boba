@@ -3474,7 +3474,7 @@ class Main(object):
 		ch = int(curs.fetchone( )[0])
 		if ch == 1:
 			if len(self.command.split(" ")) >= 2:
-				race = self.command.split(" ")[1]
+				race = self.command.split(" ", 1)[1]
 				curs.execute("SELECT race_id FROM races WHERE low_name = %s", (race,))
 				race_id = curs.fetchone( )
 				if race is not None:
@@ -3556,8 +3556,8 @@ class Main(object):
 							random_id=random.randint(0, 10000000000),
 							message="Общая карта сохранена!"
 							)
-				elif len(self.command.split(" ")) == 2:
-					map_race = self.command.split(" ")[1]
+				elif len(self.command.split(" ")) >= 2:
+					map_race = self.command.split(" ", 1)[1]
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
 							user=self.user,
