@@ -3558,7 +3558,6 @@ class Main(object):
 							)
 				elif len(self.command.split(" ")) == 2:
 					map_race = self.command.split(" ")[1]
-					
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
 							user=self.user,
@@ -3567,12 +3566,12 @@ class Main(object):
 							charset='utf8', init_command='SET NAMES UTF8'
 							)
 					curs = conn.cursor( )
-					curs.execute(f"SELECT race_id FROM races WHERE low_name = {map_race}")
-					if curs.fetchone( ) is not None:
+					curs.execute(f"SELECT race_id FROM races WHERE low_name = '{map_race}'")
+					map_race = curs.fetchone()
+					if map_race is not None:
 						map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
 						map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
 							map_size - 1]["src"]
-						
 						try:
 							curs.execute(
 									f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
@@ -3581,7 +3580,7 @@ class Main(object):
 							conn.commit( )
 						except:
 							curs.execute(
-									f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = 0",
+									f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = {map_race[0]}",
 									(map, self.user_id)
 									)
 							conn.commit( )
