@@ -3574,8 +3574,8 @@ class Main(object):
 							map_size - 1]["src"]
 						try:
 							curs.execute(
-									f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
-									(map, self.user_id)
+									f"INSERT INTO maps(link, from_user, race_id) VALUES ( %s, %s, %s)",
+									(map, self.user_id, {map_race[0]})
 									)
 							conn.commit( )
 						except:
