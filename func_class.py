@@ -3512,7 +3512,7 @@ class Main(object):
 	
 	def setMap(self):
 		if self.user_id in self.adms:
-			if "doc" in self.event.object["message"].keys( ):
+			if "doc" in self.event.object["message"]["attachments"][0].keys( ):
 				if len(self.command.split(" ")) == 1:
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
