@@ -3558,44 +3558,38 @@ class Main(object):
 							)
 				elif len(self.command.split(" ")) == 2:
 					map_race = self.command.split(" ")[1]
-					if map_race.isdigit( ):
-						conn = pymysql.connect(
-								host="triniti.ru-hoster.com",
-								user=self.user,
-								password=self.passw,
-								db='demkaXvl',
-								charset='utf8', init_command='SET NAMES UTF8'
+					
+					conn = pymysql.connect(
+							host="triniti.ru-hoster.com",
+							user=self.user,
+							password=self.passw,
+							db='demkaXvl',
+							charset='utf8', init_command='SET NAMES UTF8'
+							)
+					curs = conn.cursor( )
+					curs.execute(f"SELECT race_id FROM races WHERE low_name = {map_race}")
+					if curs.fetchone( ) is not None:
+						map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
+						map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
+							map_size - 1]["src"]
+						
+						try:
+							curs.execute(
+									f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
+									(map, self.user_id)
+									)
+							conn.commit( )
+						except:
+							curs.execute(
+									f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = 0",
+									(map, self.user_id)
+									)
+							conn.commit( )
+						self.vk.messages.send(
+								peer_id=self.peer_id,
+								random_id=random.randint(0, 10000000000),
+								message="Карта сохранена!"
 								)
-						curs = conn.cursor( )
-						curs.execute(f"SELECT race_id FROM races WHERE low_name = {map_race}")
-						if curs.fetchone( ) is not None:
-							map_size = self.event.object["message"]["attachments"][0]["doc"]["type"]
-							map = self.event.object["message"]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][
-								map_size - 1]["src"]
-							
-							try:
-								curs.execute(
-										f"INSERT INTO maps(link, from_user) VALUES ( %s, %s)",
-										(map, self.user_id)
-										)
-								conn.commit( )
-							except:
-								curs.execute(
-										f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = 0",
-										(map, self.user_id)
-										)
-								conn.commit( )
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Карта сохранена!"
-									)
-						else:
-							self.vk.messages.send(
-									peer_id=self.peer_id,
-									random_id=random.randint(0, 10000000000),
-									message="Аргументы указаны неправильно."
-									)
 					else:
 						self.vk.messages.send(
 								peer_id=self.peer_id,
