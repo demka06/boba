@@ -3580,7 +3580,7 @@ class Main(object):
 							conn.commit( )
 						except:
 							curs.execute(
-									f"UPDATE maps SET link = %s, from_user = %s WHERE map_id = {map_race[0]}",
+									f"UPDATE maps SET link = %s, from_user = %s WHERE race_id = {map_race[0]}",
 									(map, self.user_id)
 									)
 							conn.commit( )
