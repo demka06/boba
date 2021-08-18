@@ -3475,10 +3475,23 @@ class Main(object):
 		if ch == 1:
 			if len(self.command.split(" ")) >= 2:
 				race = self.command.split(" ")[1].capitalize( )
-				curs.execute("SELECT race_id FROM races WHERE race_name = %s", (race,))
+				curs.execute("SELECT race_id FROM races WHERE name = %s", (race,))
 				race_id = curs.fetchone( )
 				if race is not None:
 					curs.execute(f"SELECT link FROM maps WHERE race_id = {race_id[0]} ORDER BY time DESC")
+					map = curs.fetchone( )
+					resource = urllib.request.urlopen(map[0])
+					out = open("map.png", 'wb')
+					out.write(resource.read( ))
+					out.close( )
+					vk_upload = vk_api.VkUpload(self.vk_session)
+					photo = vk_upload.document_message(doc="map.png")
+					photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
+					self.vk.messages.send(
+							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
+							)
+				else:
+					curs.execute("SELECT link FROM maps WHERE race_id = 0 ORDER BY time DESC")
 					map = curs.fetchone( )
 					resource = urllib.request.urlopen(map[0])
 					out = open("map.png", 'wb')
