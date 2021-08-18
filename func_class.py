@@ -2635,9 +2635,9 @@ class Main(object):
 					"https"
 					):
 				short_name = user.split("/")[3]
-				user = self.vk.users.get(user_ids=short_name)[0]['id']
+				user = str(self.vk.users.get(user_ids=short_name)[0]['id'])
 			elif user.startswith("[id"):
-				user = int(user.split("|")[0].replace("[id", ""))
+				user = user.split("|")[0].replace("[id", "")
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
@@ -3432,8 +3432,8 @@ class Main(object):
 						charset='utf8', init_command='SET NAMES UTF8'
 						)
 				curs = conn.cursor( )
-				curs.execute(f"SELECT form FROM forms WHERE user_id = {user}")
-				form = curs.fetchone( )
+				curs.execute(f"SELECT form, time, access FROM forms WHERE user_id = {user}")
+				form = curs.fetchall( )
 				if form is None:
 					self.vk.messages.send(
 							peer_id=self.peer_id,
@@ -3442,10 +3442,17 @@ class Main(object):
 							disable_mentions=1
 							)
 				else:
+					acc = form[0][2]
+					if acc == 0:
+						acc = "На рассмотрении"
+					elif acc == 1:
+						acc = "Принят"
+					else:
+						acc = "Отклонена"
 					self.vk.messages.send(
 							peer_id=self.peer_id,
 							random_id=random.randint(0, 10000000000),
-							message=f"Анкета @id{user}:\n\n{form[0]}.",
+							message=f"Анкета @id{user}:\n\n{form[0][0]}\n\nВремя: {form[0][1]}\nВердикт: {acc}",
 							disable_mentions=1
 							)
 			else:
@@ -3638,11 +3645,11 @@ class Main(object):
 						message="Анкета отправлена Администрации."
 						)
 				curs.execute("SELECT form_id FROM forms ORDER BY form_id DESC LIMIT 1")
-				form_id = curs.fetchone( )[0]
+				form_id = curs.fetchone()[0]
 				self.vk.messages.send(
 						peer_id=self.adms_chat,
 						random_id=random.randint(0, 10000000000),
-						message=f"@all\nНовая анкета!\nID анкеты: {form_id}\nID пользователя: {self.user_id}\nАнкета:{self.txt.replace('/рег', '')}"
+						message=f"@all\nНовая анкета!\nID анкеты: {form_id}\nID пользователя: @id{self.user_id}\nАнкета:{self.txt.replace('/рег', '')}"
 						)
 		else:
 			if a[0] == 1:

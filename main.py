@@ -127,7 +127,7 @@ while True:
 					user_id = event.object.message["from_id"]
 					peer_id = event.object.message["peer_id"]
 					cls = func_class.Main(vk, event, vk_session)
-					if command.startswith(("/анкета", " ")):
+					if command.startswith(("/рег", " ")):
 						cls.addForm()
 		except Exception:
 			vk.messages.send(
