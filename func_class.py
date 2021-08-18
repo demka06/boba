@@ -278,7 +278,8 @@ class Main(object):
 			resp = int(curs.fetchone( )[0])
 			if resp == 0 or now - resp >= 86400:
 				curs.execute(
-						"SELECT mine, vlg, farm, city, tmpl, altr, swml, qry FROM users WHERE user_id = %s", (self.user_id,)
+						"SELECT mine, vlg, farm, city, tmpl, altr, swml, qry FROM users WHERE user_id = %s",
+						(self.user_id,)
 						)
 				data = curs.fetchone( )
 				curs.execute("SELECT hps FROM forts WHERE user_id = %s", (self.user_id,))
@@ -787,7 +788,8 @@ class Main(object):
 											if user_profile[4] >= build[3]:
 												if user_profile[5] >= build[7]:
 													curs.execute(
-															f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}")
+															f"UPDATE users SET {build[5]} = {build[5]} + 1, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}"
+															)
 													conn.commit( )
 													
 													morph = pymorphy2.MorphAnalyzer( )
@@ -802,7 +804,7 @@ class Main(object):
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
+															message=f"&#10062; У вас не хватает {int(build[7]) - int(user_profile[5])} ед. Камня"
 															)
 											else:
 												self.vk.messages.send(
@@ -875,7 +877,8 @@ class Main(object):
 											if user_profile[4] >= build[3]:
 												if user_profile[5] >= build[7]:
 													curs.execute(
-															f"UPDATE users SET {build[5]} = {build[5]} + 1 wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}")
+															f"UPDATE users SET {build[5]} = {build[5]} + 1 wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}"
+															)
 													conn.commit( )
 													
 													morph = pymorphy2.MorphAnalyzer( )
@@ -890,8 +893,8 @@ class Main(object):
 													self.vk.messages.send(
 															peer_id=self.peer_id,
 															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
-															)				
+															message=f"&#10062; У вас не хватает {int(build[7]) - int(user_profile[5])} ед. Камня"
+															)
 											else:
 												self.vk.messages.send(
 														peer_id=self.peer_id,
@@ -979,7 +982,8 @@ class Main(object):
 													if user_profile[4] >= build[3]:
 														if user_profile[5] >= build[7]:
 															curs.execute(
-																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}")
+																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}"
+																	)
 															conn.commit( )
 															
 															morph = pymorphy2.MorphAnalyzer( )
@@ -992,10 +996,10 @@ class Main(object):
 																	)
 														else:
 															self.vk.messages.send(
-															peer_id=self.peer_id,
-															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
-															)
+																	peer_id=self.peer_id,
+																	random_id=random.randint(0, 10000000000),
+																	message=f"&#10062; У вас не хватает {int(build[7]) - int(user_profile[5])} ед. Камня"
+																	)
 													else:
 														self.vk.messages.send(
 																peer_id=self.peer_id,
@@ -1082,7 +1086,8 @@ class Main(object):
 													if user_profile[4] >= build[3]:
 														if user_profile[5] >= build[7]:
 															curs.execute(
-																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}")
+																	f"UPDATE users SET {build[5]} = {build[5]} + {count}, wood = wood - {round(build[2] + build[2] / 100 * 0.1 * user_profile[8])}, steel = steel - {round(build[1] + build[1] / 100 * 0.1 * user_profile[8])}, food = food - {round(build[0] + build[0] / 100 * 0.1 * user_profile[8])}, b_cris = b_cris - {round(build[3] + build[3] / 100 * 0.1 * user_profile[8])}, w_cris = w_cris - {round(build[4] + build[4] / 100 * 0.1 * user_profile[8])}, stone = stone - {round(build[7] + build[7] / 100 * 0.1 * user_profile[8])} WHERE user_id = {self.user_id}"
+																	)
 															conn.commit( )
 															
 															morph = pymorphy2.MorphAnalyzer( )
@@ -1095,10 +1100,10 @@ class Main(object):
 																	)
 														else:
 															self.vk.messages.send(
-															peer_id=self.peer_id,
-															random_id=random.randint(0, 10000000000),
-															message=f"&#10062; У вас не хватает {int(build[7])-int(user_profile[5])} ед. Камня"
-															)
+																	peer_id=self.peer_id,
+																	random_id=random.randint(0, 10000000000),
+																	message=f"&#10062; У вас не хватает {int(build[7]) - int(user_profile[5])} ед. Камня"
+																	)
 													else:
 														self.vk.messages.send(
 																peer_id=self.peer_id,
@@ -2186,7 +2191,7 @@ class Main(object):
 		ch = int(curs.fetchone( )[0])
 		if ch == 1:
 			curs.execute(
-					"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml, fort_name, peer_id, stone FROM users WHERE user_id = %s",
+					"SELECT race_id, exp, anders, nickname, food, wood, steel, b_cris, w_cris, vlg, city, farm, tmpl, altr, mine, inf, arch, clvr, plds, ctpl, mag, bllsts, swml, fort_name, peer_id, stone, qry FROM users WHERE user_id = %s",
 					(user_id,)
 					)
 			prof = curs.fetchone( )
@@ -2270,6 +2275,7 @@ class Main(object):
 					stats_pic_draw.text(xy=(970, 879), text=str(prof[10]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 978), text=str(prof[12]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 1077), text=str(prof[13]), fill="black", font=font)
+					stats_pic_draw.text(xy=(970, 1077), text=str(prof[26]), fill="black", font=font)
 					
 					stats_pic.save('prof.png')
 				else:
@@ -2625,20 +2631,20 @@ class Main(object):
 			res = self.command.split("\n")[2].capitalize( ).strip( )
 			count = self.command.split("\n")[3].strip( )
 			cost = self.command.split("\n")[4].strip( )
-			if self.command.split("\n")[1].startswith("http") or self.command.split("\n")[1].startswith(
+			if user.startswith("http") or user.startswith(
 					"https"
 					):
-				short_name = self.command.split(" ")[2].split("/")[3]
+				short_name = user.split("/")[3]
 				user = self.vk.users.get(user_ids=short_name)[0]['id']
-			elif self.command.split("\n")[1].startswith("[id"):
-				user = self.command.split("\n")[1].split("|")[0].replace("[id", "")
+			elif user.startswith("[id"):
+				user = int(user.split("|")[0].replace("[id", ""))
 			else:
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
 						message="&#10062; Получатель указан неверно."
 						)
-			if count.isdigit( ) and cost.isdigit( ):
+			if count.isdigit( ) and cost.isdigit( ) and user.isdigit():
 				conn = pymysql.connect(
 						host="triniti.ru-hoster.com",
 						user=self.user,
@@ -3505,7 +3511,7 @@ class Main(object):
 					)
 	
 	def setMap(self):
-		if self.user_id in self.adms_chat:
+		if self.user_id in self.adms:
 			if "doc" in self.event.object["message"].keys( ):
 				if len(self.command.split(" ")) == 1:
 					conn = pymysql.connect(
@@ -4123,7 +4129,7 @@ class Main(object):
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"Название Форта: {data[0]}\nНаселение: {data[1]}\nБлагосостояние: {data[2]}\nПоследняя оплата за Форт: {data[3]}\n\nКол-во городов: {data[4]}\nКол-во деревень: {data[5]}\nПотребление продовольствия в сутки: {data[6]}\n\nВладелец: @id{user_id}",
+						message=f"Название Форта: {none}\nНаселение: {data[1]}\nБлагосостояние: {data[2]}\nПоследняя оплата за Форт: {data[3]}\n\nКол-во городов: {data[4]}\nКол-во деревень: {data[5]}\nПотребление продовольствия в сутки: {data[6]}\n\nВладелец: @id{user_id}",
 						disable_mentions=1
 						)
 			else:
@@ -4177,8 +4183,14 @@ class Main(object):
 				a = curs.fetchall( )
 				b = ""
 				for i in a:
+					self.vk.messages.send(
+							peer_id=self.peer_id,
+							random_id=random.randint(0, 10000000000),
+							message=i[3],
+							disable_mentions=1
+							)
 					curs.execute(f"SELECT count FROM military WHERE bd_name = '{i[3]}'")
-					c = curs.fetchone()[0]
+					c = curs.fetchone( )[0]
 					curs.execute(f"SELECT {i[3]}, {i[3]}*{i[0]}/{c} FROM users WHERE user_id = {user_id}")
 					count = curs.fetchone( )
 					curs.execute(f"SELECT name FROM resourses WHERE res_id = {i[1]}")
@@ -4186,11 +4198,11 @@ class Main(object):
 					morph = pymorphy2.MorphAnalyzer( )
 					name = morph.parse(res)[0]
 					name = name.inflect({'gent'}).word.capitalize( )
-					b += f"{i[2]} : {count[0]} : {count[1]} ед. {name} в 3 дня\n"
+					b += f"{i[2]} : {count[0]} : {round(count[1])} ед. {name} в 3 дня\n\n"
 				self.vk.messages.send(
 						peer_id=self.peer_id,
 						random_id=random.randint(0, 10000000000),
-						message=f"Армия @id{user_id} :\nНазвание : Кол-во войска : Потребление\n\n{round(b)}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
+						message=f"Армия @id{user_id} :\nНазвание : Кол-во войска : Потребление\n\n{b}\nОбщий лимит Армии: {prof[0]} из {prof[1]}\nПоследняя оплата: {datetime.fromtimestamp(prof[2]).astimezone(timezone('Europe/Moscow')).strftime('%Y-%m-%d %H:%M:%S')} (Следующая оплата за войска через 3 суток)",
 						disable_mentions=1
 						)
 			else:
