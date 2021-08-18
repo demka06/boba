@@ -3485,8 +3485,8 @@ class Main(object):
 					out.write(resource.read( ))
 					out.close( )
 					vk_upload = vk_api.VkUpload(self.vk_session)
-					photo = vk_upload.document_message(doc="map.png")
-					photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
+					photo = vk_upload.photo_messages(photos="map.png")
+					photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 					self.vk.messages.send(
 							peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 							)
@@ -3504,8 +3504,8 @@ class Main(object):
 				out.write(resource.read( ))
 				out.close( )
 				vk_upload = vk_api.VkUpload(self.vk_session)
-				photo = vk_upload.document(doc = "map.png")
-				photo = f'doc{photo[0]["owner_id"]}_{photo[0]["id"]}'
+				photo = vk_upload.photo_messages(photos="map.png")
+				photo = f'photo{photo[0]["owner_id"]}_{photo[0]["id"]}'
 				self.vk.messages.send(
 						peer_id=self.peer_id, random_id=random.randint(0, 10000000000), attachment=photo
 						)
