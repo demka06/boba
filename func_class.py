@@ -1633,7 +1633,7 @@ class Main(object):
 									)
 							
 							stats_pic_draw.text(
-									xy=(242, 208), text=race_inv[8], fill=color,
+									xy=(242, 208), text=int(race_inv[8]), fill=color,
 									font=ImageFont.truetype("Aqum.ttf", size=25)
 									)  # RACE USERS COUNT
 							"""MILITARY"""
