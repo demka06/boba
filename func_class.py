@@ -3674,7 +3674,7 @@ class Main(object):
 		[race]
 		"""
 		if self.user_id in self.adms:
-			if len(self.command.split(" ")) == 2:
+			if len(self.command.split(" ")) == -3:
 				form_id = self.command.split(" ")[1]
 				if form_id.isdigit( ):
 					conn = pymysql.connect(
@@ -3729,7 +3729,7 @@ class Main(object):
 							random_id=random.randint(0, 10000000000),
 							message="Аргументы указаны неправильно."
 							)
-			elif len(self.command.split("\n")) >= 3:
+			elif len(self.command.split("\n")) >= 2:
 				form_id = self.command.split(" ")[1]
 				if form_id.isdigit( ):
 					conn = pymysql.connect(
