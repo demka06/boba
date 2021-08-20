@@ -3730,7 +3730,7 @@ class Main(object):
 							message="Аргументы указаны неправильно."
 							)
 			elif len(self.command.split("\n")) >= 3:
-				form_id = self.command.split(" ")[1].strip()
+				form_id = self.command.split(" ")[1].split("\n")[0].strip()
 				if form_id.isdigit( ):
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
