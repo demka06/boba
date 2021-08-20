@@ -3729,8 +3729,8 @@ class Main(object):
 							random_id=random.randint(0, 10000000000),
 							message="Аргументы указаны неправильно."
 							)
-			elif len(self.command.split("\n")) >= 2:
-				form_id = self.command.split(" ")[1]
+			elif len(self.command.split("\n")) >= 3:
+				form_id = self.command.split(" ")[1].strip()
 				if form_id.isdigit( ):
 					conn = pymysql.connect(
 							host="triniti.ru-hoster.com",
