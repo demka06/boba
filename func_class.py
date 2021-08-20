@@ -1369,7 +1369,7 @@ class Main(object):
 					font = ImageFont.truetype("Aqum.ttf", size=20)
 					
 					stats_pic_draw.text(
-							xy=(242, 208), text=race_inv[8], fill=color,
+							xy=(242, 208), text=str(race_inv[8]), fill=color,
 							font=ImageFont.truetype("Aqum.ttf", size=25)
 							)  # RACE USERS COUNT
 					stats_pic_draw.text(
