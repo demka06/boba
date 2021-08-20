@@ -3750,7 +3750,7 @@ class Main(object):
 							if curs.fetchone( ) is None:
 								user_name = self.txt.splitlines( )[1].strip( )
 								user_race = self.txt.splitlines( )[2].strip( )
-								curs.execute("SELECT race_id FROM races WHERE name = %s", (user_race,))
+								curs.execute("SELECT race_id FROM races WHERE low_name = %s", (user_race,))
 								race = curs.fetchone( )
 								if race is None:
 									self.vk.messages.send(
