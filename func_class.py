@@ -3760,7 +3760,7 @@ class Main(object):
 											)
 								else:
 									curs.execute(
-											"INSERT INTO users(user_id,peer_id,anders,nickname,food, race_id) VALUES (%s,%s,%s,%s,%s)",
+											"INSERT INTO users(user_id,peer_id,anders,nickname,food, race_id) VALUES (%s,%s,%s,%s,%s,%s)",
 											(form[1], self.peer_id, 100, user_name, 10, race[0])
 											)
 									conn.commit( )
