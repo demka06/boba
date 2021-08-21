@@ -3700,6 +3700,8 @@ class Main(object):
 										(form[1], self.peer_id, 100, user_name, 10)
 										)
 								conn.commit( )
+								curs.execute(f"INSERT INTO forts (user_id, hps, plt) VALUES ({form[1]}, 100, 5000)")
+								conn.commit( )
 								self.vk.messages.send(
 										peer_id=self.peer_id,
 										random_id=random.randint(0, 10000000000),
