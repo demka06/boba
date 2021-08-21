@@ -3748,6 +3748,8 @@ class Main(object):
 						if form[3] == 0:
 							curs.execute(f"UPDATE forms SET access = 1 WHERE form_id = {form_id}")
 							conn.commit( )
+							curs.execute(f"INSERT INTO forts (user_id, hps, plt) VALUES ({form[1]}, 100, 5000)")
+							conn.commit( )
 							curs.execute(f"SELECT user_id FROM users WHERE user_id = {form[1]}")
 							if curs.fetchone( ) is None:
 								user_name = self.txt.splitlines( )[1].strip( )
