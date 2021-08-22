@@ -1731,6 +1731,7 @@ class Main(object):
 				charset='utf8', init_command='SET NAMES UTF8'
 				)
 		curs = conn.cursor( )
+		a=0
 		if self.user_id in self.adms or self.user_id in self.race_adms:
 			if len(self.command.split(" ")) >= 3:
 				user = self.command.split(" ")[1].split("|")[0]
@@ -1774,7 +1775,7 @@ class Main(object):
 							random_id=random.randint(0, 10000000000),
 							message="&#10062; ID расы должно состоять только из цифр."
 							)
-			else:
+			elif a == 1:
 				if len(self.command.split(" ")) >= 2:
 					race = self.command.split(" ")[1]
 					if race.isdigit( ):
