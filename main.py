@@ -122,6 +122,8 @@ while True:
 						cls.getMilitaryStats( )
 					elif command.startswith(("/costs", " ")):
 						cls.getCostOnRes( )
+					elif command.startswith(("/setrace", " ")):
+						cls.setrace()
 				if event.object.message['peer_id'] == event.object.message['from_id']:
 					command = event.obj.message["text"].lower( )
 					user_id = event.object.message["from_id"]
