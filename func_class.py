@@ -2276,7 +2276,7 @@ class Main(object):
 					stats_pic_draw.text(xy=(970, 879), text=str(prof[10]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 978), text=str(prof[12]), fill="black", font=font)
 					stats_pic_draw.text(xy=(970, 1077), text=str(prof[13]), fill="black", font=font)
-					stats_pic_draw.text(xy=(970, 1077), text=str(prof[26]), fill="black", font=font)
+					stats_pic_draw.text(xy=(970, 1176), text=str(prof[26]), fill="black", font=font)
 					
 					stats_pic.save('prof.png')
 				else:
